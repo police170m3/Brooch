@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tathink.brooch.brooch">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true" >
+
+        <!-- 인트로 -->
+        <activity
+            android:name="com.tathink.brooch.brooch.IntroActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Black.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--인트로-->
+
+        <!-- 인트로2 -->
+        <activity
+            android:name=".IntroSubActivity"
+            android:label="@string/app_name">
+        </activity>
+        <!--인트로2-->
+
+        <!--첫 화면-->
+        <activity android:name=".MainActivity">
+        </activity>
+        <!--첫 화면-->
+
+        <!--일별 통계-->
+        <activity android:name=".StatisticsDay">
+        </activity>
+        <!--일별 통계-->
+
+        <!--주별 통계-->
+        <activity android:name=".StatisticsWeek">
+        </activity>
+        <!--주별 통계-->
+
+        <!--월별 통계-->
+        <activity android:name=".StatisticsMonth">
+        </activity>
+        <!--월별 통계-->
+    </application>
+
+</manifest>

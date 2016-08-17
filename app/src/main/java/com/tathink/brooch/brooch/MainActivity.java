@@ -25,7 +25,8 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 //통계화면으로 이동 처리
-                Intent i = new Intent(MainActivity.this, StatisticsDay.class);
+                Intent i = new Intent(MainActivity.this, StatisticsMain.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
             }
         });

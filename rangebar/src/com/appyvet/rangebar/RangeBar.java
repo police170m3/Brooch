@@ -78,7 +78,7 @@ public class RangeBar extends View {
 
     private static final int DEFAULT_BAR_COLOR = Color.LTGRAY;
 
-    private static final int DEFAULT_TEXT_COLOR = Color.WHITE;
+    private static final int DEFAULT_TEXT_COLOR = Color.BLACK;  //text color default value: white
 
     private static final int DEFAULT_TICK_COLOR = Color.BLACK;
 

@@ -18,6 +18,9 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 //설정 첫 액티비티로 이동 처리
+                Intent i = new Intent(MainActivity.this, SetCall.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
             }
         });
 

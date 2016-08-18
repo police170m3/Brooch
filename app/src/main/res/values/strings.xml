@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Brooch</string>
+    <string name="setcall_text">지인에게 전화해서 평상시 목소리 톤으로 20초 이상 통화해주세요.\n평소 목소리 레벨을 측정합니다.</string>
 </resources>

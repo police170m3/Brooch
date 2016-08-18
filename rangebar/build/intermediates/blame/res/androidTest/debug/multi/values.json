@@ -1,0 +1,68 @@
+[
+    {
+        "outputFile": "C:\\Users\\MSI\\AndroidStudioProjects\\Brooch\\rangebar\\build\\intermediates\\res\\merged\\androidTest\\debug\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 1036,
+                    "endColumn": 45,
+                    "endOffset": 1077
+                },
+                "from": {
+                    "file": "C:\\Users\\MSI\\AndroidStudioProjects\\Brooch\\rangebar\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 1036,
+                        "endColumn": 45,
+                        "endOffset": 1077
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 1082,
+                    "endLine": 10,
+                    "endColumn": 12,
+                    "endOffset": 1368
+                },
+                "from": {
+                    "file": "C:\\Users\\MSI\\AndroidStudioProjects\\Brooch\\rangebar\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 1082,
+                        "endLine": 10,
+                        "endColumn": 12,
+                        "endOffset": 1368
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 1373,
+                    "endLine": 13,
+                    "endColumn": 12,
+                    "endOffset": 1528
+                },
+                "from": {
+                    "file": "C:\\Users\\MSI\\AndroidStudioProjects\\Brooch\\rangebar\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 1373,
+                        "endLine": 13,
+                        "endColumn": 12,
+                        "endOffset": 1528
+                    }
+                }
+            }
+        ]
+    }
+]

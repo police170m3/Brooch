@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Statistics for a Month"
-        android:id="@+id/textView5"
+        android:id="@+id/StatMonthTextView"
         android:textAlignment="center"
         android:textColor="#33B5E5" />
 

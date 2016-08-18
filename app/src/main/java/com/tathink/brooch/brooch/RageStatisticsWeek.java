@@ -1,16 +1,10 @@
 package com.tathink.brooch.brooch;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,8 +14,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import lecho.lib.hellocharts.animation.ChartAnimationListener;
-import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
@@ -30,44 +22,42 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.ChartUtils;
-import lecho.lib.hellocharts.view.Chart;
 import lecho.lib.hellocharts.view.LineChartView;
 
 /**
- * Created by MSI on 2016-08-17.
+ * Created by MSI on 2016-08-18.
  */
-public class StatisticsDay extends FragmentActivity {
+public class RageStatisticsWeek extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.statistics_day);
+        setContentView(R.layout.statistics_week);
 
         //텍스트 뷰 처리////////////////////////////////////////////////////////
-        final TextView text = (TextView)findViewById(R.id.StatDayTextView);
-        text.setText("Stress Statistics for a Day");
+        final TextView text = (TextView)findViewById(R.id.StatWeekTextView);
+        text.setText("Rage Statistics for a Week");
 
         if (savedInstanceState == null) {
             //getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
             getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         }
 
-        ((Button)findViewById(R.id.daybtn_week)).setOnClickListener(new View.OnClickListener() {
+        ((Button)findViewById(R.id.weekbtn_day)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //주별 통계화면으로 이동 처리
-                Intent i = new Intent(StatisticsDay.this, StatisticsWeek.class);
+                Intent i = new Intent(RageStatisticsWeek.this, RageStatisticsDay.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
-
             }
         });
 
-        ((Button)findViewById(R.id.daybtn_month)).setOnClickListener(new View.OnClickListener() {
+        ((Button)findViewById(R.id.weekbtn_month)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //월별 통계화면으로 이동 처리
-                Intent i = new Intent(StatisticsDay.this, StatisticsMonth.class);
+                Intent i = new Intent(RageStatisticsWeek.this, RageStatisticsMonth.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
                 //finish();
@@ -78,13 +68,13 @@ public class StatisticsDay extends FragmentActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        Log.d("StatDay Activity", "onPause");
+        Log.d("StatWeek Activity", "onPause");
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        Log.d("StatDay Activity", "onResume");
+        Log.d("StatWeek Activity", "onResume");
     }
 
     @Override
@@ -150,18 +140,18 @@ public class StatisticsDay extends FragmentActivity {
                     randomNumbersTab[i][j] = (float) Math.random() * 100f;
                 }
             }*/
-            randomNumbersTab[0][0] = 50f;
-            randomNumbersTab[0][1] = 60f;
-            randomNumbersTab[0][2] = 70f;
-            randomNumbersTab[0][3] = 80f;
-            randomNumbersTab[0][4] = 90f;
-            randomNumbersTab[0][5] = 100f;
-            randomNumbersTab[0][6] = 150f;
-            randomNumbersTab[0][7] = 70f;
-            randomNumbersTab[0][8] = 90f;
+            randomNumbersTab[0][0] = 10f;
+            randomNumbersTab[0][1] = 20f;
+            randomNumbersTab[0][2] = 30f;
+            randomNumbersTab[0][3] = 40f;
+            randomNumbersTab[0][4] = 50f;
+            randomNumbersTab[0][5] = 10f;
+            randomNumbersTab[0][6] = 20f;
+            randomNumbersTab[0][7] = 30f;
+            randomNumbersTab[0][8] = 40f;
             randomNumbersTab[0][9] = 50f;
-            randomNumbersTab[0][10] = 40f;
-            randomNumbersTab[0][11] = 80f;
+            randomNumbersTab[0][10] = 60f;
+            randomNumbersTab[0][11] = 70f;
 
         }
 
@@ -225,7 +215,7 @@ public class StatisticsDay extends FragmentActivity {
                 Axis axisX = new Axis();
                 Axis axisY = new Axis().setHasLines(true);
                 if (hasAxesNames) {
-                    axisX.setName("Times");
+                    axisX.setName("Days");
                     axisY.setName("a number of Count about High dB");
                 }
                 data.setAxisXBottom(axisX);

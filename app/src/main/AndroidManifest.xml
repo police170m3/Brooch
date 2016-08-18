@@ -34,12 +34,15 @@
 
         <!--일별 통계-->
         <activity android:name=".StatisticsDay"></activity>
+        <activity android:name=".RageStatisticsDay"></activity>
 
         <!--주별 통계-->
         <activity android:name=".StatisticsWeek"></activity>
+        <activity android:name=".RageStatisticsWeek"></activity>
 
         <!--월별 통계-->
         <activity android:name=".StatisticsMonth"></activity>
+        <activity android:name=".RageStatisticsMonth"></activity>
 
     </application>
 

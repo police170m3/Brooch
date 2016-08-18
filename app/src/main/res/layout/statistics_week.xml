@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Statistics for a Week"
-        android:id="@+id/textView4"
+        android:id="@+id/StatWeekTextView"
         android:textAlignment="center"
         android:textColor="#33B5E5" />
 

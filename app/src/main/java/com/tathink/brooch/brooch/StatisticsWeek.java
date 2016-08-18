@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -41,6 +42,11 @@ public class StatisticsWeek extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_week);
+
+        //텍스트 뷰 처리////////////////////////////////////////////////////////
+        final TextView text = (TextView)findViewById(R.id.StatWeekTextView);
+        text.setText("Stress Statistics for a Week");
+
         if (savedInstanceState == null) {
             //getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
             getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();

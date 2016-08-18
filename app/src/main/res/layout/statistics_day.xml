@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Statistics for a Day"
-        android:id="@+id/textView4"
+        android:id="@+id/StatDayTextView"
         android:textAlignment="center"
         android:textColor="#33B5E5" />
 

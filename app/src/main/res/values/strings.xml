@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">Brooch</string>
     <string name="setcall_text">지인에게 전화해서 평상시 목소리 톤으로 20초 이상 통화해주세요.\n평소 목소리 레벨을 측정합니다.</string>
+    <string name="setrage_guidetext">설정하기를 누르시고 화났을 때 처럼 힘껏 소리쳐 주세요.\n
+        예문을 따라서 큰 소리를 내셔도 됩니다.</string>
+    <string name="setrage_text">너 정말 이렇게 말을 안들을꺼야!\n혼 좀 나볼래!\n
+        어! 말 좀 들어!\n\n
+        당장 이리 안와!\n
+        셋 셀까지 안오면 혼날 줄 알아!\n
+        하나! 둘! 셋! 빨리와!</string>
+    <string name="setpic_text">좋아하는 사진을 최대 5장까지 등록하실 수 있습니다.</string>
+    <string name="pic1">1st. picture</string>
+    <string name="pic2">2nd. picture</string>
+    <string name="pic3">3th. picture</string>
+    <string name="pic4">4th. picture</string>
+    <string name="pic5">5th. picture</string>
 </resources>

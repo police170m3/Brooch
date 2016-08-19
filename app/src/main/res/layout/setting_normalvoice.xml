@@ -43,5 +43,13 @@
             android:id="@+id/setnormalvoice_btn_remeasure" />
     </LinearLayout>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:id="@+id/setnormalvoice_btn_next"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp" />
+
 
 </LinearLayout>

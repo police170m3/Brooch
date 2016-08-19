@@ -10,13 +10,14 @@ import android.widget.LinearLayout;
 import org.florescu.android.rangeseekbar.RangeSeekBar;
 
 /**
- * Created by MSI on 2016-08-18.
+ * Created by MSI on 2016-08-19.
  */
-public class SetNormalVoice extends Activity {
+public class SetRageVoice   extends Activity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.setting_normalvoice);
+        setContentView(R.layout.setting_ragevoice);
 
         // Setup the new range seek bar
         RangeSeekBar rangeSeekBar = new RangeSeekBar(this);
@@ -30,32 +31,46 @@ public class SetNormalVoice extends Activity {
         LinearLayout layout = (LinearLayout) findViewById(R.id.seekbar_placeholder);
         layout.addView(rangeSeekBar);
 
-        ((Button)findViewById(R.id.setnormalvoice_btn_set)).setOnClickListener(new View.OnClickListener() {
+        ((Button)findViewById(R.id.setragevoice_btn_set)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //측정된 값으로 설정하기
             }
         });
 
-        ((Button)findViewById(R.id.setnormalvoice_btn_remeasure)).setOnClickListener(new View.OnClickListener() {
+        ((Button)findViewById(R.id.setragevoice_btn_remeasure)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //다시 측정하기 - 평소 목소리
-                Intent i = new Intent(SetNormalVoice.this, SetCall.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                //다시 측정하기 - 화났을때 목소리
+                //현재 액티비티를 종료하여 이전 액티비티(SetRage)로 전환
+                finish();
             }
         });
 
-        ((Button)findViewById(R.id.setnormalvoice_btn_next)).setOnClickListener(new View.OnClickListener() {
+        ((Button)findViewById(R.id.setragevoice_btn_next)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //다음
-                Intent i = new Intent(SetNormalVoice.this, SetRage.class);
+                Intent i = new Intent(SetRageVoice.this, SetPic.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
         });
 
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
+
+    @Override
+    protected  void onDestroy(){
+        super.onDestroy();
     }
 }

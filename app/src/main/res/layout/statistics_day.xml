@@ -21,19 +21,41 @@
         android:layout_height="500dp"
         android:layout_gravity="center"
         android:id="@+id/container">
+
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Week"
-        android:id="@+id/daybtn_week"
-        android:layout_gravity="left|bottom" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Month"
-        android:id="@+id/daybtn_month"
-        android:layout_gravity="right|bottom" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Week"
+            android:id="@+id/daybtn_week"
+            android:layout_gravity="left|bottom" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&lt;"
+            android:id="@+id/daybtn_left"
+            android:layout_gravity="center_horizontal|bottom" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">"
+            android:id="@+id/daybtn_right"
+            android:layout_gravity="center_horizontal|bottom" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Month"
+            android:id="@+id/daybtn_month"
+            android:layout_gravity="right|bottom" />
+    </LinearLayout>
+
 </FrameLayout>

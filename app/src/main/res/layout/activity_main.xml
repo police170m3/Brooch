@@ -10,15 +10,6 @@
     android:background="#ffffff"
     tools:context="com.tathink.brooch.brooch.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Main Activity"
-        android:id="@+id/textView3"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="50dp" />
-
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
@@ -33,8 +24,15 @@
         android:layout_height="wrap_content"
         android:text="통계"
         android:id="@+id/btnStatistics"
-        android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp" />
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="370dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/main"
+        android:layout_below="@+id/btnSetting"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

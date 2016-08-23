@@ -45,8 +45,8 @@
             android:layout_marginTop="15dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:contentDescription="@string/pic1"
                 android:id="@+id/setPicimageView1"
                 android:src="@drawable/unknown"
@@ -54,8 +54,8 @@
                 android:layout_marginRight="2dp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:contentDescription="@string/pic2"
                 android:id="@+id/setPicimageView2"
                 android:src="@drawable/unknown"
@@ -71,8 +71,8 @@
             android:layout_marginTop="15dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:contentDescription="@string/pic3"
                 android:id="@+id/setPicimageView3"
                 android:src="@drawable/unknown"
@@ -80,8 +80,8 @@
                 android:layout_marginRight="2dp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:contentDescription="@string/pic4"
                 android:id="@+id/setPicimageView4"
                 android:src="@drawable/unknown"
@@ -97,8 +97,8 @@
             android:layout_marginTop="15dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:contentDescription="@string/pic5"
                 android:id="@+id/setPicimageView5"
                 android:src="@drawable/unknown"

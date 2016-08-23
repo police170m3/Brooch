@@ -16,6 +16,7 @@ import android.widget.Toast;
  */
 public class SetCall extends Activity {
 
+    private boolean flag = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class SetCall extends Activity {
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                flag = true;
                 Intent i = new Intent(Intent.ACTION_DIAL);
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
@@ -52,7 +54,7 @@ public class SetCall extends Activity {
     @Override
     protected void onRestart(){
         Intent i = new Intent(SetCall.this, SetNormalVoice.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(i);
         super.onRestart();
     }

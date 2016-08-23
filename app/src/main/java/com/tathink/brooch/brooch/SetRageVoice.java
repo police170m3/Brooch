@@ -35,6 +35,15 @@ public class SetRageVoice   extends Activity {
             @Override
             public void onClick(View view) {
                 //측정된 값으로 설정하기
+                /*측정 값 코드 작성.........................
+                ............................................
+                 */
+
+                //저장 후 액티비티 이동
+                //다음
+                Intent i = new Intent(SetRageVoice.this, SetPic.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
         });
 
@@ -44,16 +53,6 @@ public class SetRageVoice   extends Activity {
                 //다시 측정하기 - 화났을때 목소리
                 //현재 액티비티를 종료하여 이전 액티비티(SetRage)로 전환
                 finish();
-            }
-        });
-
-        ((Button)findViewById(R.id.setragevoice_btn_next)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //다음
-                Intent i = new Intent(SetRageVoice.this, SetPic.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
             }
         });
 

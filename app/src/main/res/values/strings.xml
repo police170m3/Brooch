@@ -8,10 +8,19 @@
         당장 이리 안와!\n
         셋 셀까지 안오면 혼날 줄 알아!\n
         하나! 둘! 셋! 빨리와!</string>
+    <string name="settext_text">화를 내는 자신을 보며 아이가 느낄 마음을 10자 이내로 입력해주세요.\n\n
+        예문 : 엄마, 화내시면 저 슬퍼요.</string>
     <string name="setpic_text">좋아하는 사진을 최대 5장까지 등록하실 수 있습니다.</string>
     <string name="pic1">1st. picture</string>
     <string name="pic2">2nd. picture</string>
     <string name="pic3">3th. picture</string>
     <string name="pic4">4th. picture</string>
     <string name="pic5">5th. picture</string>
+    <string name="nexttime">다음에 등록할래요</string>
+    <string name="registration">등록</string>
+    <string name="call">전화걸기</string>
+    <string name="recall">다시걸기</string>
+    <string name="setting">설정하기</string>
+    <string name="okay">확인</string>
+    <string name="tryagain">다시하기</string>
 </resources>

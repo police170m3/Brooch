@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/scrollView">
+    android:id="@+id/scrollView"
+    android:fillViewport="false">
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -109,8 +110,16 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next"
-            android:id="@+id/setcall_btn_next"
+            android:text="@string/nexttime"
+            android:id="@+id/setpic_btn_nexttime"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration"
+            android:id="@+id/setpic_btn_reg"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp" />
     </LinearLayout>

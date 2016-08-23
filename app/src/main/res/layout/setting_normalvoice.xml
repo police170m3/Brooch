@@ -7,14 +7,17 @@
         android:padding="8dp"
         >
 
-     <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:textAppearance="?android:attr/textAppearanceLarge"
-         android:text="평소 목소리 dB"
-         android:id="@+id/textView4"
-         android:layout_gravity="center_horizontal"
-         android:layout_marginBottom="10dp" />
+    <TextView
+        android:background="@drawable/border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="평소 목소리 dB"
+        android:id="@+id/textView4"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#000000" />
 
     <LinearLayout
             android:id="@+id/seekbar_placeholder"
@@ -33,23 +36,15 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="설정하기"
+            android:text="@string/registration"
             android:id="@+id/setnormalvoice_btn_set" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="다시하기"
+            android:text="@string/recall"
             android:id="@+id/setnormalvoice_btn_remeasure" />
     </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        android:id="@+id/setnormalvoice_btn_next"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp" />
 
 
 </LinearLayout>

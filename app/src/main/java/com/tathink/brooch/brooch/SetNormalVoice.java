@@ -13,6 +13,8 @@ import org.florescu.android.rangeseekbar.RangeSeekBar;
  * Created by MSI on 2016-08-18.
  */
 public class SetNormalVoice extends Activity {
+    private boolean flag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,14 @@ public class SetNormalVoice extends Activity {
             @Override
             public void onClick(View view) {
                 //측정된 값으로 설정하기
+                /*설정하는 코드 작성....................
+                ........................................
+                .......................................*/
+
+                //설정 후 액티비티 이동
+                Intent i = new Intent(SetNormalVoice.this, SetRage.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
             }
         });
 
@@ -42,17 +52,7 @@ public class SetNormalVoice extends Activity {
             public void onClick(View view) {
                 //다시 측정하기 - 평소 목소리
                 Intent i = new Intent(SetNormalVoice.this, SetCall.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
-
-        ((Button)findViewById(R.id.setnormalvoice_btn_next)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //다음
-                Intent i = new Intent(SetNormalVoice.this, SetRage.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
             }
         });

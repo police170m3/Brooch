@@ -55,6 +55,7 @@
         <activity android:name=".SetRageMeasure"></activity>
         <activity android:name=".SetRageVoice"></activity>
         <activity android:name=".SetPic"></activity>
+        <activity android:name=".SetText"></activity>
 
     </application>
 

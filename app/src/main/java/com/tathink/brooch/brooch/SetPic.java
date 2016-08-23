@@ -70,6 +70,7 @@ public class SetPic extends Activity {
             }
         });
 
+        //ImageView 버튼 처리
         View mViewPic2 = findViewById(R.id.setPicimageView2);
         mViewPic2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +83,7 @@ public class SetPic extends Activity {
             }
         });
 
+        //ImageView 버튼 처리
         View mViewPic3 = findViewById(R.id.setPicimageView3);
         mViewPic3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +96,7 @@ public class SetPic extends Activity {
             }
         });
 
+        //ImageView 버튼 처리
         View mViewPic4 = findViewById(R.id.setPicimageView4);
         mViewPic4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +109,7 @@ public class SetPic extends Activity {
             }
         });
 
+        //ImageView 버튼 처리
         View mViewPic5 = findViewById(R.id.setPicimageView5);
         mViewPic5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +119,33 @@ public class SetPic extends Activity {
                 Intent intent5 = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent5.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 startActivityForResult(Intent.createChooser(intent5, "앨범에서 불러오기"), REQUEST_CODE_PICKALBUM);
+            }
+        });
+
+        //다음에 등록할래요 버튼처리
+        ((Button)findViewById(R.id.setpic_btn_nexttime)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //액티비티 이동
+                Intent i = new Intent(SetPic.this, SetText.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+            }
+        });
+
+        //등록 버튼처리
+        ((Button)findViewById(R.id.setpic_btn_reg)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //사진 경로 저장
+                /*사진 경로 저장 코드 작성.............................................
+                .......................................................................
+                 */
+
+                //액티비티 이동
+                Intent i = new Intent(SetPic.this, SetText.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
             }
         });
     }

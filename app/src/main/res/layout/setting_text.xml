@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#eeeeee">
+    android:layout_height="match_parent">
 
     <TextView
         android:background="@drawable/border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="화났을 때 목소리 측정"
-        android:id="@+id/setrage_title_textView"
+        android:text="문장 등록"
+        android:id="@+id/setpic_title_textView"
         android:layout_gravity="center_horizontal"
         android:padding="20dp"
         android:layout_marginTop="20dp"
@@ -21,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/setrage_guidetext"
+        android:text="@string/settext_text"
         android:id="@+id/textView5"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
@@ -32,11 +31,4 @@
         android:singleLine="false"
         android:textColor="#000000" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/setting"
-        android:id="@+id/setrage_btn_set"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
 </LinearLayout>

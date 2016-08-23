@@ -4,16 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -21,12 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  * Created by MSI on 2016-08-19.
@@ -122,27 +110,18 @@ public class SetPic extends Activity {
             }
         });
 
-        //다음에 등록할래요 버튼처리
         ((Button)findViewById(R.id.setpic_btn_nexttime)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //액티비티 이동
                 Intent i = new Intent(SetPic.this, SetText.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
             }
         });
 
-        //등록 버튼처리
         ((Button)findViewById(R.id.setpic_btn_reg)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //사진 경로 저장
-                /*사진 경로 저장 코드 작성.............................................
-                .......................................................................
-                 */
-
-                //액티비티 이동
                 Intent i = new Intent(SetPic.this, SetText.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);

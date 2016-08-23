@@ -56,6 +56,10 @@
         <activity android:name=".SetRageVoice"></activity>
         <activity android:name=".SetPic"></activity>
         <activity android:name=".SetText"></activity>
+        <activity android:name=".SetTextInput"
+            android:windowSoftInputMode="stateAlwaysVisible"></activity>
+        <activity android:name=".SetSMS"></activity>
+        <activity android:name=".SetVibration"></activity>
 
     </application>
 

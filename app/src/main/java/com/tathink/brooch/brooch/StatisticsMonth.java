@@ -45,7 +45,7 @@ public class StatisticsMonth extends FragmentActivity {
 
         //텍스트 뷰 처리////////////////////////////////////////////////////////
         final TextView text = (TextView)findViewById(R.id.StatMonthTextView);
-        text.setText("최근 일주일");
+        text.setText("최근 한달");
 
         if (savedInstanceState == null) {
             //getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();

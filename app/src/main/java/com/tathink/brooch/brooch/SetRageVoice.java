@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
@@ -18,6 +19,8 @@ public class SetRageVoice   extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_ragevoice);
+
+        ImageView home = (ImageView) findViewById(R.id.home);
 
         // Setup the new range seek bar
         RangeSeekBar rangeSeekBar = new RangeSeekBar(this);
@@ -53,6 +56,16 @@ public class SetRageVoice   extends Activity {
                 //다시 측정하기 - 화났을때 목소리
                 //현재 액티비티를 종료하여 이전 액티비티(SetRage)로 전환
                 finish();
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ImageView 클릭시 이벤트 처리........
+                Intent i = new Intent(SetRageVoice.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
         });
 

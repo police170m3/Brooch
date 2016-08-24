@@ -36,7 +36,7 @@ public class RageStatisticsDay extends FragmentActivity {
 
         //텍스트 뷰 처리////////////////////////////////////////////////////////
         final TextView text = (TextView)findViewById(R.id.StatDayTextView);
-        text.setText("Rage Statistics for a Day");
+        text.setText("최근 24시간");
 
         if (savedInstanceState == null) {
             //getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();

@@ -4,19 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="화났을 때 목소리 측정"
-        android:id="@+id/textView4"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:padding="20dp" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="화났을 때 목소리 측정"
+            android:id="@+id/textView4"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:padding="20dp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/home"
+            android:src="@drawable/home"
+            android:layout_gravity="right|top"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/seekbar_placeholder"

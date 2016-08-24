@@ -45,6 +45,17 @@ public class SetPic extends Activity {
         checkPermission();
         //mashowmallow permission////////////////////////////////////////////////////////////////////
 
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ImageView 클릭시 이벤트 처리........
+                Intent i = new Intent(SetPic.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        });
+
         //ImageView 버튼 처리
         View mViewPic1 = findViewById(R.id.setPicimageView1);
         mViewPic1.setOnClickListener(new View.OnClickListener() {

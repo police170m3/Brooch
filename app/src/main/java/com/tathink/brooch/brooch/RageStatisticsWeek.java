@@ -36,7 +36,7 @@ public class RageStatisticsWeek extends FragmentActivity {
 
         //텍스트 뷰 처리////////////////////////////////////////////////////////
         final TextView text = (TextView)findViewById(R.id.StatWeekTextView);
-        text.setText("Rage Statistics for a Week");
+        text.setText("최근 일주일");
 
         if (savedInstanceState == null) {
             //getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();

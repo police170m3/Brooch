@@ -45,7 +45,7 @@ public class StatisticsMonth extends FragmentActivity {
 
         //텍스트 뷰 처리////////////////////////////////////////////////////////
         final TextView text = (TextView)findViewById(R.id.StatMonthTextView);
-        text.setText("Stress Statistics for a Month");
+        text.setText("최근 일주일");
 
         if (savedInstanceState == null) {
             //getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
@@ -106,7 +106,7 @@ public class StatisticsMonth extends FragmentActivity {
         float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
 
         private boolean hasAxes = true;
-        private boolean hasAxesNames = true;
+        private boolean hasAxesNames = true;       //X,Y축 라벨
         private boolean hasLines = true;
         private boolean hasPoints = true;
         private ValueShape shape = ValueShape.CIRCLE;
@@ -204,7 +204,7 @@ public class StatisticsMonth extends FragmentActivity {
                 }
 
                 Line line = new Line(values);
-                line.setColor(ChartUtils.COLORS[i]);
+                line.setColor(ChartUtils.COLORS[2]);    //라인 색상은 상수값 2
                 line.setShape(shape);
                 line.setCubic(isCubic);
                 line.setFilled(isFilled);
@@ -224,8 +224,8 @@ public class StatisticsMonth extends FragmentActivity {
                 Axis axisX = new Axis();
                 Axis axisY = new Axis().setHasLines(true);
                 if (hasAxesNames) {
-                    axisX.setName("Days");
-                    axisY.setName("a number of Count about High dB");
+                    axisX.setName("시간");
+                    axisY.setName("횟수");
                 }
                 data.setAxisXBottom(axisX);
                 data.setAxisYLeft(axisY);
@@ -297,7 +297,7 @@ public class StatisticsMonth extends FragmentActivity {
 
             @Override
             public void onValueSelected(int lineIndex, int pointIndex, PointValue value) {
-                Toast.makeText(getActivity(), "Selected: " + value, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Selected: " + value, Toast.LENGTH_SHORT).show();
             }
 
             @Override

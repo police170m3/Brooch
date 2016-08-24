@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,17 @@ public class SetSMS extends Activity {
         textInName = (TextView)findViewById(R.id.textinName);
         buttonAdd = (Button)findViewById(R.id.add);
         container = (LinearLayout)findViewById(R.id.container);
+
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ImageView 클릭시 이벤트 처리........
+                Intent i = new Intent(SetSMS.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        });
 
         //설정하기 이벤트 처리
         ((Button)findViewById(R.id.setsms_btn_set)).setOnClickListener(new View.OnClickListener() {
@@ -124,9 +136,17 @@ public class SetSMS extends Activity {
             cursor.moveToFirst();
             String name = cursor.getString(0);
             String number = cursor.getString(1);
-            textInName.setText(name);
-            textIn.setText(number);
+
+            //긴 이름 짧게 처리 - 출력만 간략히...
+            if(name.length() >= 8){
+                textInName.setText(name.substring(0, 7) + "..");
+                textIn.setText(number);
+            } else {
+                textInName.setText(name);
+                textIn.setText(number);
+            }
             cursor.close();
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

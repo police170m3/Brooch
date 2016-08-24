@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,9 +44,20 @@ public class StatisticsDay extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_day);
 
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ImageView 클릭시 이벤트 처리........
+                Intent i = new Intent(StatisticsDay.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        });
+
         //텍스트 뷰 처리////////////////////////////////////////////////////////
         final TextView text = (TextView)findViewById(R.id.StatDayTextView);
-        text.setText("Stress Statistics for a Day");
+        text.setText("최근 24시간");
 
         if (savedInstanceState == null) {
             //getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
@@ -107,7 +119,7 @@ public class StatisticsDay extends FragmentActivity {
         float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
 
         private boolean hasAxes = true;
-        private boolean hasAxesNames = true;
+        private boolean hasAxesNames = true;       //X,Y축 라벨
         private boolean hasLines = true;
         private boolean hasPoints = true;
         private ValueShape shape = ValueShape.CIRCLE;
@@ -205,7 +217,7 @@ public class StatisticsDay extends FragmentActivity {
                 }
 
                 Line line = new Line(values);
-                line.setColor(ChartUtils.COLORS[i]);
+                line.setColor(ChartUtils.COLORS[i]);    //라인 색상은 상수값 1
                 line.setShape(shape);
                 line.setCubic(isCubic);
                 line.setFilled(isFilled);
@@ -225,8 +237,8 @@ public class StatisticsDay extends FragmentActivity {
                 Axis axisX = new Axis();
                 Axis axisY = new Axis().setHasLines(true);
                 if (hasAxesNames) {
-                    axisX.setName("Times");
-                    axisY.setName("a number of Count about High dB");
+                    axisX.setName("시간");
+                    axisY.setName("횟수");
                 }
                 data.setAxisXBottom(axisX);
                 data.setAxisYLeft(axisY);
@@ -298,7 +310,7 @@ public class StatisticsDay extends FragmentActivity {
 
             @Override
             public void onValueSelected(int lineIndex, int pointIndex, PointValue value) {
-                Toast.makeText(getActivity(), "Selected: " + value, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Selected: " + value, Toast.LENGTH_SHORT).show();
             }
 
             @Override

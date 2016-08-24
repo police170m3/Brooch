@@ -4,17 +4,32 @@
     android:layout_height="match_parent"
     android:background="#eeeeee">
 
-    <TextView
-        android:background="@drawable/border"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="평소 목소리 녹음"
-        android:id="@+id/setcall_title_textView"
-        android:layout_gravity="center_horizontal"
-        android:padding="20dp"
-        android:layout_marginTop="20dp"
-        android:textColor="#000000" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:background="@drawable/border"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="평소 목소리 녹음"
+            android:id="@+id/setcall_title_textView"
+            android:layout_gravity="center_horizontal|top"
+            android:padding="20dp"
+            android:layout_marginTop="20dp"
+            android:textColor="#000000" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/home"
+            android:src="@drawable/home"
+            android:layout_gravity="right|top"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp" />
+
+    </FrameLayout>
 
     <TextView
         android:background="@drawable/border"

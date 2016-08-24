@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 /**
  * Created by MSI on 2016-08-17.
@@ -16,10 +17,14 @@ public class StatisticsMain extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_main);
 
-        ((Button)findViewById(R.id.stat_main_btn_setting)).setOnClickListener(new View.OnClickListener() {
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //설정 화면으로 이동
+                //ImageView 클릭시 이벤트 처리........
+                Intent i = new Intent(StatisticsMain.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
         });
 

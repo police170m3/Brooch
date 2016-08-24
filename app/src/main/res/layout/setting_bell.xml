@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:orientation="vertical" android:layout_width="match_parent"
-android:layout_height="match_parent">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:background="@drawable/border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="브러치 진동시간"
+        android:text="알림벨 울림시간"
         android:layout_gravity="center_horizontal"
         android:padding="20dp"
         android:layout_marginTop="20dp"
@@ -25,7 +25,7 @@ android:layout_height="match_parent">
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5sec."
+            android:text="5초"
             android:id="@+id/radioButton1"
             android:layout_below="@+id/textView"
             android:layout_centerHorizontal="true"
@@ -36,7 +36,7 @@ android:layout_height="match_parent">
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="7sec."
+            android:text="10초"
             android:id="@+id/radioButton2"
             android:layout_gravity="left"
             android:checked="false"
@@ -45,7 +45,7 @@ android:layout_height="match_parent">
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10sec."
+            android:text="20초"
             android:id="@+id/radioButton3"
             android:layout_gravity="left"
             android:checked="false"
@@ -54,18 +54,45 @@ android:layout_height="match_parent">
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="15sec."
+            android:text="30초"
             android:id="@+id/radioButton4"
             android:layout_gravity="left"
             android:checked="false"
             android:layout_marginBottom="10dp" />
     </RadioGroup>
 
+    <TextView
+        android:background="@drawable/border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="알림벨 종류 선택"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#000000"
+        android:id="@+id/setbell_textview_select" />
+
+    <TextView
+        android:background="@drawable/border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/setbell_text"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#000000"
+        android:id="@+id/setbell_textview_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textAlignment="center" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/setting"
-        android:id="@+id/setvibration_btn_set"
+        android:id="@+id/setbell_btn_set"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp" />
 

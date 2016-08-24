@@ -24,4 +24,5 @@
     <string name="tryagain">다시하기</string>
     <string name="setsms_text">주어진 시간안에 전화벨을 끄지 않으면 지정된 3명 이내의 지인들에게 아래 메시지가 자동 전달됩니다.</string>
     <string name="setsmsMessage_text">지금 아기에게 화를 내고 있어요.\n전화하여 부모를 진정시켜주세요.</string>
+    <string name="setbell_text">휴대폰 미디어 음량이 켜져있어야 합니다.</string>
 </resources>

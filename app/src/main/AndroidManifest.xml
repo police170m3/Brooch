@@ -60,6 +60,7 @@
             android:windowSoftInputMode="stateAlwaysVisible"></activity>
         <activity android:name=".SetSMS"></activity>
         <activity android:name=".SetVibration"></activity>
+        <activity android:name=".SetBell"></activity>
 
     </application>
 

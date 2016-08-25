@@ -2,6 +2,7 @@ package com.tathink.brooch.brooch;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.telephony.PhoneStateListener;
@@ -31,7 +32,7 @@ public class SetCall extends Activity {
             @Override
             public void onClick(View view) {
                 flag = true;
-                Intent i = new Intent(Intent.ACTION_DIAL);
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("content://contacts/people/"));
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
             }

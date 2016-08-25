@@ -3,13 +3,20 @@ package com.tathink.brooch.brooch;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +26,7 @@ import android.widget.Toast;
 public class SetBell extends Activity {
     TextView textView1, textView2;
     int temp;       //임시 변수
+    private MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +44,8 @@ public class SetBell extends Activity {
             }
         });
 
-        textView1 = (TextView)findViewById(R.id.setbell_textview_select);       //전화벨 종류 선택
-        textView2 = (TextView)findViewById(R.id.setbell_textview_content);      //전화벨 종류 선택 문구
+        textView1 = (TextView) findViewById(R.id.setbell_textview_select);       //전화벨 종류 선택
+        textView2 = (TextView) findViewById(R.id.setbell_textview_content);      //전화벨 종류 선택 문구
 
         textView1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +63,7 @@ public class SetBell extends Activity {
             }
         });
 
-        ((Button)findViewById(R.id.setbell_btn_set)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.setbell_btn_set)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //통계화면으로 이동 처리
@@ -69,18 +77,46 @@ public class SetBell extends Activity {
 
     @Override
     @Deprecated
-    protected Dialog onCreateDialog(int id){
-        switch (id){
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
             case 1:
                 AlertDialog.Builder builder = new AlertDialog.Builder(SetBell.this);
                 final String str[] = {"전화벨", "Kill Bill", "Magic Mamaliga", "Marry You", "Minions"};
-                builder.setTitle("알림벨 종류 선택").setPositiveButton("선택완료", new DialogInterface.OnClickListener(){
-                    public void onClick(DialogInterface dialog, int which){
+
+                builder.setTitle("알림벨 종류 선택").setPositiveButton("선택완료", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //선택완료 버튼 누르게 되면 토스트 출력
                         Toast.makeText(getApplicationContext(), str[temp] + "선택됨", Toast.LENGTH_SHORT).show();
                     }
-                }).setNegativeButton("취소", null).setSingleChoiceItems(str, 0, new DialogInterface.OnClickListener(){
+                });
+                builder.setSingleChoiceItems(str, 0, new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which){
-                        temp = which;
+                        Uri alert;
+                        if(which == 0){
+                            alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                            playMusic(alert);
+                        } else if(which == 1) {
+                            alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.kill_bill);
+                            playMusic(alert);
+                        } else if(which == 2) {
+                            alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.magic_mamaliga);
+                            playMusic(alert);
+                        } else if(which == 3) {
+                            alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.marry_you);
+                            playMusic(alert);
+                        } else if(which == 4) {
+                            alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.minions);
+                            playMusic(alert);
+                        }
+                    }
+                });
+                builder.setOnKeyListener(new DialogInterface.OnKeyListener(){
+                    @Override
+                    public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
+                        if(keyCode == KeyEvent.KEYCODE_BACK){
+                            stopMusic();
+                        }
+                        return false;
                     }
                 });
 
@@ -88,5 +124,35 @@ public class SetBell extends Activity {
         }
         return super.onCreateDialog(id);
 
+    }
+
+    private void playMusic(Uri alert) {
+        stopMusic();
+        mMediaPlayer = new MediaPlayer();
+
+        try{
+            mMediaPlayer.setDataSource(this, alert);
+            startAlarm(mMediaPlayer);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void startAlarm(MediaPlayer player) throws java.io.IOException, IllegalArgumentException, IllegalStateException{
+        final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {   // 현재 Alarm 볼륨 구함
+            player.setAudioStreamType(AudioManager.STREAM_ALARM);    // Alarm 볼륨 설정
+            player.setLooping(false);    // 음악 반복 재생
+            player.prepare();   // 3. 재생 준비
+            player.start();    // 4. 재생 시작
+        }
+    }
+
+    private void stopMusic() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.stop();     // 5. 재생 중지
+            mMediaPlayer.release();    // 6. MediaPlayer 리소스 해제
+            mMediaPlayer = null;
+        }
     }
 }

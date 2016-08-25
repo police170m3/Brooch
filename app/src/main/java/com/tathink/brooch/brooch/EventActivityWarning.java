@@ -12,11 +12,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 
-import java.io.IOException;
-import java.util.Random;
-
-import static com.tathink.brooch.brooch.R.raw.kill_bill;
-
 /**
  * Created by MSI on 2016-08-25.
  */

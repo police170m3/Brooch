@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+
+import java.io.IOException;
 
 /**
  * Created by MSI on 2016-08-25.
@@ -80,10 +80,11 @@ public class EventActivityWarning extends Activity{
         }
     }
 
-    private void startAlarm(MediaPlayer player) throws java.io.IOException, IllegalArgumentException, IllegalStateException{
+    private void startAlarm(MediaPlayer player) throws IOException, IllegalArgumentException, IllegalStateException{
         final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 15, 0);
         if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {   // 현재 Alarm 볼륨 구함
-            player.setAudioStreamType(AudioManager.STREAM_ALARM);    // Alarm 볼륨 설정
+            player.setAudioStreamType(AudioManager.STREAM_MUSIC);    // Alarm 볼륨 설정
             player.setLooping(true);    // 음악 반복 재생
             player.prepare();   // 3. 재생 준비
             player.start();    // 4. 재생 시작

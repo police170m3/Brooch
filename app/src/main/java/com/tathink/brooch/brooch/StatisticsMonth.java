@@ -56,7 +56,7 @@ public class StatisticsMonth extends FragmentActivity {
         });
 
         //텍스트 뷰 처리////////////////////////////////////////////////////////
-        final TextView text = (TextView)findViewById(R.id.StatMonthTextView);
+        final TextView text = (TextView) findViewById(R.id.StatMonthTextView);
         text.setText("최근 한달");
 
         if (savedInstanceState == null) {
@@ -64,7 +64,7 @@ public class StatisticsMonth extends FragmentActivity {
             getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         }
 
-        ((Button)findViewById(R.id.monthbtn_day)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.monthbtn_day)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //주별 통계화면으로 이동 처리
@@ -74,7 +74,7 @@ public class StatisticsMonth extends FragmentActivity {
             }
         });
 
-        ((Button)findViewById(R.id.monthbtn_week)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.monthbtn_week)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //월별 통계화면으로 이동 처리
@@ -87,19 +87,19 @@ public class StatisticsMonth extends FragmentActivity {
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         Log.d("StatMonth Activity", "onPause");
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         Log.d("StatMonth Activity", "onResume");
     }
 
     @Override
-    protected  void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         Log.d("StatWeek Activity", "onDestroy");
     }
@@ -152,7 +152,6 @@ public class StatisticsMonth extends FragmentActivity {
 
             return rootView;
         }
-
 
 
         private void generateValues() {
@@ -224,7 +223,7 @@ public class StatisticsMonth extends FragmentActivity {
                 line.setHasLabelsOnlyForSelected(hasLabelForSelected);
                 line.setHasLines(hasLines);
                 line.setHasPoints(hasPoints);
-                if (pointsHaveDifferentColor){
+                if (pointsHaveDifferentColor) {
                     line.setPointColor(ChartUtils.COLORS[(i + 1) % ChartUtils.COLORS.length]);
                 }
                 lines.add(line);

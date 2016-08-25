@@ -11,12 +11,10 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,11 +84,13 @@ public class SetBell extends Activity {
                 builder.setTitle("알림벨 종류 선택").setPositiveButton("선택완료", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //선택완료 버튼 누르게 되면 토스트 출력
+                        stopMusic();
                         Toast.makeText(getApplicationContext(), str[temp] + "선택됨", Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.setSingleChoiceItems(str, 0, new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which){
+                        Toast.makeText(getApplicationContext(), "음악이 들리지 않으면 볼륨을 확인하세요", Toast.LENGTH_SHORT).show();
                         Uri alert;
                         if(which == 0){
                             alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
@@ -140,6 +140,7 @@ public class SetBell extends Activity {
 
     private void startAlarm(MediaPlayer player) throws java.io.IOException, IllegalArgumentException, IllegalStateException{
         final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 15, 0);
         if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {   // 현재 Alarm 볼륨 구함
             player.setAudioStreamType(AudioManager.STREAM_ALARM);    // Alarm 볼륨 설정
             player.setLooping(false);    // 음악 반복 재생

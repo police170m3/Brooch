@@ -7,8 +7,6 @@ import android.os.Handler;
 import android.view.Window;
 import android.widget.ImageView;
 
-import java.util.Random;
-
 /**
  * Created by MSI on 2016-08-16.
  */

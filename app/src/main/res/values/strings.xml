@@ -25,4 +25,8 @@
     <string name="setsms_text">주어진 시간안에 전화벨을 끄지 않으면 지정된 3명 이내의 지인들에게 아래 메시지가 자동 전달됩니다.</string>
     <string name="setsmsMessage_text">지금 아기에게 화를 내고 있어요.\n전화하여 부모를 진정시켜주세요.</string>
     <string name="setbell_text">휴대폰 미디어 음량이 켜져있어야 합니다.</string>
+    <string name="safe_text">현재 액티비티는 EventActivitySafe입니다. 여기에 문구가 작성됩니다.</string>
+    <string name="caution_text">현재 액티비티는 EventActivityCaution입니다. 여기에 문구가 작성됩니다.</string>
+    <string name="serious_text">현재 액티비티는 EventActivitySerious입니다. 여기에 문구가 작성됩니다.</string>
+    <string name="warning_text">현재 액티비티는 EventActivityWarning입니다. 여기에 문구가 작성됩니다.</string>
 </resources>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,17 @@ public class RageStatisticsDay extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_day);
+
+        ImageView home = (ImageView) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ImageView 클릭시 이벤트 처리........
+                Intent i = new Intent(RageStatisticsDay.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        });
 
         //텍스트 뷰 처리////////////////////////////////////////////////////////
         final TextView text = (TextView)findViewById(R.id.StatDayTextView);
@@ -196,7 +208,7 @@ public class RageStatisticsDay extends FragmentActivity {
                 }
 
                 Line line = new Line(values);
-                line.setColor(ChartUtils.COLORS[i]);
+                line.setColor(ChartUtils.COLORS[1]);    //라인 색상은 상수값 1
                 line.setShape(shape);
                 line.setCubic(isCubic);
                 line.setFilled(isFilled);

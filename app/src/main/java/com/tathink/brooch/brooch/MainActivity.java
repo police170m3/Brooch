@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -37,5 +38,43 @@ public class MainActivity extends Activity {
         });
 
 
+        //테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////
+        ((Button)findViewById(R.id.safe_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //통계화면으로 이동 처리
+                Intent i = new Intent(MainActivity.this, EventActivitySafe.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+            }
+        });
+        ((Button)findViewById(R.id.caution_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //통계화면으로 이동 처리
+                Intent i = new Intent(MainActivity.this, EventActivityCaution.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+            }
+        });
+        ((Button)findViewById(R.id.serious_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //통계화면으로 이동 처리
+                Intent i = new Intent(MainActivity.this, EventActivitySerious.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+            }
+        });
+        ((Button)findViewById(R.id.warning_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //통계화면으로 이동 처리
+                Intent i = new Intent(MainActivity.this, EventActivityWarning.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+            }
+        });
+        //테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////
     }
 }

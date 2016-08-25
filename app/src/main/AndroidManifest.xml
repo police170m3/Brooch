@@ -62,6 +62,12 @@
         <activity android:name=".SetVibration"></activity>
         <activity android:name=".SetBell"></activity>
 
+        <!--테스트 액티비티-->
+        <activity android:name=".EventActivitySafe"></activity>
+        <activity android:name=".EventActivityCaution"></activity>
+        <activity android:name=".EventActivitySerious"></activity>
+        <activity android:name=".EventActivityWarning"></activity>
+
     </application>
 
 </manifest>

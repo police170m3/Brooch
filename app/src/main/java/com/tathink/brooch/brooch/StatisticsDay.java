@@ -217,7 +217,7 @@ public class StatisticsDay extends FragmentActivity {
                 }
 
                 Line line = new Line(values);
-                line.setColor(ChartUtils.COLORS[i]);    //라인 색상은 상수값 1
+                line.setColor(ChartUtils.COLORS[1]);    //라인 색상은 상수값 1
                 line.setShape(shape);
                 line.setCubic(isCubic);
                 line.setFilled(isFilled);

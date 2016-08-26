@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -138,7 +139,7 @@ public class SetBell extends Activity {
         }
     }
 
-    private void startAlarm(MediaPlayer player) throws java.io.IOException, IllegalArgumentException, IllegalStateException{
+    private void startAlarm(final MediaPlayer player) throws java.io.IOException, IllegalArgumentException, IllegalStateException{
         final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 15, 0);
         if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {   // 현재 Alarm 볼륨 구함
@@ -146,6 +147,7 @@ public class SetBell extends Activity {
             player.setLooping(false);    // 음악 반복 재생
             player.prepare();   // 3. 재생 준비
             player.start();    // 4. 재생 시작
+
         }
     }
 
@@ -156,4 +158,5 @@ public class SetBell extends Activity {
             mMediaPlayer = null;
         }
     }
+
 }

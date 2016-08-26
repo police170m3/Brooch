@@ -3,6 +3,7 @@ package com.tathink.brooch.brooch;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,16 +24,29 @@ public class SetNormalVoice extends Activity {
         ImageView home = (ImageView) findViewById(R.id.home);
 
         // Setup the new range seek bar
-        RangeSeekBar rangeSeekBar = new RangeSeekBar(this);
+        final RangeSeekBar rangeSeekBar = new RangeSeekBar(this);
         // Set the range
         rangeSeekBar.setTextAboveThumbsColor(R.color.common_signin_btn_dark_text_default);
-        rangeSeekBar.setRangeValues(0, 300);
-        rangeSeekBar.setSelectedMinValue(20);
-        rangeSeekBar.setSelectedMaxValue(88);
+        rangeSeekBar.setRangeValues(0, 200);
+        rangeSeekBar.setSelectedMinValue(20);   //추후 프리퍼런스의 값 읽어와서 인자전달
+        rangeSeekBar.setSelectedMaxValue(50);   //추후 프리퍼런스의 값 읽어와서 인자전달
+
 
         // Add to layout
         LinearLayout layout = (LinearLayout) findViewById(R.id.seekbar_placeholder);
         layout.addView(rangeSeekBar);
+
+        rangeSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener() {
+            @Override
+            public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
+                //range seek bar 드레그 했을때 max, max 값 구하기............
+                Log.d("min------------", ""+ minValue);
+                Log.d("max------------", ""+ maxValue);
+            }
+        });
+
+        //선택한 값 읽어오기
+        Log.d("values-----", ""+rangeSeekBar.getSelectedMaxValue()+"----------"+rangeSeekBar.getSelectedMinValue());
 
         ((Button)findViewById(R.id.setnormalvoice_btn_set)).setOnClickListener(new View.OnClickListener() {
             @Override

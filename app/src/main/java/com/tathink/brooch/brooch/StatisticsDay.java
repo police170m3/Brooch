@@ -152,18 +152,18 @@ public class StatisticsDay extends FragmentActivity {
                     randomNumbersTab[i][j] = (float) Math.random() * 100f;
                 }
             }*/
-            randomNumbersTab[0][0] = 50f;
-            randomNumbersTab[0][1] = 60f;
-            randomNumbersTab[0][2] = 70f;
-            randomNumbersTab[0][3] = 80f;
-            randomNumbersTab[0][4] = 90f;
-            randomNumbersTab[0][5] = 100f;
-            randomNumbersTab[0][6] = 150f;
-            randomNumbersTab[0][7] = 70f;
+            randomNumbersTab[0][0] = 10f;
+            randomNumbersTab[0][1] = 20f;
+            randomNumbersTab[0][2] = 30f;
+            randomNumbersTab[0][3] = 40f;
+            randomNumbersTab[0][4] = 50f;
+            randomNumbersTab[0][5] = 60f;
+            randomNumbersTab[0][6] = 70;
+            randomNumbersTab[0][7] = 80f;
             randomNumbersTab[0][8] = 90f;
-            randomNumbersTab[0][9] = 50f;
-            randomNumbersTab[0][10] = 40f;
-            randomNumbersTab[0][11] = 80f;
+            randomNumbersTab[0][9] = 100f;
+            randomNumbersTab[0][10] = 100f;
+            randomNumbersTab[0][11] = 100f;
 
         }
 
@@ -189,7 +189,7 @@ public class StatisticsDay extends FragmentActivity {
             // Reset viewport height range to (0,100)
             final Viewport v = new Viewport(chart.getMaximumViewport());
             v.bottom = 0;
-            v.top = 200;    //y축 최대 크기
+            v.top = 100;    //y축 최대 크기
             v.left = 0;
             v.right = numberOfPoints - 1;
             chart.setMaximumViewport(v);

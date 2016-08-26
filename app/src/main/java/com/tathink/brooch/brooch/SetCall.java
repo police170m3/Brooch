@@ -13,7 +13,7 @@ import android.widget.ImageView;
  */
 public class SetCall extends Activity {
 
-    private boolean flag = false;
+    static public boolean flag = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +61,16 @@ public class SetCall extends Activity {
 
     @Override
     protected void onRestart(){
-        Intent i = new Intent(SetCall.this, SetNormalVoice.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(i);
-        super.onRestart();
+        if(flag == true) {
+            flag = false;
+            Intent i = new Intent(SetCall.this, SetNormalVoice.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            super.onRestart();
+        }
+        else {
+            super.onRestart();
+        }
     }
 
 }

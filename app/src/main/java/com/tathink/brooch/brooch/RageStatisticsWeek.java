@@ -152,18 +152,18 @@ public class RageStatisticsWeek extends FragmentActivity {
                     randomNumbersTab[i][j] = (float) Math.random() * 100f;
                 }
             }*/
-            randomNumbersTab[0][0] = 10f;
-            randomNumbersTab[0][1] = 20f;
-            randomNumbersTab[0][2] = 30f;
-            randomNumbersTab[0][3] = 40f;
+            randomNumbersTab[0][0] = 50f;
+            randomNumbersTab[0][1] = 50f;
+            randomNumbersTab[0][2] = 50f;
+            randomNumbersTab[0][3] = 50f;
             randomNumbersTab[0][4] = 50f;
-            randomNumbersTab[0][5] = 10f;
-            randomNumbersTab[0][6] = 20f;
-            randomNumbersTab[0][7] = 30f;
-            randomNumbersTab[0][8] = 40f;
+            randomNumbersTab[0][5] = 50f;
+            randomNumbersTab[0][6] = 50f;
+            randomNumbersTab[0][7] = 50f;
+            randomNumbersTab[0][8] = 50f;
             randomNumbersTab[0][9] = 50f;
-            randomNumbersTab[0][10] = 60f;
-            randomNumbersTab[0][11] = 70f;
+            randomNumbersTab[0][10] = 50f;
+            randomNumbersTab[0][11] = 50f;
 
         }
 
@@ -189,7 +189,7 @@ public class RageStatisticsWeek extends FragmentActivity {
             // Reset viewport height range to (0,100)
             final Viewport v = new Viewport(chart.getMaximumViewport());
             v.bottom = 0;
-            v.top = 200;    //y축 최대 크기
+            v.top = 100;    //y축 최대 크기
             v.left = 0;
             v.right = numberOfPoints - 1;
             chart.setMaximumViewport(v);

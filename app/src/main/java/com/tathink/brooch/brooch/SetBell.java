@@ -91,22 +91,27 @@ public class SetBell extends Activity {
                 });
                 builder.setSingleChoiceItems(str, 0, new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which){
-                        Toast.makeText(getApplicationContext(), "음악이 들리지 않으면 볼륨을 확인하세요", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "음악이 들리지 않으면 볼륨을 확인하세요", Toast.LENGTH_SHORT).show();
                         Uri alert;
                         if(which == 0){
                             alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                            temp = 0;
                             playMusic(alert);
                         } else if(which == 1) {
                             alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.kill_bill);
+                            temp = 1;
                             playMusic(alert);
                         } else if(which == 2) {
                             alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.magic_mamaliga);
+                            temp = 2;
                             playMusic(alert);
                         } else if(which == 3) {
                             alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.marry_you);
+                            temp = 3;
                             playMusic(alert);
                         } else if(which == 4) {
                             alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.minions);
+                            temp = 4;
                             playMusic(alert);
                         }
                     }

@@ -9,6 +9,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -24,6 +25,16 @@ public class EventActivityWarning extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventactivity_warning);
+
+        //꺼진 화면에서 화면 활성화///////////////////////////////////////////////////////////////////
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+            WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        //꺼진 화면에서 화면 활성화///////////////////////////////////////////////////////////////////
+
+        //임시 이벤트 처리
+        Uri alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.minions);
+        playMusic(alert);
+        ///////////////////
 
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +59,7 @@ public class EventActivityWarning extends Activity{
             @Override
             public void onClick(View view) {
                 stopMusic();
+                finish();
             }
         });
 

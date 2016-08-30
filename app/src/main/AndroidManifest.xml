@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -62,11 +66,29 @@
         <activity android:name=".SetVibration"></activity>
         <activity android:name=".SetBell"></activity>
 
+        <!-- Receiver and Service 등록-->
+        <receiver android:name="kr.mint.testbluetoothspp.ConnectionReceiver" >
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="kr.mint.testbluetoothspp.BluetoothSignalReceiver" >
+            <intent-filter>
+                <action android:name="kr.mint.bluetooth.receive" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="kr.mint.testbluetoothspp.BTService" />
+
         <!--테스트 액티비티-->
         <activity android:name=".EventActivitySafe"></activity>
         <activity android:name=".EventActivityCaution"></activity>
         <activity android:name=".EventActivitySerious"></activity>
         <activity android:name=".EventActivityWarning"></activity>
+        <activity android:name=".BTMainActivity"></activity>
+        <activity android:name=".DeviceListActivity"></activity>
 
     </application>
 

@@ -29,4 +29,12 @@
     <string name="caution_text">현재 액티비티는 EventActivityCaution입니다. 여기에 문구가 작성됩니다.</string>
     <string name="serious_text">현재 액티비티는 EventActivitySerious입니다. 여기에 문구가 작성됩니다.</string>
     <string name="warning_text">현재 액티비티는 EventActivityWarning입니다. 여기에 문구가 작성됩니다.</string>
+
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
+    <string name="scanning">scanning for devices...</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
 </resources>

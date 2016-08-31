@@ -15,6 +15,9 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context $context, Intent $intent) {
+        //DB 객체 생성
+        final DBManager dbManager = new DBManager(ContextUtil.CONTEXT.getApplicationContext(), "STRESS.db", null, 1);
+
         Log.i("BluetoothSignalReceiver.java | onReceive", "|action : " + $intent.getAction() + "| signal : " + $intent.getStringExtra("signal") + "|");
         Toast.makeText($context, $intent.getStringExtra("signal"), Toast.LENGTH_SHORT).show();
         //      Intent intent = new Intent($context, MainActivity.class);
@@ -52,18 +55,18 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
         }
         //db값 70 이상일때 벨소리 처리----------------------------------------------------------------------
 
-        /* SQLite processing............................................................................................................*//*
-        int db = 55;     //dB값 임시 저장
+        //SQLite insert signal value processing........................................................................................
+        int db = signal;     //dB값 임시 저장  위에 signal 변수 값 사용하면 됨...........
 
-        //현재 시간
-        android.text.format.DateFormat df = new android.text.format.DateFormat();
-        String date = df.format("yyyy-MM-dd hh:mm:ss", new java.util.Date()).toString();
+        if(db != 0) {
+            //현재 시간
+            android.text.format.DateFormat df = new android.text.format.DateFormat();
+            String date = df.format("yyyy-MM-dd hh:mm:ss", new java.util.Date()).toString();
 
-        final DBManager dbManager = new DBManager($context, "DBINFO.db", null, 1);
 
-        dbManager.insert("insert into DB_INFO value(null, '" + date + "', " + db + ");");
-
-        *//* SQLite processing............................................................................................................*/
+            dbManager.insert("insert into STRESS_INFO values(null, '" + date + "', " + db + ");");
+        }
+        //SQLite processing............................................................................................................
     }
 
 }

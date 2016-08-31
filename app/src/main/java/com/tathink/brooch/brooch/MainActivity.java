@@ -84,6 +84,16 @@ public class MainActivity extends Activity {
                 startActivity(i);
             }
         });
+
+        ((Button)findViewById(R.id.dbtest_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //통계화면으로 이동 처리
+                Intent i = new Intent(MainActivity.this, DBTestActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+            }
+        });
         //테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////
     }
 }

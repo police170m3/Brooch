@@ -17,7 +17,7 @@ public class DBManager  extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // 새로운 테이블을 생성한다.
         // create table 테이블명 (컬럼명 타입 옵션);
-        db.execSQL("CREATE TABLE DB_INFO (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, dB INTEGER);");
+        db.execSQL("CREATE TABLE STRESS_INFO (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, signal INTEGER);");
 
     }
 
@@ -47,12 +47,12 @@ public class DBManager  extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String str = "";
 
-        Cursor cursor = db.rawQuery("select * from DB_INFO", null);
+        Cursor cursor = db.rawQuery("select * from STRESS_INFO", null);
         while(cursor.moveToNext()) {
             str += cursor.getInt(0)
                     + " : date "
                     + cursor.getString(1)
-                    + ", dB = "
+                    + ", signal = "
                     + cursor.getInt(2)
                     + "\n";
         }

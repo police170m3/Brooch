@@ -89,6 +89,7 @@
         <activity android:name=".EventActivityWarning"></activity>
         <activity android:name=".BTMainActivity"></activity>
         <activity android:name=".DeviceListActivity"></activity>
+        <activity android:name=".DBTestActivity"></activity>
 
     </application>
 

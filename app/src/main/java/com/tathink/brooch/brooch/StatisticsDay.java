@@ -1,6 +1,7 @@
 package com.tathink.brooch.brooch;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.mint.testbluetoothspp.DBManager;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
@@ -33,6 +35,12 @@ public class StatisticsDay extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_day);
+
+        //160831
+//        //DBManger 객체 생성
+//        final DBManager dbManager = new DBManager(getApplicationContext(), "STRESS.db", null, 1);
+//        //DB 최근 데이터 12개 select
+
 
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {

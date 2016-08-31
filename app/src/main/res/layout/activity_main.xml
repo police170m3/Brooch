@@ -70,10 +70,22 @@
             android:id="@+id/warning_btn" />
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BT TEST"
-        android:id="@+id/bt_btn" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BT TEST"
+            android:id="@+id/bt_btn" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DB TEST"
+            android:id="@+id/dbtest_btn" />
+    </LinearLayout>
 
 </LinearLayout>

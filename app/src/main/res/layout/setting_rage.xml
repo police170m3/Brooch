@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="화났을 때 목소리 측정"
+            android:text="화난 목소리 측정"
             android:id="@+id/setrage_title_textView"
             android:layout_gravity="center_horizontal|top"
             android:padding="20dp"

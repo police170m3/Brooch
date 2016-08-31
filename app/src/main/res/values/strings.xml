@@ -1,34 +1,48 @@
 <resources>
     <string name="app_name">Brooch</string>
-    <string name="setcall_text">지인에게 전화해서 평상시 목소리 톤으로 20초 이상 통화해주세요.\n평소 목소리 레벨을 측정합니다.</string>
-    <string name="setrage_guidetext">설정하기를 누르시고 화났을 때 처럼 힘껏 소리쳐 주세요.\n
-        예문을 따라서 큰 소리를 내셔도 됩니다.</string>
+    <string name="subactivity_text1_1"><![CDATA[\"내가 성공했다면, 오직 천사와 같은 <font color="#FF0000">어머니</font> 덕이다.\"]]></string>
+    <string name="subactivity_text1_2"><![CDATA[[에이브러햄 링컨]]]></string>
+    <string name="subactivity_text2_1"><![CDATA[\"<font color="#FF0000">당신이 화내면</font> 그들도 화낸다.\"]]></string>
+    <string name="subactivity_text2_2"><![CDATA[\'바이러스 리더쉽\']]></string>
+    <string name="subactivity_text3_1"><![CDATA[\"<font color="#FF0000">생각대로 살지 않으면</font> 사는 대로 살게 된다.\"]]></string>
+    <string name="subactivity_text3_2"><![CDATA[[폴 발레리]]]></string>
+    <string name="subactivity_text4_1"><![CDATA[\"공부라는 것이 무엇입니까?\" 수불선사(修弗禪師)에게 물었다.\"<font color="#FF0000"> 남에게 상처를 주지 않도록 노력하는 사람</font>이 공부가 된 사람입니다.\"]]></string>
+    <string name="subactivity_text4_2"><![CDATA[조용헌 \'동양학을 읽는 월요일\']]></string>
+    <string name="subactivity_text5_1"><![CDATA[\"<font color="#FF0000">내 언어의 한계</font>가 내 세계의 한계다.\"]]></string>
+    <string name="subactivity_text5_2"><![CDATA[[비트겐슈타인]]]></string>
+    <string name="setcall_text">20초 이상 가까운 지인과 차분하게 통화하는 동안 사용자의 목소리 크기가 측정됩니다.</string>
+    <string name="setrage_guidetext">평소 소리지르며 화를 내는 목소리를 측정합니다. 측정하기를 누른 후 10초간 임의로 언성을 높여 말하거나, 다음의 예문을 따라 고함을 지른 후 확인 버튼을 누르면 됩니다.</string>
     <string name="setrage_text">너 정말 이렇게 말을 안들을꺼야!\n혼 좀 나볼래!\n
         어! 말 좀 들어!\n\n
         당장 이리 안와!\n
         셋 셀까지 안오면 혼날 줄 알아!\n
         하나! 둘! 셋! 빨리와!</string>
-    <string name="settext_text">화를 내는 자신을 보며 아이가 느낄 마음을 10자 이내로 입력해주세요.</string>
-    <string name="setpic_text">좋아하는 사진을 최대 5장까지 등록하실 수 있습니다.</string>
+    <string name="setragevoice_guidetext">측정 결과를 터치하여 목소리 크기의 최저점과 최고점을 수동으로 조절할 수 있습니다.</string>
+    <string name="settext_text">화를 내는 자신을 보며 상대방이 느낄 마음을 10자 이내로 입력해주세요.\n\n
+        예) 엄마, 화내시면 무서워요!!\n\n등록을 하지 않을 경우, 기본 문구가 제공됩니다.</string>
+    <string name="setpic_text">아래 이미지를 터치하면 최대 5장까지 사진 등록이 가능합니다. 등록하지 않을 경우, 기본 이미지가 제공됩니다.</string>
     <string name="pic1">1st. picture</string>
     <string name="pic2">2nd. picture</string>
     <string name="pic3">3th. picture</string>
     <string name="pic4">4th. picture</string>
     <string name="pic5">5th. picture</string>
-    <string name="nexttime">다음에 등록할래요</string>
+    <string name="nexttime">다음에 등록</string>
     <string name="registration">등록</string>
     <string name="call">전화걸기</string>
     <string name="recall">다시걸기</string>
-    <string name="setting">설정하기</string>
+    <string name="setting">등록</string>
     <string name="okay">확인</string>
     <string name="tryagain">다시하기</string>
-    <string name="setsms_text">주어진 시간안에 전화벨을 끄지 않으면 지정된 3명 이내의 지인들에게 아래 메시지가 자동 전달됩니다.</string>
-    <string name="setsmsMessage_text">지금 아기에게 화를 내고 있어요.\n전화하여 부모를 진정시켜주세요.</string>
+    <string name="setsms_text">주어진 시간 안에 벨소리를 끄지 않으면 지정한 3명 이내의 지인들에게 문자가 자동 전송됩니다.</string>
+    <string name="setsmsMessage_text">텍스트 박스 추후 삭제) 전송 문자내용: 통화가 될 때까지 전화를 계속 걸어 주시겠어요?</string>
     <string name="setbell_text">휴대폰 미디어 음량이 켜져있어야 합니다.</string>
-    <string name="safe_text">현재 액티비티는 EventActivitySafe입니다. 여기에 문구가 작성됩니다.</string>
-    <string name="caution_text">현재 액티비티는 EventActivityCaution입니다. 여기에 문구가 작성됩니다.</string>
-    <string name="serious_text">현재 액티비티는 EventActivitySerious입니다. 여기에 문구가 작성됩니다.</string>
-    <string name="warning_text">현재 액티비티는 EventActivityWarning입니다. 여기에 문구가 작성됩니다.</string>
+    <string name="safe_text">스트레스가 안전한 단계입니다.</string>
+    <string name="caution_text">스트레스가 경미한 단계입니다.\n\n
+    잠시 대화를 멈추고 손바닥을 따뜻하게 비비며 마사지를 하시면서 두뇌가 \'불안 요소가 사라졌다\'고 착각해 스트레스가 감소하게 됩니다.</string>
+    <string name="serious_text">스트레스가 심각한 단계입니다.\n\n
+    잠시 대화를 멈추고 껌을 씹게되면 체내에 에너지를 공급해주는 \'코르티솔 호르몬\'이 분비돼 스트레스가 완화됩니다.</string>
+    <string name="warning_text">스트레스가 매우 심각한 단계입니다.\n\n
+    잠시 대화를 멈추고 감정이 가라앉을 때까지 눈을 감고 복식 호흡을 반복해 심호흡을 크게 하면 체내에 부교감 신경계가 활발해져 스트레스가 완화됩니다.</string>
 
     <string name="title_paired_devices">Paired Devices</string>
     <string name="title_other_devices">Other Available Devices</string>

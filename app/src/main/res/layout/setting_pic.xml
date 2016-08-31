@@ -121,20 +121,28 @@
                 android:layout_marginRight="2dp" />
         </LinearLayout>
 
-        <Button
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nexttime"
-            android:id="@+id/setpic_btn_nexttime"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp" />
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/registration"
-            android:id="@+id/setpic_btn_reg"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/registration"
+                android:id="@+id/setpic_btn_reg"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nexttime"
+                android:id="@+id/setpic_btn_nexttime"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp" />
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

@@ -13,8 +13,8 @@
         android:layout_marginRight="15dp"
         android:ems="10"
         android:background="@drawable/round"
-        android:hint="예문 : 엄마, 화내시면 저 슬퍼요"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:text="화내시는 모습을 보면 무섭고 슬퍼요." />
 
     <Button
         android:layout_width="wrap_content"

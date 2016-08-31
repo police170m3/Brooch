@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IntroSubActivity">
+    tools:context=".IntroSubActivity"
+    android:orientation="vertical"
+    android:gravity="center_vertical|center_horizontal">
 
-    <ImageView
-        android:layout_width="250dp"
+    <LinearLayout
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/AdimageView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" />
-</RelativeLayout>
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="동해물과 백두산이 마르고닳도록 하느님이 보우하사 우리나라 만세"
+            android:id="@+id/subactivity_text1"
+            android:padding="15dp"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="티에이싱크"
+            android:id="@+id/subactivity_text2"
+            android:padding="15dp"
+            android:layout_gravity="right" />
+    </LinearLayout>
+
+</LinearLayout>

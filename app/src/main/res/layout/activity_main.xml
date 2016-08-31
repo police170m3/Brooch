@@ -34,7 +34,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="통계"
+        android:text="돌아보기"
         android:id="@+id/btnStatistics"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"

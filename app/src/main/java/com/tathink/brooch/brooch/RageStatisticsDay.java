@@ -30,7 +30,7 @@ import lecho.lib.hellocharts.view.LineChartView;
  * Created by MSI on 2016-08-18.
  */
 public class RageStatisticsDay extends FragmentActivity {
-    private static int SDcount=0;
+    private static int SDcount = 0;
     public static float[] RDdbValue = new float[24];
     public static  int hours = 0;
 

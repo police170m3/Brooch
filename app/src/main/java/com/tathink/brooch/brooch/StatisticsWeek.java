@@ -30,7 +30,7 @@ import lecho.lib.hellocharts.view.LineChartView;
  * Created by MSI on 2016-08-17.
  */
 public class StatisticsWeek extends FragmentActivity {
-    private static int SWcount=0;
+    private static int SWcount = 0;
     public static float[] SWdbValue = new float[7];
     public static  int days = 0;
 

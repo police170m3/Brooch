@@ -77,8 +77,22 @@ public class DBManager  extends SQLiteOpenHelper {
     public int SelectStress1week(int i, int days){    //최근 1주일 동안 db 횟수 체크
         SQLiteDatabase db = getReadableDatabase();
         int cnt = 0;
-        int from = (i) + (days);
-        int to = (i - 1) + (days);
+        int from = (-1) * (i) + (days);
+        int to = (-1) * (i + 1) + (days);
+
+        Cursor cursor = db.rawQuery("select count(*) from STRESS_INFO where date <= datetime('now', '" + from + " days') and date >= datetime('now', '" + to + " days');", null);
+        while (cursor.moveToNext()) {
+            cnt = cursor.getInt(0);
+        }
+
+        return cnt;
+    }
+
+    public int SelectStress1month(int i, int weeks){    //최근 1주일 동안 db 횟수 체크
+        SQLiteDatabase db = getReadableDatabase();
+        int cnt = 0;
+        int from = (-1) * (i) + (weeks);
+        int to = (-1) * (i + 1) + (weeks);
 
         Cursor cursor = db.rawQuery("select count(*) from STRESS_INFO where date <= datetime('now', '" + from + " days') and date >= datetime('now', '" + to + " days');", null);
         while (cursor.moveToNext()) {

@@ -31,29 +31,20 @@
         android:layout_below="@+id/date"
         android:layout_alignParentEnd="true" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Result of DB"
-        android:id="@+id/tv_result"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/dB"
-        android:layout_alignParentEnd="true" />
-
-    <Button
+        <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="insert"
         android:id="@+id/btn_insert"
-        android:layout_below="@+id/tv_result"
-        android:layout_alignParentStart="true" />
+            android:layout_below="@+id/dB"
+            android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="update"
         android:id="@+id/btn_update"
-        android:layout_below="@+id/tv_result"
+        android:layout_above="@+id/btn_DelAll"
         android:layout_toEndOf="@+id/btn_insert" />
 
     <Button
@@ -61,7 +52,7 @@
         android:layout_height="wrap_content"
         android:text="delete"
         android:id="@+id/btn_delete"
-        android:layout_below="@+id/tv_result"
+        android:layout_above="@+id/btn_DelAll"
         android:layout_toEndOf="@+id/btn_update" />
 
     <Button
@@ -69,7 +60,7 @@
         android:layout_height="wrap_content"
         android:text="select"
         android:id="@+id/btn_select"
-        android:layout_below="@+id/tv_result"
+        android:layout_above="@+id/btn_DelAll"
         android:layout_toEndOf="@+id/btn_delete" />
 
     <Button
@@ -79,6 +70,15 @@
         android:id="@+id/btn_DelAll"
         android:layout_below="@+id/btn_insert"
         android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Result of DB"
+            android:id="@+id/tv_result"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/btn_DelAll"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 

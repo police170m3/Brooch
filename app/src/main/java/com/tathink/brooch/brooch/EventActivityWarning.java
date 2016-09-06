@@ -20,6 +20,8 @@ import java.io.IOException;
  */
 public class EventActivityWarning extends Activity{
     private MediaPlayer mMediaPlayer;
+    int volume;
+    private AudioManager audioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,19 +108,21 @@ public class EventActivityWarning extends Activity{
     }
 
     private void startAlarm(MediaPlayer player) throws IOException, IllegalArgumentException, IllegalStateException{
-        final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 15, 0);
-        if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {   // 현재 Alarm 볼륨 구함
-            player.setAudioStreamType(AudioManager.STREAM_MUSIC);    // Alarm 볼륨 설정
-            player.setLooping(true);    // 음악 반복 재생
-            player.prepare();   // 3. 재생 준비
-            player.start();    // 4. 재생 시작
-        }
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);    // Alarm 볼륨 설정
+        player.setLooping(true);    // 음악 반복 재생
+        player.prepare();   // 3. 재생 준비
+        player.start();    // 4. 재생 시작
     }
 
     private void stopMusic() {
         if (mMediaPlayer != null) {
             mMediaPlayer.stop();     // 5. 재생 중지
+            if(volume != 15){
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
+            }
             mMediaPlayer.release();    // 6. MediaPlayer 리소스 해제
             mMediaPlayer = null;
         }

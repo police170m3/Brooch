@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.mint.testbluetoothspp.DBManager;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
@@ -28,11 +30,24 @@ import lecho.lib.hellocharts.view.LineChartView;
  * Created by MSI on 2016-08-17.
  */
 public class StatisticsWeek extends FragmentActivity {
+    private static int SWcount=0;
+    public static float[] SWdbValue = new float[7];
+    public static  int days = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_week);
+
+        Toast.makeText(StatisticsWeek.this, "현재 days는 "+days+" "+((days)/7)+"주일 전입니다.", Toast.LENGTH_LONG).show();
+
+        //DBManger 객체 생성
+        final DBManager dbManager = new DBManager(getApplicationContext(), "STRESS.db", null, 1);
+        //DB 최근 데이터 24시간 횟수 select
+        for(int i = 0; i < 7; i++) {
+            SWcount = dbManager.SelectStress1week(i, days);
+            SWdbValue[6 - i] = (float) SWcount;
+        }
 
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +89,40 @@ public class StatisticsWeek extends FragmentActivity {
                 //finish();
             }
         });
+
+        //1주일 전 후 < 버튼, > 버튼 처리//////////////////////////////////////////////////////////
+        ((Button)findViewById(R.id.weekbtn_left)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //1주일 전 데이터
+                if(days == -21) {
+                    //1주일 간의 자료만 제공합니다.
+                    Toast.makeText(StatisticsWeek.this, "이전 보기는 한달간 자료를 제공합니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    days -= 7;
+                    Intent i = new Intent(StatisticsWeek.this, StatisticsWeek.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            }
+        });
+
+        ((Button)findViewById(R.id.weekbtn_right)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //1주일 후 데이터
+                if(days == 0){
+                    //토스트로 가장 마지막 최근 24시간 자료 입니다.
+                    Toast.makeText(StatisticsWeek.this, "마지막 최근 한달 그래프입니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    days += 7;
+                    Intent i = new Intent(StatisticsWeek.this, StatisticsWeek.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            }
+        });
+        //1주일 전 후 < 버튼, > 버튼 처리//////////////////////////////////////////////////////////
     }
 
     @Override
@@ -103,7 +152,7 @@ public class StatisticsWeek extends FragmentActivity {
         private LineChartData data;
         private int numberOfLines = 1;
         private int maxNumberOfLines = 4;
-        private int numberOfPoints = 12;
+        private int numberOfPoints = 7;
 
         float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
 
@@ -146,23 +195,9 @@ public class StatisticsWeek extends FragmentActivity {
 
 
         private void generateValues() {
-            /*for (int i = 0; i < maxNumberOfLines; ++i) {
-                for (int j = 0; j < numberOfPoints; ++j) {
-                    randomNumbersTab[i][j] = (float) Math.random() * 100f;
-                }
-            }*/
-            randomNumbersTab[0][0] = 10f;
-            randomNumbersTab[0][1] = 20f;
-            randomNumbersTab[0][2] = 30f;
-            randomNumbersTab[0][3] = 40f;
-            randomNumbersTab[0][4] = 50f;
-            randomNumbersTab[0][5] = 60f;
-            randomNumbersTab[0][6] = 10f;
-            randomNumbersTab[0][7] = 20f;
-            randomNumbersTab[0][8] = 30f;
-            randomNumbersTab[0][9] = 40f;
-            randomNumbersTab[0][10] = 50f;
-            randomNumbersTab[0][11] = 60f;
+            for(int i = 0; i < 7; i++){
+                randomNumbersTab[0][i] = SWdbValue[i];
+            }
 
         }
 

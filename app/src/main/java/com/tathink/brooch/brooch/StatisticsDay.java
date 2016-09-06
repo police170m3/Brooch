@@ -1,7 +1,6 @@
 package com.tathink.brooch.brooch;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,17 +30,24 @@ import lecho.lib.hellocharts.view.LineChartView;
  * Created by MSI on 2016-08-17.
  */
 public class StatisticsDay extends FragmentActivity {
+    private static int SDcount = 0;
+    public static float[] SDdbValue = new float[24];
+    public static int hours = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_day);
 
-        //160831
-//        //DBManger 객체 생성
-//        final DBManager dbManager = new DBManager(getApplicationContext(), "STRESS.db", null, 1);
-//        //DB 최근 데이터 12개 select
+        Toast.makeText(StatisticsDay.this, "현재 hours는 " + hours + " " + ((hours) / 24) + "일 전입니다.", Toast.LENGTH_LONG).show();
 
+        //DBManger 객체 생성
+        final DBManager dbManager = new DBManager(getApplicationContext(), "STRESS.db", null, 1);
+        //DB 최근 데이터 24시간 횟수 select
+        for (int i = 0; i < 24; i++) {
+            SDcount = dbManager.SelectStress24h(i, hours);
+            SDdbValue[23 - i] = (float) SDcount;
+        }
 
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +61,7 @@ public class StatisticsDay extends FragmentActivity {
         });
 
         //텍스트 뷰 처리////////////////////////////////////////////////////////
-        final TextView text = (TextView)findViewById(R.id.StatDayTextView);
+        final TextView text = (TextView) findViewById(R.id.StatDayTextView);
         text.setText("최근 24시간");
 
         if (savedInstanceState == null) {
@@ -62,7 +69,7 @@ public class StatisticsDay extends FragmentActivity {
             getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
         }
 
-        ((Button)findViewById(R.id.daybtn_week)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.daybtn_week)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //주별 통계화면으로 이동 처리
@@ -73,7 +80,7 @@ public class StatisticsDay extends FragmentActivity {
             }
         });
 
-        ((Button)findViewById(R.id.daybtn_month)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.daybtn_month)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //월별 통계화면으로 이동 처리
@@ -83,22 +90,56 @@ public class StatisticsDay extends FragmentActivity {
                 //finish();
             }
         });
+
+        //24시간 전 후 < 버튼, > 버튼 처리//////////////////////////////////////////////////////////
+        ((Button) findViewById(R.id.daybtn_left)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //24시간 전 24시간 데이터
+                if (hours == -144) {
+                    //1주일 간의 자료만 제공합니다.
+                    Toast.makeText(StatisticsDay.this, "이전 보기는 1주일간 자료를 제공합니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    hours -= 24;
+                    Intent i = new Intent(StatisticsDay.this, StatisticsDay.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            }
+        });
+
+        ((Button) findViewById(R.id.daybtn_right)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //24시간 후 24시간 데이터
+                if (hours == 0) {
+                    //토스트로 가장 마지막 최근 24시간 자료 입니다.
+                    Toast.makeText(StatisticsDay.this, "마지막 최근 24시간 그래프입니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    hours += 24;
+                    Intent i = new Intent(StatisticsDay.this, StatisticsDay.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            }
+        });
+        //24시간 전 후 < 버튼, > 버튼 처리//////////////////////////////////////////////////////////
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         Log.d("StatDay Activity", "onPause");
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         Log.d("StatDay Activity", "onResume");
     }
 
     @Override
-    protected  void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         Log.d("StatWeek Activity", "onDestroy");
     }
@@ -112,7 +153,7 @@ public class StatisticsDay extends FragmentActivity {
         private LineChartData data;
         private int numberOfLines = 1;
         private int maxNumberOfLines = 4;
-        private int numberOfPoints = 12;
+        private int numberOfPoints = 24;
 
         float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
 
@@ -140,7 +181,6 @@ public class StatisticsDay extends FragmentActivity {
 
             // Generate some random values.
             generateValues();
-
             generateData();
 
             // Disable viewport recalculations, see toggleCubic() method for more info.
@@ -153,26 +193,10 @@ public class StatisticsDay extends FragmentActivity {
         }
 
 
-
         private void generateValues() {
-            /*for (int i = 0; i < maxNumberOfLines; ++i) {
-                for (int j = 0; j < numberOfPoints; ++j) {
-                    randomNumbersTab[i][j] = (float) Math.random() * 100f;
-                }
-            }*/
-            randomNumbersTab[0][0] = 10f;
-            randomNumbersTab[0][1] = 20f;
-            randomNumbersTab[0][2] = 30f;
-            randomNumbersTab[0][3] = 40f;
-            randomNumbersTab[0][4] = 50f;
-            randomNumbersTab[0][5] = 60f;
-            randomNumbersTab[0][6] = 70;
-            randomNumbersTab[0][7] = 80f;
-            randomNumbersTab[0][8] = 90f;
-            randomNumbersTab[0][9] = 100f;
-            randomNumbersTab[0][10] = 100f;
-            randomNumbersTab[0][11] = 100f;
-
+            for (int i = 0; i < 24; i++) {
+                randomNumbersTab[0][i] = SDdbValue[i];
+            }
         }
 
         private void reset() {
@@ -197,7 +221,7 @@ public class StatisticsDay extends FragmentActivity {
             // Reset viewport height range to (0,100)
             final Viewport v = new Viewport(chart.getMaximumViewport());
             v.bottom = 0;
-            v.top = 100;    //y축 최대 크기
+            v.top = 50;    //y축 최대 크기
             v.left = 0;
             v.right = numberOfPoints - 1;
             chart.setMaximumViewport(v);
@@ -223,7 +247,7 @@ public class StatisticsDay extends FragmentActivity {
                 line.setHasLabelsOnlyForSelected(hasLabelForSelected);
                 line.setHasLines(hasLines);
                 line.setHasPoints(hasPoints);
-                if (pointsHaveDifferentColor){
+                if (pointsHaveDifferentColor) {
                     line.setPointColor(ChartUtils.COLORS[(i + 1) % ChartUtils.COLORS.length]);
                 }
                 lines.add(line);

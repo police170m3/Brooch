@@ -31,6 +31,13 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
         int signal = 0;
         signal = Integer.parseInt($intent.getStringExtra("signal").substring(0, $intent.getStringExtra("signal").length()-3));
         if(signal >= 70) {
+            //dB값 70 이상일때 SQLite에 저장
+            //android.text.format.DateFormat df = new android.text.format.DateFormat();
+            //String date = df.format("yyyy-MM-dd HH:mm", new java.util.Date()).toString();
+            //dbManager.insert("insert into STRESS_INFO values(null, '" + date + "', " + signal + ");");
+            dbManager.insert("insert into STRESS_INFO values(null, datetime('now', '+9 hours'), " + signal + ");"); //UTC기준 국제표준시에 +9하면 우리나라 시간
+            //dB값 70 이상일때 SQLite에 저장
+
             //꺼진 화면 wake up 처리/////////////////////////////////////////////////////////////////////
             if(sCpuWakeLock != null){
                 return;
@@ -54,19 +61,6 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
             }
         }
         //db값 70 이상일때 벨소리 처리----------------------------------------------------------------------
-
-        //SQLite insert signal value processing........................................................................................
-        int db = signal;     //dB값 임시 저장  위에 signal 변수 값 사용하면 됨...........
-
-        if(db != 0) {
-            //현재 시간
-            android.text.format.DateFormat df = new android.text.format.DateFormat();
-            String date = df.format("yyyy-MM-dd hh:mm:ss", new java.util.Date()).toString();
-
-
-            dbManager.insert("insert into STRESS_INFO values(null, '" + date + "', " + db + ");");
-        }
-        //SQLite processing............................................................................................................
     }
 
 }

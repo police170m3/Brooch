@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.mint.testbluetoothspp.DBManager;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.Line;
@@ -29,11 +30,24 @@ import lecho.lib.hellocharts.view.LineChartView;
  * Created by MSI on 2016-08-18.
  */
 public class RageStatisticsDay extends FragmentActivity {
+    private static int SDcount=0;
+    public static float[] RDdbValue = new float[24];
+    public static  int hours = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_day);
+
+        Toast.makeText(RageStatisticsDay.this, "현재 hours는 "+hours+" "+((hours)/24)+"일 전입니다.", Toast.LENGTH_LONG).show();
+
+        //DBManger 객체 생성
+        final DBManager dbManager = new DBManager(getApplicationContext(), "STRESS.db", null, 1);
+        //DB 최근 데이터 24시간 횟수 select
+        for(int i = 0; i < 24; i++) {
+            SDcount = dbManager.SelectStress24h(i, hours);
+            RDdbValue[23 - i] = (float) SDcount;
+        }
 
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +90,40 @@ public class RageStatisticsDay extends FragmentActivity {
                 //finish();
             }
         });
+
+        //24시간 전 후 < 버튼, > 버튼 처리//////////////////////////////////////////////////////////
+        ((Button)findViewById(R.id.daybtn_left)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //24시간 전 24시간 데이터
+                if(hours == -144) {
+                    //1주일 간의 자료만 제공합니다.
+                    Toast.makeText(RageStatisticsDay.this, "이전 보기는 1주일간 자료를 제공합니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    hours -= 24;
+                    Intent i = new Intent(RageStatisticsDay.this, RageStatisticsDay.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            }
+        });
+
+        ((Button)findViewById(R.id.daybtn_right)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //24시간 후 24시간 데이터
+                if(hours == 0){
+                    //토스트로 가장 마지막 최근 24시간 자료 입니다.
+                    Toast.makeText(RageStatisticsDay.this, "마지막 최근 24시간 그래프입니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    hours += 24;
+                    Intent i = new Intent(RageStatisticsDay.this, RageStatisticsDay.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            }
+        });
+        //24시간 전 후 < 버튼, > 버튼 처리//////////////////////////////////////////////////////////
     }
 
     @Override
@@ -105,7 +153,7 @@ public class RageStatisticsDay extends FragmentActivity {
         private LineChartData data;
         private int numberOfLines = 1;
         private int maxNumberOfLines = 4;
-        private int numberOfPoints = 12;
+        private int numberOfPoints = 24;
 
         float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
 
@@ -133,7 +181,6 @@ public class RageStatisticsDay extends FragmentActivity {
 
             // Generate some random values.
             generateValues();
-
             generateData();
 
             // Disable viewport recalculations, see toggleCubic() method for more info.
@@ -148,24 +195,9 @@ public class RageStatisticsDay extends FragmentActivity {
 
 
         private void generateValues() {
-            /*for (int i = 0; i < maxNumberOfLines; ++i) {
-                for (int j = 0; j < numberOfPoints; ++j) {
-                    randomNumbersTab[i][j] = (float) Math.random() * 100f;
-                }
-            }*/
-            randomNumbersTab[0][0] = 20f;
-            randomNumbersTab[0][1] = 20f;
-            randomNumbersTab[0][2] = 20f;
-            randomNumbersTab[0][3] = 20f;
-            randomNumbersTab[0][4] = 20f;
-            randomNumbersTab[0][5] = 20f;
-            randomNumbersTab[0][6] = 20f;
-            randomNumbersTab[0][7] = 20f;
-            randomNumbersTab[0][8] = 20f;
-            randomNumbersTab[0][9] = 20f;
-            randomNumbersTab[0][10] = 20f;
-            randomNumbersTab[0][11] = 20f;
-
+            for(int i = 0; i < 24; i++){
+                randomNumbersTab[0][i] = RDdbValue[i];
+            }
         }
 
         private void reset() {
@@ -190,7 +222,7 @@ public class RageStatisticsDay extends FragmentActivity {
             // Reset viewport height range to (0,100)
             final Viewport v = new Viewport(chart.getMaximumViewport());
             v.bottom = 0;
-            v.top = 100;    //y축 최대 크기
+            v.top = 50;    //y축 최대 크기
             v.left = 0;
             v.right = numberOfPoints - 1;
             chart.setMaximumViewport(v);
@@ -228,8 +260,8 @@ public class RageStatisticsDay extends FragmentActivity {
                 Axis axisX = new Axis();
                 Axis axisY = new Axis().setHasLines(true);
                 if (hasAxesNames) {
-                    axisX.setName("Times");
-                    axisY.setName("a number of Count about High dB");
+                    axisX.setName("시간");
+                    axisY.setName("횟수");
                 }
                 data.setAxisXBottom(axisX);
                 data.setAxisYLeft(axisY);
@@ -245,38 +277,31 @@ public class RageStatisticsDay extends FragmentActivity {
 
         private void toggleFilled() {
             isFilled = !isFilled;
-
             generateData();
         }
 
         private void togglePointColor() {
             pointsHaveDifferentColor = !pointsHaveDifferentColor;
-
             generateData();
         }
 
         private void setCircles() {
             shape = ValueShape.CIRCLE;
-
             generateData();
         }
 
         private void toggleLabels() {
             hasLabels = !hasLabels;
-
             if (hasLabels) {
                 hasLabelForSelected = false;
                 chart.setValueSelectionEnabled(hasLabelForSelected);
             }
-
             generateData();
         }
 
         private void toggleLabelForSelected() {
             hasLabelForSelected = !hasLabelForSelected;
-
             chart.setValueSelectionEnabled(hasLabelForSelected);
-
             if (hasLabelForSelected) {
                 hasLabels = false;
             }
@@ -301,7 +326,7 @@ public class RageStatisticsDay extends FragmentActivity {
 
             @Override
             public void onValueSelected(int lineIndex, int pointIndex, PointValue value) {
-                Toast.makeText(getActivity(), "Selected: " + value, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Selected: " + value, Toast.LENGTH_SHORT).show();
             }
 
             @Override

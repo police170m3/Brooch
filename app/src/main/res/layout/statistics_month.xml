@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="&lt;"
-            android:id="@+id/monthbtn_week_left"
+            android:id="@+id/monthbtn_left"
             android:layout_gravity="bottom" />
 
         <Button

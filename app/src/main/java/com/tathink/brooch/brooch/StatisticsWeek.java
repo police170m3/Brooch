@@ -18,6 +18,7 @@ import java.util.List;
 import kr.mint.testbluetoothspp.DBManager;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
@@ -39,7 +40,7 @@ public class StatisticsWeek extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_week);
 
-        Toast.makeText(StatisticsWeek.this, "현재 days는 "+days+" "+((days)/7)+"주일 전입니다.", Toast.LENGTH_LONG).show();
+        //Toast.makeText(StatisticsWeek.this, "현재 days는 "+days+" "+((days)/7)+"주일 전입니다.", Toast.LENGTH_LONG).show();
 
         //DBManger 객체 생성
         final DBManager dbManager = new DBManager(getApplicationContext(), "STRESS.db", null, 1);
@@ -113,7 +114,7 @@ public class StatisticsWeek extends FragmentActivity {
                 //1주일 후 데이터
                 if(days == 0){
                     //토스트로 가장 마지막 최근 24시간 자료 입니다.
-                    Toast.makeText(StatisticsWeek.this, "마지막 최근 한달 그래프입니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(StatisticsWeek.this, "현재기준 최근 일주일 그래프입니다.", Toast.LENGTH_LONG).show();
                 } else {
                     days += 7;
                     Intent i = new Intent(StatisticsWeek.this, StatisticsWeek.class);
@@ -147,6 +148,9 @@ public class StatisticsWeek extends FragmentActivity {
      * A fragment containing a line chart.
      */
     public static class PlaceholderFragment extends android.app.Fragment {
+        public final static String[] weeks = new String[]{"-6일", "-5일", "-4일", "-3일", "-2일", "-1일", "오늘"};
+
+        public final static String[] weeks1weekago = new String[]{"-6일", "-5일", "-4일", "-3일", "-2일", "-1일", "0일"};
 
         private LineChartView chart;
         private LineChartData data;
@@ -257,11 +261,27 @@ public class StatisticsWeek extends FragmentActivity {
 
             data = new LineChartData(lines);
 
+            //x축 단위 표시
+            List<AxisValue> axisValues = new ArrayList<AxisValue>();
+            for(int i = 0; i < 7; i++){
+                if(days == 0) {
+                    axisValues.add(new AxisValue(i, weeks[i].toCharArray()));
+                } else {
+                    axisValues.add(new AxisValue(i, weeks1weekago[i].toCharArray()));
+                }
+            }
+
             if (hasAxes) {
-                Axis axisX = new Axis();
+                Axis axisX = new Axis(axisValues);
+                data.setAxisXBottom(axisX);
+                //Axis axisX = new Axis();
                 Axis axisY = new Axis().setHasLines(true);
                 if (hasAxesNames) {
-                    axisX.setName("시간");
+                    if(days == 0) {
+                        axisX.setName("최근 일주일");
+                    } else {
+                        axisX.setName((days)/-7+"주일전");
+                    }
                     axisY.setName("횟수");
                 }
                 data.setAxisXBottom(axisX);

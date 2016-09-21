@@ -18,6 +18,7 @@ import java.util.List;
 import kr.mint.testbluetoothspp.DBManager;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
@@ -39,7 +40,7 @@ public class StatisticsDay extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_day);
 
-        Toast.makeText(StatisticsDay.this, "현재 hours는 " + hours + " " + ((hours) / 24) + "일 전입니다.", Toast.LENGTH_LONG).show();
+        //Toast.makeText(StatisticsDay.this, "현재 hours는 " + hours + " " + ((hours) / 24) + "일 전입니다.", Toast.LENGTH_LONG).show();
 
         //DBManger 객체 생성
         final DBManager dbManager = new DBManager(getApplicationContext(), "STRESS.db", null, 1);
@@ -114,7 +115,7 @@ public class StatisticsDay extends FragmentActivity {
                 //24시간 후 24시간 데이터
                 if (hours == 0) {
                     //토스트로 가장 마지막 최근 24시간 자료 입니다.
-                    Toast.makeText(StatisticsDay.this, "마지막 최근 24시간 그래프입니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(StatisticsDay.this, "현재기준 최근 24시간 그래프입니다.", Toast.LENGTH_LONG).show();
                 } else {
                     hours += 24;
                     Intent i = new Intent(StatisticsDay.this, StatisticsDay.class);
@@ -148,6 +149,13 @@ public class StatisticsDay extends FragmentActivity {
      * A fragment containing a line chart.
      */
     public static class PlaceholderFragment extends android.app.Fragment {
+        public final  static  String[] days = new String[]{"-23", "-22", "-21", "-20", "-19", "-18",
+                "-17", "-16", "-15", "-14", "-13", "-12", "-11", "-10", "-9", "-8",
+                "-7", "-6", "-5", "-4", "-3", "-2", "-1", "현재"};
+
+        public final  static  String[] days1dayago = new String[]{"-23", "-22", "-21", "-20", "-19", "-18",
+                "-17", "-16", "-15", "-14", "-13", "-12", "-11", "-10", "-9", "-8",
+                "-7", "-6", "-5", "-4", "-3", "-2", "-1", "0"};
 
         private LineChartView chart;
         private LineChartData data;
@@ -229,7 +237,6 @@ public class StatisticsDay extends FragmentActivity {
         }
 
         private void generateData() {
-
             List<Line> lines = new ArrayList<Line>();
             for (int i = 0; i < numberOfLines; ++i) {
 
@@ -239,6 +246,7 @@ public class StatisticsDay extends FragmentActivity {
                 }
 
                 Line line = new Line(values);
+
                 line.setColor(ChartUtils.COLORS[1]);    //라인 색상은 상수값 1
                 line.setShape(shape);
                 line.setCubic(isCubic);
@@ -251,15 +259,32 @@ public class StatisticsDay extends FragmentActivity {
                     line.setPointColor(ChartUtils.COLORS[(i + 1) % ChartUtils.COLORS.length]);
                 }
                 lines.add(line);
+
             }
 
             data = new LineChartData(lines);
 
+            //x축 단위 표시
+            List<AxisValue> axisValues = new ArrayList<AxisValue>();
+            for(int i = 0; i < 24; i++){
+                if(hours == 0) {
+                    axisValues.add(new AxisValue(i, days[i].toCharArray()));
+                } else {
+                    axisValues.add(new AxisValue(i, days1dayago[i].toCharArray()));
+                }
+            }
+            //Axis axisValue = new Axis(axisValues);
+
             if (hasAxes) {
-                Axis axisX = new Axis();
+                Axis axisX = new Axis(axisValues);
+                data.setAxisXBottom(axisX);
                 Axis axisY = new Axis().setHasLines(true);
                 if (hasAxesNames) {
-                    axisX.setName("시간");
+                    if(hours == 0) {
+                        axisX.setName("최근 24시간");
+                    } else {
+                        axisX.setName((hours)/-24+"일전");
+                    }
                     axisY.setName("횟수");
                 }
                 data.setAxisXBottom(axisX);

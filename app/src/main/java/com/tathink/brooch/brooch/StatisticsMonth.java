@@ -1,16 +1,10 @@
 package com.tathink.brooch.brooch;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,28 +15,38 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import lecho.lib.hellocharts.animation.ChartAnimationListener;
-import lecho.lib.hellocharts.gesture.ZoomType;
+import kr.mint.testbluetoothspp.DBManager;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.ChartUtils;
-import lecho.lib.hellocharts.view.Chart;
 import lecho.lib.hellocharts.view.LineChartView;
 
 /**
  * Created by MSI on 2016-08-17.
  */
 public class StatisticsMonth extends FragmentActivity {
+    private static int SMcount = 0;
+    public static float[] SMdbValue = new float[4];
+    public static int weeks = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_month);
+
+        //DBManager 객체 생성
+        final DBManager dbManager = new DBManager(getApplicationContext(), "STRESS.db", null, 1);
+        //DB 최근 데이터 24시간 횟수 select
+        for(int i = 0; i < 4; i++) {
+            SMcount = dbManager.SelectStress1month(i, weeks);
+            SMdbValue[3 - i] = (float) SMcount;
+        }
 
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +88,40 @@ public class StatisticsMonth extends FragmentActivity {
                 //finish();
             }
         });
+
+        //1주일 전 후 < 버튼, > 버튼 처리//////////////////////////////////////////////////////////
+        ((Button)findViewById(R.id.monthbtn_left)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //1주일 전 데이터
+                if(weeks == -20) {
+                    //1주일 간의 자료만 제공합니다.
+                    Toast.makeText(StatisticsMonth.this, "이전 보기는 6개월간 자료를 제공합니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    weeks -= 4;
+                    Intent i = new Intent(StatisticsMonth.this, StatisticsMonth.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            }
+        });
+
+        ((Button)findViewById(R.id.monthbtn_right)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //1주일 후 데이터
+                if(weeks == 0){
+                    //토스트로 가장 마지막 최근 24시간 자료 입니다.
+                    Toast.makeText(StatisticsMonth.this, "현재기준 최근 한달 그래프입니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    weeks += 4;
+                    Intent i = new Intent(StatisticsMonth.this, StatisticsMonth.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            }
+        });
+        //1주일 전 후 < 버튼, > 버튼 처리//////////////////////////////////////////////////////////
     }
 
     @Override
@@ -108,12 +146,15 @@ public class StatisticsMonth extends FragmentActivity {
      * A fragment containing a line chart.
      */
     public static class PlaceholderFragment extends android.app.Fragment {
+        public final static String[] months = new String[]{"-3주", "-2주", "-1주", "현재"};
+
+        public final static String[] months1monthago = new String[]{"-3주", "-2주", "-1주", "0주"};
 
         private LineChartView chart;
         private LineChartData data;
         private int numberOfLines = 1;
         private int maxNumberOfLines = 4;
-        private int numberOfPoints = 12;
+        private int numberOfPoints = 4;
 
         float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
 
@@ -155,23 +196,9 @@ public class StatisticsMonth extends FragmentActivity {
 
 
         private void generateValues() {
-            /*for (int i = 0; i < maxNumberOfLines; ++i) {
-                for (int j = 0; j < numberOfPoints; ++j) {
-                    randomNumbersTab[i][j] = (float) Math.random() * 100f;
-                }
-            }*/
-            randomNumbersTab[0][0] = 100f;
-            randomNumbersTab[0][1] = 90f;
-            randomNumbersTab[0][2] = 80f;
-            randomNumbersTab[0][3] = 70f;
-            randomNumbersTab[0][4] = 60f;
-            randomNumbersTab[0][5] = 50f;
-            randomNumbersTab[0][6] = 40f;
-            randomNumbersTab[0][7] = 30f;
-            randomNumbersTab[0][8] = 20f;
-            randomNumbersTab[0][9] = 10f;
-            randomNumbersTab[0][10] = 10f;
-            randomNumbersTab[0][11] = 10f;
+            for(int i = 0; i < 4; i++){
+                randomNumbersTab[0][i] = SMdbValue[i];
+            }
 
         }
 
@@ -231,11 +258,27 @@ public class StatisticsMonth extends FragmentActivity {
 
             data = new LineChartData(lines);
 
+            //x축 단위 표시
+            List<AxisValue> axisValues = new ArrayList<AxisValue>();
+            for(int i = 0; i < 4; i++){
+                if(weeks == 0) {
+                    axisValues.add(new AxisValue(i, months[i].toCharArray()));
+                } else {
+                    axisValues.add(new AxisValue(i, months1monthago[i].toCharArray()));
+                }
+            }
+
             if (hasAxes) {
-                Axis axisX = new Axis();
+                Axis axisX = new Axis(axisValues);
+                data.setAxisXBottom(axisX);
+                //Axis axisX = new Axis();
                 Axis axisY = new Axis().setHasLines(true);
                 if (hasAxesNames) {
-                    axisX.setName("시간");
+                    if(weeks == 0) {
+                        axisX.setName("최근 한달");
+                    } else {
+                        axisX.setName((weeks)/-4+"달전");
+                    }
                     axisY.setName("횟수");
                 }
                 data.setAxisXBottom(axisX);

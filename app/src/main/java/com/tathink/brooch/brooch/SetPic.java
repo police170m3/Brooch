@@ -3,6 +3,7 @@ package com.tathink.brooch.brooch;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -20,6 +21,7 @@ import android.widget.ImageView;
  * Created by MSI on 2016-08-19.
  */
 public class SetPic extends Activity {
+    public String pic1 = "", pic2 = "", pic3 = "", pic4 = "", pic5 = "";
 
     private static final int SELECT_PICTURE = 1;
     String selectedImagePath;
@@ -40,6 +42,12 @@ public class SetPic extends Activity {
         imageView3 = (ImageView) findViewById(R.id.setPicimageView3);
         imageView4 = (ImageView) findViewById(R.id.setPicimageView4);
         imageView5 = (ImageView) findViewById(R.id.setPicimageView5);
+
+        //프리퍼런스 값 읽어오기
+        getPreferences();
+        if(pic1 != "" || pic2 != "" || pic3 != "" || pic4 != "" || pic5 != ""){
+            loadImageView();
+        }
 
         //mashowmallow permission////////////////////////////////////////////////////////////////////
         checkPermission();
@@ -133,6 +141,7 @@ public class SetPic extends Activity {
         ((Button)findViewById(R.id.setpic_btn_reg)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                savePreferences(pic1, pic2, pic3, pic4, pic5);  //프리퍼런스 저장
                 Intent i = new Intent(SetPic.this, SetText.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
@@ -149,6 +158,27 @@ public class SetPic extends Activity {
 
                 // 이미지 Path 취득
                 mImgPath = getPath(mImageUri);
+
+                //이미지 Path 저장
+                switch (FLAG){
+                    case 1:
+                        pic1 = mImgPath;
+                        break;
+                    case 2:
+                        pic2 = mImgPath;
+                        break;
+                    case 3:
+                        pic3 = mImgPath;
+                        break;
+                    case 4:
+                        pic4 = mImgPath;
+                        break;
+                    case 5:
+                        pic5 = mImgPath;
+                        break;
+                }
+                //이미지 Path 저장
+
                 updateImageView();
             }
         }
@@ -162,6 +192,44 @@ public class SetPic extends Activity {
         cursor.moveToFirst();
 
         return cursor.getString(column_index);
+    }
+
+    private  void loadImageView(){
+        if(pic1 != ""){
+            int degree1 = ImageUtil.GetExifOrientation(pic1);
+            Bitmap resizeBitmap1 = ImageUtil.loadBackgroundBitmap(SetPic.this, pic1);
+            Bitmap rotateBitmap1 = ImageUtil.GetRotatedBitmap(resizeBitmap1, degree1);
+            Bitmap roundBitmap1 = ImageUtil.getRoundedCornerBitmap(rotateBitmap1);
+            imageView1.setImageBitmap(roundBitmap1);
+        }
+        if(pic2 != ""){
+            int degree2 = ImageUtil.GetExifOrientation(pic2);
+            Bitmap resizeBitmap2 = ImageUtil.loadBackgroundBitmap(SetPic.this, pic2);
+            Bitmap rotateBitmap2 = ImageUtil.GetRotatedBitmap(resizeBitmap2, degree2);
+            Bitmap roundBitmap2 = ImageUtil.getRoundedCornerBitmap(rotateBitmap2);
+            imageView2.setImageBitmap(roundBitmap2);
+        }
+        if(pic3 != ""){
+            int degree3 = ImageUtil.GetExifOrientation(pic3);
+            Bitmap resizeBitmap3 = ImageUtil.loadBackgroundBitmap(SetPic.this, pic3);
+            Bitmap rotateBitmap3 = ImageUtil.GetRotatedBitmap(resizeBitmap3, degree3);
+            Bitmap roundBitmap3 = ImageUtil.getRoundedCornerBitmap(rotateBitmap3);
+            imageView3.setImageBitmap(roundBitmap3);
+        }
+        if(pic4 != ""){
+            int degree4 = ImageUtil.GetExifOrientation(pic4);
+            Bitmap resizeBitmap4 = ImageUtil.loadBackgroundBitmap(SetPic.this, pic4);
+            Bitmap rotateBitmap4 = ImageUtil.GetRotatedBitmap(resizeBitmap4, degree4);
+            Bitmap roundBitmap4 = ImageUtil.getRoundedCornerBitmap(rotateBitmap4);
+            imageView4.setImageBitmap(roundBitmap4);
+        }
+        if(pic5 != ""){
+            int degree5 = ImageUtil.GetExifOrientation(pic5);
+            Bitmap resizeBitmap5 = ImageUtil.loadBackgroundBitmap(SetPic.this, pic5);
+            Bitmap rotateBitmap5 = ImageUtil.GetRotatedBitmap(resizeBitmap5, degree5);
+            Bitmap roundBitmap5 = ImageUtil.getRoundedCornerBitmap(rotateBitmap5);
+            imageView5.setImageBitmap(roundBitmap5);
+        }
     }
 
     private void updateImageView() {
@@ -215,6 +283,26 @@ public class SetPic extends Activity {
             }
             // 예외 케이스
         }
+    }
+
+    private void savePreferences(String pic1, String pic2, String pic3, String pic4, String pic5){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("pic1", pic1);
+        editor.putString("pic2", pic2);
+        editor.putString("pic3", pic3);
+        editor.putString("pic4", pic4);
+        editor.putString("pic5", pic5);
+        editor.commit();
+    }
+
+    private void getPreferences(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        pic1 = pref.getString("pic1", "");
+        pic2 = pref.getString("pic2", "");
+        pic3 = pref.getString("pic3", "");
+        pic4 = pref.getString("pic4", "");
+        pic5 = pref.getString("pic5", "");
     }
 
 }

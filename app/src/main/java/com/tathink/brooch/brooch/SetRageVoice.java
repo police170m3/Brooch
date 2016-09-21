@@ -2,8 +2,8 @@ package com.tathink.brooch.brooch;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,21 +15,22 @@ import org.florescu.android.rangeseekbar.RangeSeekBar;
  * Created by MSI on 2016-08-19.
  */
 public class SetRageVoice   extends Activity {
+    public int min = 0, max = 0;    //프리퍼런스 값 저장 변수(min-목소리 최소 dB, Max-목소리 최대 dB)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_ragevoice);
-
         ImageView home = (ImageView) findViewById(R.id.home);
 
         // Setup the new range seek bar
-        RangeSeekBar rangeSeekBar = new RangeSeekBar(this);
+        final RangeSeekBar rangeSeekBar = new RangeSeekBar(this);
         // Set the range
+        getPreferences();   //프리퍼런스 값 읽어오기....
         rangeSeekBar.setTextAboveThumbsColor(R.color.common_signin_btn_dark_text_default);
         rangeSeekBar.setRangeValues(0, 200);
-        rangeSeekBar.setSelectedMinValue(51);
-        rangeSeekBar.setSelectedMaxValue(88);
+        rangeSeekBar.setSelectedMinValue(min);   //추후 프리퍼런스의 값 읽어와서 인자전달
+        rangeSeekBar.setSelectedMaxValue(max);   //추후 프리퍼런스의 값 읽어와서 인자전달
 
         // Add to layout
         LinearLayout layout = (LinearLayout) findViewById(R.id.seekbar_placeholder);
@@ -39,8 +40,10 @@ public class SetRageVoice   extends Activity {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
                 //range seek bar 드레그 했을때 max, max 값 구하기............
-                Log.d("min------------", ""+ minValue);
-                Log.d("max------------", ""+ maxValue);
+                /*Log.d("min------------", ""+ minValue);
+                Log.d("max------------", ""+ maxValue);*/
+                min = (int) minValue;
+                max = (int) maxValue;
             }
         });
 
@@ -48,9 +51,8 @@ public class SetRageVoice   extends Activity {
             @Override
             public void onClick(View view) {
                 //측정된 값으로 설정하기
-                /*측정 값 코드 작성.........................
-                ............................................
-                 */
+                //minValue, maxValue값 preference에 저장하기
+                savePreferences(min, max);
 
                 //저장 후 액티비티 이동
                 //다음
@@ -94,5 +96,23 @@ public class SetRageVoice   extends Activity {
     @Override
     protected  void onDestroy(){
         super.onDestroy();
+    }
+
+    private void savePreferences(int min, int max){
+        /*Log.d("44444444444444", "" + min);
+        Log.d("44444444444444", "" + max);*/
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt("rvMin", min);
+        editor.putInt("rvMax", max);
+        editor.commit();
+    }
+
+    private void getPreferences(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        min = pref.getInt("rvMin", 0);
+        max = pref.getInt("rvMax", 0);
+        /*Log.d("5555555555555555", ""+ pref.getInt("nvMin", 0));
+        Log.d("5555555555555555", ""+ pref.getInt("nvMax", 0));*/
     }
 }

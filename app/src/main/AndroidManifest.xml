@@ -87,6 +87,7 @@
         <activity android:name=".EventActivityCaution"></activity>
         <activity android:name=".EventActivitySerious"></activity>
         <activity android:name=".EventActivityWarning"></activity>
+        <activity android:name=".EventActivityWarning2"></activity>
         <activity android:name=".BTMainActivity"></activity>
         <activity android:name=".DeviceListActivity"></activity>
         <activity android:name=".DBTestActivity"></activity>

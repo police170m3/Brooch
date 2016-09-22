@@ -199,7 +199,6 @@ public class SetBell extends Activity {
                 return builder.create();
         }
         return super.onCreateDialog(id);
-
     }
 
     private void playMusic(Uri alert) {

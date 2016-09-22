@@ -86,6 +86,12 @@
             android:layout_height="wrap_content"
             android:text="DB TEST"
             android:id="@+id/dbtest_btn" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="경고2"
+            android:id="@+id/warning2_btn" />
     </LinearLayout>
 
 </LinearLayout>

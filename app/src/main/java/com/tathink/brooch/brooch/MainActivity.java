@@ -74,6 +74,15 @@ public class MainActivity extends Activity {
                 startActivity(i);
             }
         });
+        ((Button)findViewById(R.id.warning2_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //통계화면으로 이동 처리
+                Intent i = new Intent(MainActivity.this, EventActivityWarning2.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+            }
+        });
 
         ((Button)findViewById(R.id.bt_btn)).setOnClickListener(new View.OnClickListener() {
             @Override

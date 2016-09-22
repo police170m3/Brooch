@@ -6,16 +6,18 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ import android.widget.Toast;
  * Created by MSI on 2016-08-24.
  */
 public class SetBell extends Activity {
+    public int pbTime = 5, pbKind = 1;
+    RadioButton radioBtn_on;
     TextView textView1, textView2;
     int temp;       //임시 변수
     private MediaPlayer mMediaPlayer;
@@ -31,6 +35,51 @@ public class SetBell extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_bell);
+
+        //프리퍼런스 값 읽어서 선택처리
+        getPreferences();
+        switch (pbTime) {
+            case 5:
+                radioBtn_on = (RadioButton)findViewById(R.id.radioButton1);
+                radioBtn_on.setChecked(true);
+                break;
+            case 10:
+                radioBtn_on = (RadioButton)findViewById(R.id.radioButton2);
+                radioBtn_on.setChecked(true);
+                break;
+            case 20:
+                radioBtn_on = (RadioButton)findViewById(R.id.radioButton3);
+                radioBtn_on.setChecked(true);
+                break;
+            case 30:
+                radioBtn_on = (RadioButton)findViewById(R.id.radioButton4);
+                radioBtn_on.setChecked(true);
+                break;
+        }
+
+        //라디오 버튼 선택 값 가져오기
+        RadioGroup rdgroup = (RadioGroup)findViewById(R.id.radioGroup);
+        rdgroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                //RadioButton radio_btn = (RadioButton)findViewById(checkedId);
+                switch (checkedId) {
+                    case R.id.radioButton1:
+                        pbTime = 5;
+                        break;
+                    case R.id.radioButton2:
+                        pbTime = 10;
+                        break;
+                    case R.id.radioButton3:
+                        pbTime = 20;
+                        break;
+                    case R.id.radioButton4:
+                        pbTime = 30;
+                        break;
+                }
+            }
+        });
+        //라디오 버튼 선택 값 가져오기
 
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +114,9 @@ public class SetBell extends Activity {
         ((Button) findViewById(R.id.setbell_btn_set)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //프리퍼런스 저장
+                savePreferences();
+
                 //통계화면으로 이동 처리
                 Intent i = new Intent(SetBell.this, MainActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -79,17 +131,35 @@ public class SetBell extends Activity {
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case 1:
-                AlertDialog.Builder builder = new AlertDialog.Builder(SetBell.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(SetBell.this);
                 final String str[] = {"전화벨", "Kill Bill", "Magic Mamaliga", "Marry You", "Minions"};
 
                 builder.setTitle("알림벨 종류 선택").setPositiveButton("선택완료", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //선택완료 버튼 누르게 되면 토스트 출력
                         stopMusic();
+                        switch (temp) {
+                            case 0:
+                                pbKind = 0;
+                                break;
+                            case 1:
+                                pbKind = 1;
+                                break;
+                            case 2:
+                                pbKind = 2;
+                                break;
+                            case 3:
+                                pbKind = 3;
+                                break;
+                            case 4:
+                                pbKind = 4;
+                                break;
+                        }
                         Toast.makeText(getApplicationContext(), str[temp] + "선택됨", Toast.LENGTH_SHORT).show();
                     }
                 });
-                builder.setSingleChoiceItems(str, 0, new DialogInterface.OnClickListener(){
+                //pbKind 초기 선택값
+                builder.setSingleChoiceItems(str, pbKind, new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int which){
                         //Toast.makeText(getApplicationContext(), "음악이 들리지 않으면 볼륨을 확인하세요", Toast.LENGTH_SHORT).show();
                         Uri alert;
@@ -164,4 +234,17 @@ public class SetBell extends Activity {
         }
     }
 
+    private void savePreferences(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt("pbTime", pbTime);
+        editor.putInt("pbKind", pbKind);
+        editor.commit();
+    }
+
+    private void getPreferences(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        pbTime = pref.getInt("pbTime", 5);
+        pbKind = pref.getInt("pbKind", 1);
+    }
 }

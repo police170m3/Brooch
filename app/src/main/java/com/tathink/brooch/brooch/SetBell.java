@@ -239,6 +239,7 @@ public class SetBell extends Activity {
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("pbTime", pbTime);
         editor.putInt("pbKind", pbKind);
+        editor.putBoolean("prefSave", true);
         editor.commit();
     }
 

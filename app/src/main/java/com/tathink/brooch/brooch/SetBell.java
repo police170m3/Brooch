@@ -246,6 +246,6 @@ public class SetBell extends Activity {
     private void getPreferences(){
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         pbTime = pref.getInt("pbTime", 5);
-        pbKind = pref.getInt("pbKind", 1);
+        pbKind = pref.getInt("pbKind", 0);
     }
 }

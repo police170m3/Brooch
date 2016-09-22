@@ -2,19 +2,18 @@ package com.tathink.brooch.brooch;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
  * Created by MSI on 2016-08-16.
  */
 public class IntroSubActivity extends Activity {
+    public boolean prefSave = false;
     Handler h;//핸들러 선언
 
     //image random 처리
@@ -76,8 +75,14 @@ public class IntroSubActivity extends Activity {
     Runnable mrun = new Runnable(){
         @Override
         public void run(){
-            Intent i = new Intent(IntroSubActivity.this, MainActivity.class); //인텐트 생성(현 액티비티, 새로 실행할 액티비티)
-            startActivity(i);
+            getPreferences();
+            if(prefSave == true){
+                Intent i = new Intent(IntroSubActivity.this, MainActivity.class); //인텐트 생성(현 액티비티, 새로 실행할 액티비티)
+                startActivity(i);
+            } else {
+                Intent i = new Intent(IntroSubActivity.this, SetCall.class);
+                startActivity(i);
+            }
             finish();
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             //overridePendingTransition 이란 함수를 이용하여 fade in,out 효과를줌. 순서가 중요
@@ -89,6 +94,11 @@ public class IntroSubActivity extends Activity {
     public void onBackPressed(){
         super.onBackPressed();
         h.removeCallbacks(mrun);
+    }
+
+    private void getPreferences(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        prefSave = pref.getBoolean("prefSave", false);
     }
 
 }

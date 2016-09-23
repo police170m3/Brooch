@@ -14,6 +14,7 @@ import android.widget.RadioGroup;
  * Created by MSI on 2016-08-23.
  */
 public class SetVibration extends Activity {
+    public boolean prefSave = false;
     public int bvTime = 5;
     RadioButton radioBtn_on;
     @Override
@@ -66,16 +67,20 @@ public class SetVibration extends Activity {
         });
         //라디오 버튼 선택 값 가져오기
 
-        ImageView home = (ImageView) findViewById(R.id.home);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //ImageView 클릭시 이벤트 처리........
-                Intent i = new Intent(SetVibration.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
+        //home 버튼 처리
+        if (prefSave) {
+            ImageView home = (ImageView) findViewById(R.id.home);
+            home.setImageResource(R.drawable.home);
+            home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //ImageView 클릭시 이벤트 처리........
+                    Intent i = new Intent(SetVibration.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            });
+        }
 
         ((Button)findViewById(R.id.setvibration_btn_set)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,5 +106,6 @@ public class SetVibration extends Activity {
     private void getPreferences(){
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         bvTime = pref.getInt("bvTime", 5);
+        prefSave = pref.getBoolean("prefSave", false);
     }
 }

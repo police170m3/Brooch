@@ -2,6 +2,7 @@ package com.tathink.brooch.brooch;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
  * Created by MSI on 2016-08-19.
  */
 public class SetRageMeasure extends Activity {
+    public boolean prefSave = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,22 @@ public class SetRageMeasure extends Activity {
         toast.show();
 
         Button callButton = (Button)findViewById(R.id.setragemeasure_btn_set);
-        ImageView home = (ImageView) findViewById(R.id.home);
+
+        //home 버튼 처리
+        getPreferences();
+        if (prefSave) {
+            ImageView home = (ImageView) findViewById(R.id.home);
+            home.setImageResource(R.drawable.home);
+            home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //ImageView 클릭시 이벤트 처리........
+                    Intent i = new Intent(SetRageMeasure.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            });
+        }
 
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,15 +52,6 @@ public class SetRageMeasure extends Activity {
             }
         });
 
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //ImageView 클릭시 이벤트 처리........
-                Intent i = new Intent(SetRageMeasure.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
     }
 
     @Override
@@ -59,5 +67,10 @@ public class SetRageMeasure extends Activity {
     @Override
     protected  void onDestroy(){
         super.onDestroy();
+    }
+
+    private void getPreferences(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        prefSave = pref.getBoolean("prefSave", false);
     }
 }

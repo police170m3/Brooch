@@ -20,6 +20,7 @@ import android.widget.Toast;
  * Created by MSI on 2016-08-23.
  */
 public class SetSMS extends Activity {
+    public boolean prefSave = false;
     public String [] name = new String[3];
     public String [] sms = new String[3];
     public TextView textIn, textInName;
@@ -77,16 +78,20 @@ public class SetSMS extends Activity {
             }
         }
 
-        ImageView home = (ImageView) findViewById(R.id.home);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //ImageView 클릭시 이벤트 처리........
-                Intent i = new Intent(SetSMS.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
+        //home 버튼 처리
+        if (prefSave) {
+            ImageView home = (ImageView) findViewById(R.id.home);
+            home.setImageResource(R.drawable.home);
+            home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //ImageView 클릭시 이벤트 처리........
+                    Intent i = new Intent(SetSMS.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            });
+        }
 
         //등록하기 이벤트 처리
         ((Button)findViewById(R.id.setsms_btn_set)).setOnClickListener(new View.OnClickListener() {
@@ -233,5 +238,6 @@ public class SetSMS extends Activity {
         name[0] = pref.getString("name1", "");
         name[1] = pref.getString("name2", "");
         name[2] = pref.getString("name3", "");
+        prefSave = pref.getBoolean("prefSave", false);
     }
 }

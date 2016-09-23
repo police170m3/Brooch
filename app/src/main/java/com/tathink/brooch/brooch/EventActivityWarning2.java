@@ -81,7 +81,7 @@ public class EventActivityWarning2 extends Activity {
 
         //임시 이벤트 처리
         Uri alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.minions);
-//        playMusic(alert);------------------추후 활성화---------------------------
+        playMusic(alert);
         ///////////////////
 
         ImageView home = (ImageView) findViewById(R.id.home);

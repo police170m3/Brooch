@@ -2,6 +2,7 @@ package com.tathink.brooch.brooch;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
  * Created by MSI on 2016-08-18.
  */
 public class SetCall extends Activity {
+    public boolean prefSave = false;
 
     static public boolean flag = false;
     @Override
@@ -20,7 +22,22 @@ public class SetCall extends Activity {
         setContentView(R.layout.setting_call);
 
         Button callButton = (Button)findViewById(R.id.setcall_btn_call);
-        ImageView home = (ImageView) findViewById(R.id.home);
+
+        //home 버튼 처리
+        getPreferences();
+        if(prefSave) {
+            ImageView home = (ImageView) findViewById(R.id.home);
+            home.setImageResource(R.drawable.home);
+            home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //ImageView 클릭시 이벤트 처리........
+                    Intent i = new Intent(SetCall.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            });
+        }
 
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,15 +49,6 @@ public class SetCall extends Activity {
             }
         });
 
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //ImageView 클릭시 이벤트 처리........
-                Intent i = new Intent(SetCall.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
 
     }
 
@@ -73,4 +81,8 @@ public class SetCall extends Activity {
         }
     }
 
+    private void getPreferences(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        prefSave = pref.getBoolean("prefSave", false);
+    }
 }

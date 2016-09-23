@@ -21,6 +21,7 @@ import android.widget.ImageView;
  * Created by MSI on 2016-08-19.
  */
 public class SetPic extends Activity {
+    public boolean prefSave = false;
     public String pic1 = "", pic2 = "", pic3 = "", pic4 = "", pic5 = "";
 
     private static final int SELECT_PICTURE = 1;
@@ -53,16 +54,20 @@ public class SetPic extends Activity {
         checkPermission();
         //mashowmallow permission////////////////////////////////////////////////////////////////////
 
-        ImageView home = (ImageView) findViewById(R.id.home);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //ImageView 클릭시 이벤트 처리........
-                Intent i = new Intent(SetPic.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
+        //home 버튼 처리
+        if (prefSave) {
+            ImageView home = (ImageView) findViewById(R.id.home);
+            home.setImageResource(R.drawable.home);
+            home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //ImageView 클릭시 이벤트 처리........
+                    Intent i = new Intent(SetPic.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            });
+        }
 
         //ImageView 버튼 처리
         View mViewPic1 = findViewById(R.id.setPicimageView1);
@@ -303,6 +308,7 @@ public class SetPic extends Activity {
         pic3 = pref.getString("pic3", "");
         pic4 = pref.getString("pic4", "");
         pic5 = pref.getString("pic5", "");
+        prefSave = pref.getBoolean("prefSave", false);
     }
 
 }

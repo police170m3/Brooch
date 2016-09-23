@@ -25,6 +25,7 @@ import android.widget.Toast;
  * Created by MSI on 2016-08-24.
  */
 public class SetBell extends Activity {
+    public boolean prefSave = false;
     public int pbTime = 5, pbKind = 1;
     RadioButton radioBtn_on;
     TextView textView1, textView2;
@@ -81,16 +82,20 @@ public class SetBell extends Activity {
         });
         //라디오 버튼 선택 값 가져오기
 
-        ImageView home = (ImageView) findViewById(R.id.home);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //ImageView 클릭시 이벤트 처리........
-                Intent i = new Intent(SetBell.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
+        //home 버튼 처리
+        if (prefSave) {
+            ImageView home = (ImageView) findViewById(R.id.home);
+            home.setImageResource(R.drawable.home);
+            home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //ImageView 클릭시 이벤트 처리........
+                    Intent i = new Intent(SetBell.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            });
+        }
 
         textView1 = (TextView) findViewById(R.id.setbell_textview_select);       //전화벨 종류 선택
         textView2 = (TextView) findViewById(R.id.setbell_textview_content);      //전화벨 종류 선택 문구
@@ -246,5 +251,6 @@ public class SetBell extends Activity {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         pbTime = pref.getInt("pbTime", 5);
         pbKind = pref.getInt("pbKind", 0);
+        prefSave = pref.getBoolean("prefSave", false);
     }
 }

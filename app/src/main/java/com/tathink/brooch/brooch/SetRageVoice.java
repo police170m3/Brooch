@@ -15,13 +15,13 @@ import org.florescu.android.rangeseekbar.RangeSeekBar;
  * Created by MSI on 2016-08-19.
  */
 public class SetRageVoice   extends Activity {
+    public boolean prefSave = false;
     public int min = 0, max = 0;    //프리퍼런스 값 저장 변수(min-목소리 최소 dB, Max-목소리 최대 dB)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_ragevoice);
-        ImageView home = (ImageView) findViewById(R.id.home);
 
         // Setup the new range seek bar
         final RangeSeekBar rangeSeekBar = new RangeSeekBar(this);
@@ -32,6 +32,20 @@ public class SetRageVoice   extends Activity {
         rangeSeekBar.setSelectedMinValue(min);   //추후 프리퍼런스의 값 읽어와서 인자전달
         rangeSeekBar.setSelectedMaxValue(max);   //추후 프리퍼런스의 값 읽어와서 인자전달
 
+        //home 버튼 처리
+        if (prefSave) {
+            ImageView home = (ImageView) findViewById(R.id.home);
+            home.setImageResource(R.drawable.home);
+            home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //ImageView 클릭시 이벤트 처리........
+                    Intent i = new Intent(SetRageVoice.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            });
+        }
         // Add to layout
         LinearLayout layout = (LinearLayout) findViewById(R.id.seekbar_placeholder);
         layout.addView(rangeSeekBar);
@@ -71,15 +85,6 @@ public class SetRageVoice   extends Activity {
             }
         });
 
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //ImageView 클릭시 이벤트 처리........
-                Intent i = new Intent(SetRageVoice.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
 
     }
 
@@ -112,6 +117,7 @@ public class SetRageVoice   extends Activity {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         min = pref.getInt("rvMin", 0);
         max = pref.getInt("rvMax", 0);
+        prefSave = pref.getBoolean("prefSave", false);
         /*Log.d("5555555555555555", ""+ pref.getInt("nvMin", 0));
         Log.d("5555555555555555", ""+ pref.getInt("nvMax", 0));*/
     }

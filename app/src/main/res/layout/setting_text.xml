@@ -23,7 +23,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/home"
-            android:src="@drawable/home"
             android:layout_gravity="right|top"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp" />

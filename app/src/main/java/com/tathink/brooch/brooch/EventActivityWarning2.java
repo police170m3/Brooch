@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.io.IOException;
  */
 
 public class EventActivityWarning2 extends Activity {
+    public int pbTime, pbKind;
     public String pic1, pic2, pic3, pic4, pic5, eventText, picURI;
     private MediaPlayer mMediaPlayer;
     int volume, temp, degree;
@@ -41,24 +43,38 @@ public class EventActivityWarning2 extends Activity {
             int randNum = (int) (Math.random() * temp);
             switch (randNum) {
                 case 0:
-                    degree = ImageUtil.GetExifOrientation(pic1);
-                    resizeBitmap = ImageUtil.loadBackgroundBitmap(EventActivityWarning2.this, pic1);
-                    break;
+                    if (pic1 != "") {
+                        degree = ImageUtil.GetExifOrientation(pic1);
+                        resizeBitmap = ImageUtil.loadBackgroundBitmap(EventActivityWarning2.this, pic1);
+                        break;
+                    }
                 case 1:
-                    degree = ImageUtil.GetExifOrientation(pic2);
-                    resizeBitmap = ImageUtil.loadBackgroundBitmap(EventActivityWarning2.this, pic2);
-                    break;
+                    if (pic2 != "") {
+                        degree = ImageUtil.GetExifOrientation(pic2);
+                        resizeBitmap = ImageUtil.loadBackgroundBitmap(EventActivityWarning2.this, pic2);
+                        break;
+                    }
                 case 2:
-                    degree = ImageUtil.GetExifOrientation(pic3);
-                    resizeBitmap = ImageUtil.loadBackgroundBitmap(EventActivityWarning2.this, pic3);
-                    break;
+                    if (pic3 != "") {
+                        degree = ImageUtil.GetExifOrientation(pic3);
+                        resizeBitmap = ImageUtil.loadBackgroundBitmap(EventActivityWarning2.this, pic3);
+                        break;
+                    }
                 case 3:
-                    degree = ImageUtil.GetExifOrientation(pic4);
-                    resizeBitmap = ImageUtil.loadBackgroundBitmap(EventActivityWarning2.this, pic4);
-                    break;
+                    if (pic4 != "") {
+                        degree = ImageUtil.GetExifOrientation(pic4);
+                        resizeBitmap = ImageUtil.loadBackgroundBitmap(EventActivityWarning2.this, pic4);
+                        break;
+                    }
                 case 4:
-                    degree = ImageUtil.GetExifOrientation(pic5);
-                    resizeBitmap = ImageUtil.loadBackgroundBitmap(EventActivityWarning2.this, pic5);
+                    if (pic5 != "") {
+                        degree = ImageUtil.GetExifOrientation(pic5);
+                        resizeBitmap = ImageUtil.loadBackgroundBitmap(EventActivityWarning2.this, pic5);
+                        break;
+                    }
+                default:
+                    ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                    imageView.setImageResource(R.drawable.peaceful);
                     break;
             }
             Bitmap rotateBitmap = ImageUtil.GetRotatedBitmap(resizeBitmap, degree);
@@ -67,7 +83,7 @@ public class EventActivityWarning2 extends Activity {
             imageView.setImageBitmap(roundBitmap);
         } else {
             ImageView imageView = (ImageView) findViewById(R.id.imageView);
-            imageView.setImageResource(R.drawable.unknown);
+            imageView.setImageResource(R.drawable.peaceful);
         }
 
         //프리퍼런스에 저장된 이벤트 텍스트 읽어서 화면에 출력
@@ -79,8 +95,28 @@ public class EventActivityWarning2 extends Activity {
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         //꺼진 화면에서 화면 활성화///////////////////////////////////////////////////////////////////
 
-        //임시 이벤트 처리
-        Uri alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.minions);
+        //설정된 벨소리에 따라 이벤트 처리
+        Uri alert;
+        switch (pbKind) {
+            case 0:
+                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                break;
+            case 1:
+                alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.kill_bill);
+                break;
+            case 2:
+                alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.magic_mamaliga);
+                break;
+            case 3:
+                alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.marry_you);
+                break;
+            case 4:
+                alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.minions);
+                break;
+            default:
+                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                break;
+        }
         playMusic(alert);
         ///////////////////
 
@@ -145,6 +181,9 @@ public class EventActivityWarning2 extends Activity {
         pic4 = pref.getString("pic4", "");
         pic5 = pref.getString("pic5", "");
         eventText = pref.getString("eventText", "");
+
+        pbTime = pref.getInt("pbTime", 0);
+        pbKind = pref.getInt("pbKind", 0);
 
         temp = 0;
         if(pic1 != ""){ temp += 1;  }

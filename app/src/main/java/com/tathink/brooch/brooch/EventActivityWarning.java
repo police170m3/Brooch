@@ -3,6 +3,7 @@ package com.tathink.brooch.brooch;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -19,6 +20,7 @@ import java.io.IOException;
  * Created by MSI on 2016-08-25.
  */
 public class EventActivityWarning extends Activity{
+    public int pbTime, pbKind;
     private MediaPlayer mMediaPlayer;
     int volume;
     private AudioManager audioManager;
@@ -28,13 +30,35 @@ public class EventActivityWarning extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventactivity_warning);
 
+        getPreferences();
+
         //꺼진 화면에서 화면 활성화///////////////////////////////////////////////////////////////////
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
             WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         //꺼진 화면에서 화면 활성화///////////////////////////////////////////////////////////////////
 
-        //임시 이벤트 처리
-        Uri alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.minions);
+        //설정된 벨소리에 따라 이벤트 처리
+        Uri alert;
+        switch (pbKind) {
+            case 0:
+                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                break;
+            case 1:
+                alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.kill_bill);
+                break;
+            case 2:
+                alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.magic_mamaliga);
+                break;
+            case 3:
+                alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.marry_you);
+                break;
+            case 4:
+                alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.minions);
+                break;
+            default:
+                alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                break;
+        }
         playMusic(alert);
         ///////////////////
 
@@ -126,5 +150,11 @@ public class EventActivityWarning extends Activity{
             mMediaPlayer.release();    // 6. MediaPlayer 리소스 해제
             mMediaPlayer = null;
         }
+    }
+
+    private void getPreferences() {
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        pbTime = pref.getInt("pbTime", 0);
+        pbKind = pref.getInt("pbKind", 0);
     }
 }

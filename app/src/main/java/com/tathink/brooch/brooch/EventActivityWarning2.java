@@ -10,6 +10,8 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -118,6 +120,18 @@ public class EventActivityWarning2 extends Activity {
                 break;
         }
         playMusic(alert);
+
+        CountDownTimer cntr_aCounter = new CountDownTimer(pbTime*1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.d("EventActivityWarning : ", "Playing......");
+            }
+
+            @Override
+            public void onFinish() {
+                stopMusic();
+            }
+        };cntr_aCounter.start();
         ///////////////////
 
         ImageView home = (ImageView) findViewById(R.id.home);
@@ -182,7 +196,7 @@ public class EventActivityWarning2 extends Activity {
         pic5 = pref.getString("pic5", "");
         eventText = pref.getString("eventText", "");
 
-        pbTime = pref.getInt("pbTime", 0);
+        pbTime = pref.getInt("pbTime", 5);
         pbKind = pref.getInt("pbKind", 0);
 
         temp = 0;

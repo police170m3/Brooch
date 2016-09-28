@@ -9,6 +9,8 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,7 +24,7 @@ import java.io.IOException;
 public class EventActivityWarning extends Activity{
     public int pbTime, pbKind;
     private MediaPlayer mMediaPlayer;
-    int volume;
+    int volume, currentTime = 0;
     private AudioManager audioManager;
 
     @Override
@@ -60,7 +62,20 @@ public class EventActivityWarning extends Activity{
                 break;
         }
         playMusic(alert);
+
+        CountDownTimer cntr_aCounter = new CountDownTimer(pbTime*1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.d("EventActivityWarning : ", "Playing......");
+            }
+
+            @Override
+            public void onFinish() {
+                stopMusic();
+            }
+        };cntr_aCounter.start();
         ///////////////////
+
 
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
@@ -73,48 +88,11 @@ public class EventActivityWarning extends Activity{
             }
         });
 
-        findViewById(R.id.ringtone_btn).setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-                playMusic(alert);
-            }
-        });
-
         findViewById(R.id.stop1234_btn).setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
                 stopMusic();
                 finish();
-            }
-        });
-
-        findViewById(R.id.play1_btn).setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Uri alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.kill_bill);
-                playMusic(alert);
-            }
-        });
-        findViewById(R.id.play2_btn).setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Uri alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.magic_mamaliga);
-                playMusic(alert);
-            }
-        });
-        findViewById(R.id.play3_btn).setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Uri alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.marry_you);
-                playMusic(alert);
-            }
-        });
-        findViewById(R.id.play4_btn).setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Uri alert = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.minions);
-                playMusic(alert);
             }
         });
     }
@@ -154,7 +132,7 @@ public class EventActivityWarning extends Activity{
 
     private void getPreferences() {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        pbTime = pref.getInt("pbTime", 0);
+        pbTime = pref.getInt("pbTime", 5);
         pbKind = pref.getInt("pbKind", 0);
     }
 }

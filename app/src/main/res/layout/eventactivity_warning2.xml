@@ -30,7 +30,8 @@
         android:id="@+id/imageView"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/warninig"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:layout_height="300dp"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -58,9 +59,10 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="stop"
+            android:text="정지"
             android:id="@+id/stop_btn"
-            android:layout_gravity="center_horizontal|top" />
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="15dp" />
     </LinearLayout>
 
 

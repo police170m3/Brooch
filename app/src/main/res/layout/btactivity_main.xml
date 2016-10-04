@@ -29,4 +29,18 @@
         android:onClick="onExitClick"
         android:text="Exit"/>
 
+    <Button
+        android:text="SEND"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onSendClick"
+        android:id="@+id/button" />
+
+    <Button
+        android:text="SEND2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onSend2Click"
+        android:id="@+id/button2" />
+
 </LinearLayout>

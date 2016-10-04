@@ -25,12 +25,14 @@ public class BTMainActivity extends Activity {
     private BluetoothAdapter mBTAdapter;
     private TextView _text1;
     private BTService _btService;
+    private BTService.ConnectedThread mmWrite;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.btactivity_main);
         _text1 = (TextView) findViewById(R.id.textView1);
+
         ContextUtil.CONTEXT = getApplicationContext();
 
         _btService = new BTService(getApplicationContext());
@@ -55,6 +57,7 @@ public class BTMainActivity extends Activity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         checkIntent(intent);
+
     }
 
 
@@ -62,7 +65,7 @@ public class BTMainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.i("BTMainActivity.java | onActivityResult", "|==" + requestCode + "|" + resultCode + "(ok = " + RESULT_OK + ")|" + data);
+        Log.i("MainActivity.java | onActivityResult", "|==" + requestCode + "|" + resultCode + "(ok = " + RESULT_OK + ")|" + data);
         if (resultCode != RESULT_OK)
             return;
 
@@ -70,7 +73,7 @@ public class BTMainActivity extends Activity {
             discovery();
         } else if (requestCode == REQUEST_CONNECT_DEVICE_INSECURE) {
             String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-            Log.i("BTMainActivity.java | onActivityResult", "|==" + address + "|");
+            Log.i("MainActivity.java | onActivityResult", "|==" + address + "|");
             if (TextUtils.isEmpty(address))
                 return;
 
@@ -81,9 +84,9 @@ public class BTMainActivity extends Activity {
 
 
     private void checkIntent(Intent $intent) {
-        Log.i("BTMainActivity.java | checkIntent", "|==" + $intent.getAction() + "|");
+        Log.i("MainActivity.java | checkIntent", "|==" + $intent.getAction() + "|");
         if ("kr.mint.bluetooth.receive".equals($intent.getAction())) {
-            Log.i("BTMainActivity.java | checkIntent", "|==" + $intent.getStringExtra("msg") + "|");
+            Log.i("MainActivity.java | checkIntent", "|==" + $intent.getStringExtra("msg") + "|");
             _text1.setText($intent.getStringExtra("msg"));
 
         }
@@ -94,11 +97,35 @@ public class BTMainActivity extends Activity {
         discovery();
     }
 
+    public void onSendClick(View v) {
+//        String incomm = _textsend.getText().toString();
+//        byte[] sendbyte = {-1, 85, 2, 3, 2, 0, 0, 0, 0};
+
+        /*try {
+//            _btService.mmOutStream.write(incomm.getBytes());
+            for (int i = 0; i < 8; i++)
+                _btService.mmOutStream.write(_btService.sendbyte[i]);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+    }
+
+    public void onSend2Click(View v) {
+       /* try {
+            for (int i = 0; i < 8; i++)
+                _btService.mmOutStream.write(_btService.send2byte[i]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+    }
+
     public void onExitClick(View v) {
 
         Toast.makeText(this, "exit", Toast.LENGTH_LONG).show();
         mBTAdapter.disable();
         ReConnectService.ReConnectServiceStop = true;
+
         finish();
     }
 

@@ -1,6 +1,5 @@
 package kr.mint.testbluetoothspp;
 
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,15 +7,13 @@ import android.os.PowerManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.tathink.brooch.brooch.EventActivityWarning;
-
 public class BluetoothSignalReceiver extends BroadcastReceiver {
     private static PowerManager.WakeLock sCpuWakeLock;
-
+    public int temp = 0;
     @Override
     public void onReceive(Context $context, Intent $intent) {
-        //DB 객체 생성
-        final DBManager dbManager = new DBManager(ContextUtil.CONTEXT.getApplicationContext(), "STRESS.db", null, 1);
+        /*//DB 객체 생성
+        final DBManager dbManager = new DBManager(ContextUtil.CONTEXT.getApplicationContext(), "STRESS.db", null, 1);*/
 
         Log.i("BluetoothSignalReceiver.java | onReceive", "|action : " + $intent.getAction() + "| signal : " + $intent.getStringExtra("signal") + "|");
         Toast.makeText($context, $intent.getStringExtra("signal"), Toast.LENGTH_SHORT).show();
@@ -27,7 +24,9 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
 //      $context.startActivity(intent);
 
 
-        //db값 70 이상일때 벨소리 처리----------------------------------------------------------------------
+
+
+        /*//db값 70 이상일때 벨소리 처리----------------------------------------------------------------------
         int signal = 0;
         signal = Integer.parseInt($intent.getStringExtra("signal").substring(0, $intent.getStringExtra("signal").length()-3));
         if(signal >= 70) {
@@ -60,7 +59,7 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
                 e.printStackTrace();
             }
         }
-        //db값 70 이상일때 벨소리 처리----------------------------------------------------------------------
+        //db값 70 이상일때 벨소리 처리----------------------------------------------------------------------*/
     }
 
 }

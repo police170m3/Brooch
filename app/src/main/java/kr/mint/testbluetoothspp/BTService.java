@@ -12,12 +12,27 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class BTService extends Service {
     private BluetoothAdapter mAdapter;
     private Context _context;
+    public OutputStream mmOutStream;
+
+    String callrecv_min = null;
+    String callrecv_avg = null;
+    String callrecv_max = null;
+    String brooch_DB = null;
+    String brooch_safe =null;
+
+    byte[] call1 = {-1, 85, 8, 0, 1, 0, 0, 0, 0, 10};
+    byte[] callrecv2 = {-1, 85, 8, 0, 2, 0, 0, 0, 0, 10};
+    byte[] configure3 = {-1, 85, 8, 0, 2, 60, 3, 3, 3, 10};
+    byte[] cation4 = {-1, 85, 8, 0, 4, 0, 0, 0, 0, 10};
+    byte[] serious5 = {-1, 85, 8, 0, 5, 0, 0, 0, 0, 10};
+    byte[] warning6 = {-1, 85, 8, 0, 6, 0, 0, 0, 0, 10};
 
 
     @Override
@@ -108,41 +123,84 @@ public class BTService extends Service {
         }
     }
 
-    private class ConnectedThread extends Thread {
+    public class ConnectedThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
-        //private final OutputStream mmOutStream;
+//        private final OutputStream mmOutStream;
 
         public ConnectedThread(BluetoothSocket socket) {
             mmSocket = socket;
             InputStream tmpIn = null;
-            //     OutputStream tmpOut = null;
+            OutputStream tmpOut = null;
             // Get the input and output streams, using temp objects because member streams are final
             try {
                 tmpIn = socket.getInputStream();
-                //     tmpOut = socket.getOutputStream();
+                tmpOut = socket.getOutputStream();
             } catch (IOException e) {
             }
             mmInStream = tmpIn;
-            //   mmOutStream = tmpOut;
+            mmOutStream = tmpOut;
         }
 
         public void run() {
-            byte[] buffer = new byte[1024]; // buffer store for the stream
-            int bytes; // bytes returned from read()
-            // Keep listening to the InputStream until an exception occurs
+            //byte[] buffer = new byte[1024]; // buffer store for the stream
+            //int bytes; // bytes returned from read()
+            byte[] readBuffer = new byte[10];
+            int readBufferPosition = 0;
+            final byte delimiter = 10;
 
             while (true) {
                 try {
                     // Read from the InputStream
-                    bytes = mmInStream.read(buffer);
+                    //bytes = mmInStream.read(buffer);
                     // Send the obtained bytes to the UI Activity
 //               mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
-//               Log.i("BTService.java | run", "|==" + bytes2String(buffer, bytes) + "|");
+                    //Log.i("BTService.java | run", "|==" + bytes2String(buffer, bytes) + "|");
 
-                    Intent intent = new Intent("kr.mint.bluetooth.receive");
-                    intent.putExtra("signal", bytes2String(buffer, bytes));
-                    _context.sendBroadcast(intent);
+                    int bytesAvailable = mmInStream.available();
+
+                    if (bytesAvailable > 0) {
+                        final byte[] packetBytes = new byte[bytesAvailable];
+                        mmInStream.read(packetBytes);
+
+                        for (int i = 0; i < bytesAvailable; i++) {
+                            byte b = packetBytes[i];
+
+                            if (b == delimiter) {
+                                if (readBuffer[0] == -1) {
+                                    if (readBuffer[1] == 85) {
+                                        if (readBuffer[4] == 8) {
+                                            brooch_DB = String.valueOf((int) readBuffer[5]);
+                                            Intent intent = new Intent("kr.mint.bluetooth.receive");
+                                            intent.putExtra("signal", bytes2String(readBuffer[5]));
+                                            _context.sendBroadcast(intent);
+                                            readBufferPosition = 0;
+                                        } else if (readBuffer[4] == 7) {
+                                            brooch_safe = String.valueOf((int) readBuffer[5]);
+                                            Intent intent = new Intent("kr.mint.bluetooth.receive");
+                                            intent.putExtra("signal", "safe mode");
+                                            _context.sendBroadcast(intent);
+                                            readBufferPosition = 0;
+                                            // safe 모드 (safe 모듈 실행)
+                                        } else if (readBuffer[4] == 2) {
+                                            // 녹음 데이터 min, avg, max
+                                            callrecv_min = String.valueOf((int) readBuffer[5]);
+                                            callrecv_avg = String.valueOf((int) readBuffer[6]);
+                                            callrecv_max = String.valueOf((int) readBuffer[7]);
+                                            Intent intent = new Intent("kr.mint.bluetooth.receive");
+                                            intent.putExtra("signal", "min, avg, max save");
+                                            _context.sendBroadcast(intent);
+                                            readBufferPosition = 0;
+                                        }
+
+                                    }
+                                }
+
+                            } else {
+                                readBuffer[readBufferPosition++] = b;
+                            }
+                        }
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     break;
@@ -150,26 +208,24 @@ public class BTService extends Service {
             }
         }
 
-        private String bytes2String(byte[] b, int count) {
+        private String bytes2String(byte b) {
             ArrayList<String> result = new ArrayList<String>();
-            for (int i = 0; i < count; i++) {
-                String myInt = String.valueOf((b[i]));
-                result.add(myInt + " dB");
-            }
+            //for (int i = 0; i < count; i++) {
+
+            String myInt = String.valueOf((int) b);
+//                String myInt =  Integer.toHexString((int) (b[i] & 0xFF));
+            result.add(myInt + " dB");
+
+            // }
             return TextUtils.join("-", result);
         }
-      
-      /* Call this from the main Activity to send data to the remote device */
-//      public void write(byte[] bytes)
-//      {
-//         try
-//         {
-//            mmOutStream.write(bytes);
-//         }
-//         catch (IOException e)
-//         {
-//         }
-//      }
+
+        public void write(byte[] bytes) {
+            try {
+                mmOutStream.write(bytes);
+            } catch (IOException e) {
+            }
+        }
 
         /* Call this from the main Activity to shutdown the connection */
         public void cancel() {
@@ -177,6 +233,43 @@ public class BTService extends Service {
                 mmSocket.close();
             } catch (IOException e) {
             }
+        }
+    }
+
+    /* Call this from the main Activity to send data to the remote device */
+    public void writesSelect(int num) throws IOException {
+
+        switch (num) {
+            case 1:
+                for (int i = 0; i <=9; i++) {
+                    mmOutStream.write(call1[i]);
+                }
+                break;
+            case 2:
+                for (int i = 0; i <= 9; i++) {
+                    mmOutStream.write(callrecv2[i]);
+                }
+                break;
+            case 3:
+                for (int i = 0; i <= 9; i++) {
+                    mmOutStream.write(configure3[i]);
+                }
+                break;
+            case 4:
+                for (int i = 0; i <= 9; i++) {
+                    mmOutStream.write(cation4[i]);
+                }
+                break;
+            case 5:
+                for (int i = 0; i <= 9; i++) {
+                    mmOutStream.write(serious5[i]);
+                }
+                break;
+            case 6:
+                for (int i = 0; i <= 9; i++) {
+                    mmOutStream.write(warning6[i]);
+                }
+                break;
         }
     }
 }

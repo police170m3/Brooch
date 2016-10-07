@@ -19,21 +19,12 @@ import java.util.UUID;
 public class BTService extends Service {
     private BluetoothAdapter mAdapter;
     private Context _context;
-    public OutputStream mmOutStream;
 
-    String callrecv_min = null;
-    String callrecv_avg = null;
-    String callrecv_max = null;
-    String brooch_DB = null;
-    String brooch_safe =null;
-
-    byte[] call1 = {-1, 85, 8, 0, 1, 0, 0, 0, 0, 10};
-    byte[] callrecv2 = {-1, 85, 8, 0, 2, 0, 0, 0, 0, 10};
-    byte[] configure3 = {-1, 85, 8, 0, 2, 60, 3, 3, 3, 10};
-    byte[] cation4 = {-1, 85, 8, 0, 4, 0, 0, 0, 0, 10};
-    byte[] serious5 = {-1, 85, 8, 0, 5, 0, 0, 0, 0, 10};
-    byte[] warning6 = {-1, 85, 8, 0, 6, 0, 0, 0, 0, 10};
-
+    public static String callrecv_min = null;
+    public static String callrecv_avg = null;
+    public static String callrecv_max = null;
+    public static String brooch_DB = null;
+    public static String brooch_safe = null;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -126,7 +117,7 @@ public class BTService extends Service {
     public class ConnectedThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
-//        private final OutputStream mmOutStream;
+        private final OutputStream mmOutStream;
 
         public ConnectedThread(BluetoothSocket socket) {
             mmSocket = socket;
@@ -141,6 +132,8 @@ public class BTService extends Service {
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
         }
+
+
 
         public void run() {
             //byte[] buffer = new byte[1024]; // buffer store for the stream
@@ -192,7 +185,6 @@ public class BTService extends Service {
                                             _context.sendBroadcast(intent);
                                             readBufferPosition = 0;
                                         }
-
                                     }
                                 }
 
@@ -220,6 +212,50 @@ public class BTService extends Service {
             return TextUtils.join("-", result);
         }
 
+        /* Call this from the main Activity to send data to the remote device */
+        public void writesSelect(int num) throws IOException {
+
+            byte[] call1 = {-1, 85, 8, 0, 1, 0, 0, 0, 0, 10};
+            byte[] callrecv2 = {-1, 85, 8, 0, 2, 0, 0, 0, 0, 10};
+            byte[] configure3 = {-1, 85, 8, 0, 2, 60, 3, 3, 3, 10};
+            byte[] cation4 = {-1, 85, 8, 0, 4, 0, 0, 0, 0, 10};
+            byte[] serious5 = {-1, 85, 8, 0, 5, 0, 0, 0, 0, 10};
+            byte[] warning6 = {-1, 85, 8, 0, 6, 0, 0, 0, 0, 10};
+
+            switch (num) {
+                case 1:
+                    for (int i = 0; i <= 9; i++) {
+                        mmOutStream.write(call1[i]);
+                    }
+                    break;
+                case 2:
+                    for (int i = 0; i <= 9; i++) {
+                        mmOutStream.write(callrecv2[i]);
+                    }
+                    break;
+                case 3:
+                    for (int i = 0; i <= 9; i++) {
+                        mmOutStream.write(configure3[i]);
+                    }
+                    break;
+                case 4:
+                    for (int i = 0; i <= 9; i++) {
+                        mmOutStream.write(cation4[i]);
+                    }
+                    break;
+                case 5:
+                    for (int i = 0; i <= 9; i++) {
+                        mmOutStream.write(serious5[i]);
+                    }
+                    break;
+                case 6:
+                    for (int i = 0; i <= 9; i++) {
+                        mmOutStream.write(warning6[i]);
+                    }
+                    break;
+            }
+        }
+
         public void write(byte[] bytes) {
             try {
                 mmOutStream.write(bytes);
@@ -233,43 +269,6 @@ public class BTService extends Service {
                 mmSocket.close();
             } catch (IOException e) {
             }
-        }
-    }
-
-    /* Call this from the main Activity to send data to the remote device */
-    public void writesSelect(int num) throws IOException {
-
-        switch (num) {
-            case 1:
-                for (int i = 0; i <=9; i++) {
-                    mmOutStream.write(call1[i]);
-                }
-                break;
-            case 2:
-                for (int i = 0; i <= 9; i++) {
-                    mmOutStream.write(callrecv2[i]);
-                }
-                break;
-            case 3:
-                for (int i = 0; i <= 9; i++) {
-                    mmOutStream.write(configure3[i]);
-                }
-                break;
-            case 4:
-                for (int i = 0; i <= 9; i++) {
-                    mmOutStream.write(cation4[i]);
-                }
-                break;
-            case 5:
-                for (int i = 0; i <= 9; i++) {
-                    mmOutStream.write(serious5[i]);
-                }
-                break;
-            case 6:
-                for (int i = 0; i <= 9; i++) {
-                    mmOutStream.write(warning6[i]);
-                }
-                break;
         }
     }
 }

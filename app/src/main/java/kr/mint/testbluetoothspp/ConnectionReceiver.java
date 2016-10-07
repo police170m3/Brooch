@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class ConnectionReceiver extends BroadcastReceiver {
+    public static boolean btCheck = false;
     @Override
     public void onReceive(Context $context, Intent $intent) {
         ContextUtil.CONTEXT = $context;
@@ -33,7 +34,9 @@ public class ConnectionReceiver extends BroadcastReceiver {
 
         if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
             reconnect($context, address);
+            btCheck = false;
         } else if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
+            btCheck = true;
             String lastRequestAddress = PreferenceUtil.lastRequestDeviceAddress();
             if (TextUtils.isEmpty(lastRequestAddress))
                 return;

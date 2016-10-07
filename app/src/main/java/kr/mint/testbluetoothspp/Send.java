@@ -1,4 +1,4 @@
-package com.tathink.brooch.brooch;
+package kr.mint.testbluetoothspp;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -8,33 +8,28 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.tathink.brooch.brooch.DeviceListActivity;
+import com.tathink.brooch.brooch.R;
 
 import java.io.IOException;
 
-import kr.mint.testbluetoothspp.BTService;
-import kr.mint.testbluetoothspp.ContextUtil;
-import kr.mint.testbluetoothspp.ReConnectService;
-
 /**
- * Created by MSI on 2016-08-30.
+ * Created by MSI on 2016-10-07.
  */
-public class BTMainActivity extends Activity {
+
+public class Send extends Activity {
     private static final int REQUEST_ENABLE_BT = 100;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 200;
-
-    private BluetoothAdapter mBTAdapter;
-    private TextView _text1;
-    private BTService _btService;
     protected BTService.ConnectedThread mmConnectedThread;
+    private BluetoothAdapter mBTAdapter;
+    private BTService _btService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.btactivity_main);
-        _text1 = (TextView) findViewById(R.id.textView1);
-
+        setContentView(R.layout.send);
 
         ContextUtil.CONTEXT = getApplicationContext();
 
@@ -44,7 +39,6 @@ public class BTMainActivity extends Activity {
         if (mBTAdapter == null) {
             // device does not support Bluetooth
             Toast.makeText(getApplicationContext(), "device does not support Bluetooth", Toast.LENGTH_LONG).show();
-            _text1.setText("device does not support Bluetooth");
         } else {
             if (!mBTAdapter.isEnabled()) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -54,7 +48,6 @@ public class BTMainActivity extends Activity {
 
         checkIntent(getIntent());
     }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -90,28 +83,13 @@ public class BTMainActivity extends Activity {
         Log.i("MainActivity.java | checkIntent", "|==" + $intent.getAction() + "|");
         if ("kr.mint.bluetooth.receive".equals($intent.getAction())) {
             Log.i("MainActivity.java | checkIntent", "|==" + $intent.getStringExtra("msg") + "|");
-            _text1.setText($intent.getStringExtra("msg"));
 
         }
     }
 
-
-    public void onBtnClick(View v) {
-        discovery();
-    }
-
-    public void onSendClick(View v) {
-
+    public void onBtnSend(View v){
         try {
             mmConnectedThread.writesSelect(1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void onSend2Click(View v) {
-        try {
-            mmConnectedThread.writesSelect(2);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -131,4 +109,5 @@ public class BTMainActivity extends Activity {
         Intent serverIntent = new Intent(this, DeviceListActivity.class);
         startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
     }
+
 }

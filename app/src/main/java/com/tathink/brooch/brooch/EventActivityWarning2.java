@@ -89,6 +89,9 @@ public class EventActivityWarning2 extends Activity {
         }
 
         //프리퍼런스에 저장된 이벤트 텍스트 읽어서 화면에 출력
+        if (eventText == "") {
+            eventText = "화내시는 모습을 보면 무섭고 슬퍼요.";
+        }
         TextView textView = (TextView)findViewById(R.id.textView);
         textView.setText(eventText);
 

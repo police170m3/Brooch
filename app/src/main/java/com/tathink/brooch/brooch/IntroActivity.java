@@ -18,8 +18,10 @@ public class IntroActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE); //인트로화면이므로 타이틀바를 없앤다
         //setTheme(android.R.style.Theme_NoTitleBar);
         setContentView(R.layout.intro_main);
+
         h= new Handler(); //딜래이를 주기 위해 핸들러 생성
         h.postDelayed(mrun, 2000); // 딜레이 ( 런어블 객체는 mrun, 시간 2초)
+
     }
 
     Runnable mrun = new Runnable(){
@@ -39,5 +41,4 @@ public class IntroActivity extends Activity {
         super.onBackPressed();
         h.removeCallbacks(mrun);
     }
-
 }

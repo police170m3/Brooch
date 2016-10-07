@@ -1,17 +1,21 @@
 package kr.mint.testbluetoothspp;
 
-import android.content.Context;
-import android.util.Log;
-
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
+
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.Context;
+import android.util.Log;
 
 public class ReConnectService {
     private static ReConnectService _instance;
     private Context _context;
     private Timer _timer;
     private ScheduledExecutorService _scheduledExecutorService;
+    protected BTService.ConnectedThread mmConnectedThread;
 
     public static boolean ReConnectServiceStop = false;
 
@@ -41,8 +45,14 @@ public class ReConnectService {
 
                 if (ReConnectServiceStop == true)
                     stopReconnect();
+
                 Log.i("ReConnectService.java | run", "|==" + "연결 시도 중" + "|");
                 BTService btService = new BTService(_context);
+//                try {
+//                    mmConnectedThread.writesSelect(3);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 btService.connect(PreferenceUtil.lastConnectedDeviceAddress());
             }
         };

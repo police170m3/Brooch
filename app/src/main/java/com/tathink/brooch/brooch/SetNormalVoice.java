@@ -32,6 +32,8 @@ public class SetNormalVoice extends Activity {
         rangeSeekBar.setRangeValues(0, 200);
         rangeSeekBar.setSelectedMinValue(min);   //추후 프리퍼런스의 값 읽어와서 인자전달
         rangeSeekBar.setSelectedMaxValue(max);   //추후 프리퍼런스의 값 읽어와서 인자전달
+        /*rangeSeekBar.setSelectedMinValue(Integer.parseInt(BTService.callrecv_min));   //추후 프리퍼런스의 값 읽어와서 인자전달
+        rangeSeekBar.setSelectedMaxValue(Integer.parseInt(BTService.callrecv_max));   //추후 프리퍼런스의 값 읽어와서 인자전달*/
 
         //home 버튼 처리
         if(prefSave){
@@ -56,8 +58,6 @@ public class SetNormalVoice extends Activity {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar bar, Object minValue, Object maxValue) {
                 //range seek bar 드레그 했을때 max, max 값 구하기............
-                /*Log.d("min------------", ""+ minValue);
-                Log.d("max------------", ""+ maxValue);*/
                 min = (int) minValue;
                 max = (int) maxValue;
             }
@@ -92,8 +92,6 @@ public class SetNormalVoice extends Activity {
     }
 
     private void savePreferences(int min, int max){
-        /*Log.d("44444444444444", "" + min);
-        Log.d("44444444444444", "" + max);*/
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("nvMin", min);
@@ -106,7 +104,5 @@ public class SetNormalVoice extends Activity {
         min = pref.getInt("nvMin", 0);
         max = pref.getInt("nvMax", 0);
         prefSave = pref.getBoolean("prefSave", false);
-        /*Log.d("5555555555555555", ""+ pref.getInt("nvMin", 0));
-        Log.d("5555555555555555", ""+ pref.getInt("nvMax", 0));*/
     }
 }

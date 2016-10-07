@@ -1,5 +1,6 @@
 package kr.mint.testbluetoothspp;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,13 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
     public int temp = 0;
     @Override
     public void onReceive(Context $context, Intent $intent) {
+
+        //BT 연결 처리 - sejin
+        if (BluetoothDevice.ACTION_ACL_DISCONNECTED == $intent.getAction()) {
+            Log.d("TATHINK-----", "BT is Disconnected");
+        }
+//        //BT 연결 처리 - sejin
+
         /*//DB 객체 생성
         final DBManager dbManager = new DBManager(ContextUtil.CONTEXT.getApplicationContext(), "STRESS.db", null, 1);*/
 

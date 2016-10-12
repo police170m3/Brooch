@@ -31,6 +31,7 @@
     <string name="call">전화걸기</string>
     <string name="recall">다시걸기</string>
     <string name="setting">등록</string>
+    <string name="measure">측정</string>
     <string name="okay">확인</string>
     <string name="tryagain">다시하기</string>
     <string name="setsms_text">주어진 시간 안에 벨소리를 끄지 않으면 지정한 3명 이내의 지인들에게 문자가 자동 전송됩니다.</string>

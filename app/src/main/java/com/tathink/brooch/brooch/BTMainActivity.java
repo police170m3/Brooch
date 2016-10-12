@@ -103,7 +103,7 @@ public class BTMainActivity extends Activity {
     public void onSendClick(View v) {
 
         try {
-            mmConnectedThread.writesSelect(1);
+            BTService.writesSelect(1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,7 +111,7 @@ public class BTMainActivity extends Activity {
 
     public void onSend2Click(View v) {
         try {
-            mmConnectedThread.writesSelect(2);
+            BTService.writesSelect(2);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,7 +120,7 @@ public class BTMainActivity extends Activity {
     public void onExitClick(View v) {
 
         Toast.makeText(this, "exit", Toast.LENGTH_LONG).show();
-        mmConnectedThread.cancel();
+        BTService.cancel();
         mBTAdapter.disable();
         ReConnectService.ReConnectServiceStop = true;
 

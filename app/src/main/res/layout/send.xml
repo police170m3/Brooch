@@ -4,16 +4,33 @@
     android:layout_height="match_parent">
 
     <Button
-        android:text="SEND"
+        android:text="SEND1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onBtnSend"
-        android:id="@+id/sendbtn" />
+        android:id="@+id/SEND1" />
     <Button
-        android:text="SEND"
+        android:text="SEND2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onExitClick"
-        android:id="@+id/exitbtn" />
-
+        android:id="@+id/SEND2" />
+    <Button
+        android:text="SEND3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SEND3" />
+    <Button
+        android:text="SEND4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SEND4" />
+    <Button
+        android:text="SEND5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SEND5" />
+    <Button
+        android:text="SEND6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SEND6" />
 </LinearLayout>

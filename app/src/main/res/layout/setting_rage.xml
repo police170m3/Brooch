@@ -49,7 +49,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/setting"
+        android:text="@string/measure"
         android:id="@+id/setrage_btn_set"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp" />

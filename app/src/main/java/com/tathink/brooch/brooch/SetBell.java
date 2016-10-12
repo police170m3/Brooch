@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -78,6 +77,7 @@ public class SetBell extends Activity {
                         pbTime = 30;
                         break;
                 }
+                saveTimePreferences();
             }
         });
         //라디오 버튼 선택 값 가져오기
@@ -116,18 +116,18 @@ public class SetBell extends Activity {
             }
         });
 
-        ((Button) findViewById(R.id.setbell_btn_set)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //프리퍼런스 저장
-                savePreferences();
-
-                //통계화면으로 이동 처리
-                Intent i = new Intent(SetBell.this, MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
+//        ((Button) findViewById(R.id.setbell_btn_set)).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //프리퍼런스 저장
+//                savePreferences();
+//
+//                //통계화면으로 이동 처리
+//                Intent i = new Intent(SetBell.this, MainActivity.class);
+//                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(i);
+//            }
+//        });
 
     }
 
@@ -161,6 +161,14 @@ public class SetBell extends Activity {
                                 break;
                         }
                         Toast.makeText(getApplicationContext(), str[temp] + "선택됨", Toast.LENGTH_SHORT).show();
+
+                        //프리퍼런스 저장
+                        saveBellPreferences();
+
+                        //통계화면으로 이동 처리
+                        Intent i = new Intent(SetBell.this, MainActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
                     }
                 });
                 //pbKind 초기 선택값
@@ -238,14 +246,30 @@ public class SetBell extends Activity {
         }
     }
 
-    private void savePreferences(){
+    private void saveTimePreferences(){
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("pbTime", pbTime);
+        editor.putBoolean("prefSave", true);
+        editor.commit();
+    }
+
+    private void saveBellPreferences(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
         editor.putInt("pbKind", pbKind);
         editor.putBoolean("prefSave", true);
         editor.commit();
     }
+
+//    private void savePreferences(){
+//        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = pref.edit();
+//        editor.putInt("pbTime", pbTime);
+//        editor.putInt("pbKind", pbKind);
+//        editor.putBoolean("prefSave", true);
+//        editor.commit();
+//    }
 
     private void getPreferences(){
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);

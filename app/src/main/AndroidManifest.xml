@@ -81,6 +81,7 @@
         </receiver>
 
         <service android:name="kr.mint.testbluetoothspp.BTService" />
+        <service android:name="kr.mint.testbluetoothspp.MessengerService" />
 
         <!--테스트 액티비티-->
         <activity android:name=".EventActivitySafe"></activity>

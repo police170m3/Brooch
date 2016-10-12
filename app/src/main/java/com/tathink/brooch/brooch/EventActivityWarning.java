@@ -1,45 +1,34 @@
 package com.tathink.brooch.brooch;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
-
-import java.io.IOException;
 
 /**
  * Created by MSI on 2016-08-25.
  */
 public class EventActivityWarning extends Activity{
-    public int pbTime, pbKind;
+/*    public int pbTime, pbKind;
     private MediaPlayer mMediaPlayer;
     int volume, currentTime = 0;
-    private AudioManager audioManager;
+    private AudioManager audioManager;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventactivity_warning);
 
-        getPreferences();
+        //getPreferences();
 
         //꺼진 화면에서 화면 활성화///////////////////////////////////////////////////////////////////
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
             WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
         //꺼진 화면에서 화면 활성화///////////////////////////////////////////////////////////////////
 
-        //설정된 벨소리에 따라 이벤트 처리
+/*        //설정된 벨소리에 따라 이벤트 처리
         Uri alert;
         switch (pbKind) {
             case 0:
@@ -74,7 +63,7 @@ public class EventActivityWarning extends Activity{
                 stopMusic();
             }
         };cntr_aCounter.start();
-        ///////////////////
+        ///////////////////*/
 
 
         ImageView home = (ImageView) findViewById(R.id.home);
@@ -88,16 +77,16 @@ public class EventActivityWarning extends Activity{
             }
         });
 
-        findViewById(R.id.stop1234_btn).setOnClickListener(new Button.OnClickListener(){
+/*        findViewById(R.id.stop1234_btn).setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
                 stopMusic();
                 finish();
             }
-        });
+        });*/
     }
 
-    private void playMusic(Uri alert) {
+/*    private void playMusic(Uri alert) {
         stopMusic();
         mMediaPlayer = new MediaPlayer();
 
@@ -134,5 +123,5 @@ public class EventActivityWarning extends Activity{
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         pbTime = pref.getInt("pbTime", 5);
         pbKind = pref.getInt("pbKind", 0);
-    }
+    }*/
 }

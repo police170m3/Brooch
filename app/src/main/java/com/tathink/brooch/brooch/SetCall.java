@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.IOException;
+
 import kr.mint.testbluetoothspp.BTService;
 import kr.mint.testbluetoothspp.ConnectionReceiver;
 
@@ -27,7 +29,6 @@ public class SetCall extends Activity {
 
     public boolean prefSave = false;
     static public boolean flag = false;
-    protected BTService.ConnectedThread mmConnectedThread;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,11 +67,11 @@ public class SetCall extends Activity {
             @Override
             public void onClick(View view) {
                 //녹음명령
-//                try {
-//                    mmConnectedThread.writesSelect(1);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    BTService.writesSelect(1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 //녹음명령
 
 

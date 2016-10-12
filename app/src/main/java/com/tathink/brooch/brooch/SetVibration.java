@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 /**
  * Created by MSI on 2016-08-23.
@@ -21,6 +19,12 @@ public class SetVibration extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_vibration);
+
+        RadioButton opt1 = (RadioButton)findViewById(R.id.radioButton1);
+        RadioButton opt2 = (RadioButton)findViewById(R.id.radioButton2);
+        RadioButton opt3 = (RadioButton)findViewById(R.id.radioButton3);
+        RadioButton opt4 = (RadioButton)findViewById(R.id.radioButton4);
+
 
         //프리퍼런스 값 읽어서 선택처리
         getPreferences();
@@ -43,7 +47,57 @@ public class SetVibration extends Activity {
                 break;
         }
 
-        //라디오 버튼 선택 값 가져오기
+        opt1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                bvTime = 5;
+                //프리퍼런스 값 저장
+                savePreferences();
+                //다음 액티비티로 이동
+                Intent i = new Intent(SetVibration.this, SetBell.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+            }
+        });
+        opt2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                bvTime = 7;
+                //프리퍼런스 값 저장
+                savePreferences();
+                //다음 액티비티로 이동
+                Intent i = new Intent(SetVibration.this, SetBell.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+            }
+        });
+        opt3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                bvTime = 10;
+                //프리퍼런스 값 저장
+                savePreferences();
+                //다음 액티비티로 이동
+                Intent i = new Intent(SetVibration.this, SetBell.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+            }
+        });
+        opt4.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                bvTime = 15;
+                //프리퍼런스 값 저장
+                savePreferences();
+                //다음 액티비티로 이동
+                Intent i = new Intent(SetVibration.this, SetBell.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
+            }
+        });
+
+
+        /*//라디오 버튼 선택 값 가져오기
         RadioGroup rdgroup = (RadioGroup)findViewById(R.id.rdgroup);
         rdgroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -63,8 +117,15 @@ public class SetVibration extends Activity {
                         bvTime = 15;
                         break;
                 }
+                //프리퍼런스 값 저장
+                savePreferences();
+
+                //다음 액티비티로 이동
+                Intent i = new Intent(SetVibration.this, SetBell.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(i);
             }
-        });
+        });*/
         //라디오 버튼 선택 값 가져오기
 
         //home 버튼 처리
@@ -82,18 +143,18 @@ public class SetVibration extends Activity {
             });
         }
 
-        ((Button)findViewById(R.id.setvibration_btn_set)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //프리퍼런스 값 저장
-                savePreferences();
-
-                //통계화면으로 이동 처리
-                Intent i = new Intent(SetVibration.this, SetBell.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(i);
-            }
-        });
+//        ((Button)findViewById(R.id.setvibration_btn_set)).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //프리퍼런스 값 저장
+//                savePreferences();
+//
+//                //다음 액티비티로 이동
+//                Intent i = new Intent(SetVibration.this, SetBell.class);
+//                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                startActivity(i);
+//            }
+//        });
     }
 
     private void savePreferences(){

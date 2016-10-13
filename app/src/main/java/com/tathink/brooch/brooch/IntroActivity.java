@@ -28,6 +28,7 @@ public class IntroActivity extends Activity {
         @Override
         public void run(){
             Intent i = new Intent(IntroActivity.this, IntroSubActivity.class); //인텐트 생성(현 액티비티, 새로 실행할 액티비티)
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
             finish();
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

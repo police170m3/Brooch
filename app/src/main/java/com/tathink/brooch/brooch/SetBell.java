@@ -167,7 +167,7 @@ public class SetBell extends Activity {
 
                         //통계화면으로 이동 처리
                         Intent i = new Intent(SetBell.this, MainActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     }
                 });

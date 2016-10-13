@@ -26,9 +26,9 @@ public class BTService extends Service {
     public static String brooch_DB = null;
     public static String brooch_safe = null;
 
-    public static BluetoothSocket mmSocket;
-    public static InputStream mmInStream;
-    public static OutputStream mmOutStream;
+    private static BluetoothSocket mmSocket;
+    private static InputStream mmInStream;
+    private static OutputStream mmOutStream;
 
     @Override
     public IBinder onBind(Intent intent) {

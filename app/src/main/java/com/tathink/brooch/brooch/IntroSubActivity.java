@@ -78,9 +78,11 @@ public class IntroSubActivity extends Activity {
             getPreferences();
             if(prefSave == true){
                 Intent i = new Intent(IntroSubActivity.this, MainActivity.class); //인텐트 생성(현 액티비티, 새로 실행할 액티비티)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             } else {
                 Intent i = new Intent(IntroSubActivity.this, SetCall.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
             finish();

@@ -28,7 +28,7 @@ public class SetRageVoice   extends Activity {
         // Set the range
         getPreferences();   //프리퍼런스 값 읽어오기....
         rangeSeekBar.setTextAboveThumbsColor(R.color.common_signin_btn_dark_text_default);
-        rangeSeekBar.setRangeValues(0, 100);
+        rangeSeekBar.setRangeValues(30, 80);
         rangeSeekBar.setSelectedMinValue(min);   //추후 프리퍼런스의 값 읽어와서 인자전달
         rangeSeekBar.setSelectedMaxValue(max);   //추후 프리퍼런스의 값 읽어와서 인자전달
 

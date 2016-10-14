@@ -5,30 +5,36 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.CountDownTimer;
 import android.os.PowerManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.tathink.brooch.brooch.EventActivityCaution;
+import com.tathink.brooch.brooch.EventActivitySafe;
 import com.tathink.brooch.brooch.EventActivitySerious;
 import com.tathink.brooch.brooch.EventActivityWarning;
+import com.tathink.brooch.brooch.EventActivityWarning2;
+
+import java.io.IOException;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class BluetoothSignalReceiver extends BroadcastReceiver {
     private static PowerManager.WakeLock sCpuWakeLock;
-    public int temp = 0;
-    public int min = 0, max = 0, avg = 0, avgSub = 0;    //프리퍼런스 값 저장 변수(min-목소리 최소 dB, Max-목소리 최대 dB, avg-y3+y5/2, avg2-y5(평균값))
-
+    public int min = 0, max = 0, avg = 0, avgSub = 0, bvTime=0;    //프리퍼런스 값 저장 변수(min-목소리 최소 dB, Max-목소리 최대 dB, avg-y3+y5/2, avg2-y5(평균값))
+    public  int signal = 0;
+    private  Context context;
 
     @Override
     public void onReceive(Context $context, Intent $intent) {
+        context = $context;
 
         //프리퍼런스 처리
         getPreferences($context);
         avg = (min + max) / 2;
         avgSub = (min + avg) / 2;     //소리쳤을 때 min, max의 평균
-        Log.d("----------위험 구간----------", "min:" + min + "   max:" + max + "   avg:" + avg + "   avgSub:" + avgSub);
+        Log.d("----------구간별 값----------", "min:" + min + "   max:" + max + "   avg:" + avg + "   avgSub:" + avgSub);
 
         //DB 객체 생성
         final DBManager dbManager = new DBManager(ContextUtil.CONTEXT.getApplicationContext(), "STRESS.db", null, 1);
@@ -45,7 +51,6 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
 
 
         //db값 위험구간일 때 벨소리 처리----------------------------------------------------------------------
-        int signal = 0;
         signal = Integer.parseInt($intent.getStringExtra("signal").substring(0, $intent.getStringExtra("signal").length()-3));
         if(signal >= min) {
             //dB값 위험 구간중 최소값 이상일 때 SQLite에 저장
@@ -73,7 +78,14 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
             if (avg!=0) {
                 // avg!=0 설정을 진행했을때
                 if (signal >= min && signal < avgSub) {
-                    //주의구간
+                    //주의 Brooch Event
+                    try {
+                        BTService.writesSelect(4);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //주의구간 Activity Event
                     Log.d("----------------------------------주 의 구 간----------------------------------", "EventActivityCaution");
                     Intent i = new Intent($context, EventActivityCaution.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -85,7 +97,14 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
                     }
 
                 } else if (signal >= avgSub && signal < avg) {
-                    //심각구간
+                    //심각 Brooch Event
+                    try {
+                        BTService.writesSelect(5);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //심각구간 Activity Event
                     Log.d("----------------------------------심 각 구 간----------------------------------", "EventActivitySerious");
                     Intent i = new Intent($context, EventActivitySerious.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -97,7 +116,14 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
                     }
 
                 } else if (signal >= avg) {
-                    //경고구간
+                    //경고 Brooch Event
+                    try {
+                        BTService.writesSelect(6);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //경고구간 Activity Event
                     Log.d("----------------------------------경 고 구 간----------------------------------", "EventActivityWarning");
                     Intent i = new Intent($context, EventActivityWarning.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -107,6 +133,42 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
                     } catch (PendingIntent.CanceledException e) {
                         e.printStackTrace();
                     }
+
+                    //CountDownTime 를 이용하여 브로치 진동 시간 후(프리퍼런스 값 이용) 여전히 경고라면
+                    //EventActivityWarning2 처리
+                    CountDownTimer countDownTimer = new CountDownTimer(bvTime*1000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            Log.d("-------In now, It's Warning Time-------", "will be check after bvTime");
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            if (signal >= avg) {
+                                //경고구간 Activity Event2
+                                Log.d("----------------------------------경 고 구 간2----------------------------------", "EventActivityWarning");
+                                Intent i = new Intent(context, EventActivityWarning2.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_ONE_SHOT);
+                                try {
+                                    pi.send();
+                                } catch (PendingIntent.CanceledException e) {
+                                    e.printStackTrace();
+                                }
+                            } else if (signal < min) {
+                                //안전구간 Activity Safe
+                                Log.d("----------------------------------안 전 구 간----------------------------------", "EventActivityWarning");
+                                Intent i = new Intent(context, EventActivitySafe.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_ONE_SHOT);
+                                try {
+                                    pi.send();
+                                } catch (PendingIntent.CanceledException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    };countDownTimer.start();
 
                 }
 
@@ -122,6 +184,7 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
         SharedPreferences pref = context.getSharedPreferences("pref", MODE_PRIVATE);
         min = pref.getInt("rvMin", 0);
         max = pref.getInt("rvMax", 0);
+        bvTime = pref.getInt("bvTime", 5);
     }
 
 }

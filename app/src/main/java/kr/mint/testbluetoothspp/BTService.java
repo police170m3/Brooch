@@ -172,7 +172,7 @@ public class BTService extends Service {
                                         } else if (readBuffer[4] == 7) {
                                             brooch_safe = String.valueOf((int) readBuffer[5]);
                                             Intent intent = new Intent("kr.mint.bluetooth.receive");
-                                            intent.putExtra("signal", "safe mode");
+                                            intent.putExtra("signal", bytes2String(readBuffer[5]));
                                             _context.sendBroadcast(intent);
                                             readBufferPosition = 0;
                                             // safe 모드 (safe 모듈 실행)

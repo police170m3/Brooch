@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.mint.testbluetoothspp.BTService;
 import kr.mint.testbluetoothspp.DBManager;
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
@@ -41,6 +42,8 @@ public class StatisticsDay extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_day);
+
+        BTService.config_check = true;  //sejin 2016.10.24
 
         getPreferences();
         avg = (min + max) / 2;
@@ -131,12 +134,6 @@ public class StatisticsDay extends FragmentActivity {
             }
         });
         //24시간 전 후 < 버튼, > 버튼 처리//////////////////////////////////////////////////////////
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("StatDay Activity", "onPause");
     }
 
     @Override
@@ -382,5 +379,11 @@ public class StatisticsDay extends FragmentActivity {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         min = pref.getInt("rvMin", 0);
         max = pref.getInt("rvMax", 0);
+    }
+
+    @Override
+    protected void onPause() {     //sejin 2016.10.24
+        super.onPause();
+        BTService.config_check = false;  //sejin 2016.10.24
     }
 }

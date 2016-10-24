@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import kr.mint.testbluetoothspp.BTService;
+
 /**
  * Created by MSI on 2016-08-17.
  */
@@ -16,6 +18,8 @@ public class StatisticsMain extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_main);
+
+        BTService.config_check = true;  //sejin 2016.10.24
 
         ImageView home = (ImageView) findViewById(R.id.home);
         home.setOnClickListener(new View.OnClickListener() {
@@ -48,5 +52,11 @@ public class StatisticsMain extends Activity {
             }
         });
 
+    }
+
+    @Override
+    protected void onPause() {     //sejin 2016.10.24
+        super.onPause();
+        BTService.config_check = false;  //sejin 2016.10.24
     }
 }

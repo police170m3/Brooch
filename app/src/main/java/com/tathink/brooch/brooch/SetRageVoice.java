@@ -135,6 +135,7 @@ public class SetRageVoice   extends Activity {
 
     private void getPreferences(){
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        //min = pref.getInt("rvMin", 0);
         min = pref.getInt("rvMin", 0);
         max = pref.getInt("rvMax", 0);
         prefSave = pref.getBoolean("prefSave", false);

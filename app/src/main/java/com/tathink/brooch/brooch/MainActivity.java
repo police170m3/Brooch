@@ -188,6 +188,8 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
+
         Log.i("MainActivity.java | onActivityResult", "|==" + requestCode + "|" + resultCode + "(ok = " + RESULT_OK + ")|" + data);
         if (resultCode != RESULT_OK) {
             return;
@@ -212,6 +214,7 @@ public class MainActivity extends Activity {
             }    */                     //ninny
             //현상태점검
         }
+
     }
 
     private void discovery() {

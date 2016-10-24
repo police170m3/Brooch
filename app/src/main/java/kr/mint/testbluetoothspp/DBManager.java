@@ -52,13 +52,18 @@ public class DBManager  extends SQLiteOpenHelper {
         return str;
     }
 
-    public int SelectStress24h(int i, int hours){    //최근 24시간동안 db 횟수 체크
+    public int SelectStress24h(int i, int hours, int start, int end){    //최근 24시간동안 db 횟수 체크
         SQLiteDatabase db = getReadableDatabase();
         int cnt = 0;
         int from = ((-1) * (i) + hours) + 9;    //hours: 현재, 1일전, 2일전 구분용도
         int to = ((-1) * (i + 1) + hours) + 9;  //+9는 국제시간을 한국시간으로 보정
 
-        Cursor cursor = db.rawQuery("select count(*) from STRESS_INFO where date <= datetime('now', '" + from + " hours') and date > datetime('now', '" + to + " hours');", null);
+        //dB value (min/max)
+        int dBto = start;
+        int dBfrom = end;
+
+        Cursor cursor = db.rawQuery("select count(*) from STRESS_INFO where date <= datetime('now', '" + from + " hours') and date > datetime('now', '" + to + " hours') and signal between " +
+                dBto + " and " + dBfrom + ";", null);
         while (cursor.moveToNext()) {
             cnt = cursor.getInt(0);
         }
@@ -66,14 +71,19 @@ public class DBManager  extends SQLiteOpenHelper {
         return cnt;
     }
 
-    public int SelectStress1week(int i, int days){    //최근 1주일 동안 db 횟수 체크
+    public int SelectStress1week(int i, int days, int start, int end){    //최근 1주일 동안 db 횟수 체크
         SQLiteDatabase db = getReadableDatabase();
         int cnt = 0;
         int from = (-1) * (i) + (days);
         int to = (-1) * (i + 1) + (days);
 
+        //dB value (min/max)
+        int dBto = start;
+        int dBfrom = end;
+
 //        Cursor cursor = db.rawQuery("select count(*) from STRESS_INFO where date <= datetime('now', '" + from + " days', '+9 hours') and date > datetime('now', '" + to + " days');", null);
-        Cursor cursor = db.rawQuery("select count(*) from STRESS_INFO where date <= datetime('now', '" + from + " days', '+9 hours') and date > datetime('now', '" + to + " days', '+9 hours');", null);
+        Cursor cursor = db.rawQuery("select count(*) from STRESS_INFO where date <= datetime('now', '" + from + " days', '+9 hours') and date > datetime('now', '" + to + " days', '+9 hours') and signal between " +
+                dBto + " and " + dBfrom + ";", null);
         while (cursor.moveToNext()) {
             cnt = cursor.getInt(0);
         }
@@ -81,13 +91,18 @@ public class DBManager  extends SQLiteOpenHelper {
         return cnt;
     }
 
-    public int SelectStress1month(int i, int weeks){    //최근 1주일 동안 db 횟수 체크
+    public int SelectStress1month(int i, int weeks, int start, int end){    //최근 1주일 동안 db 횟수 체크
         SQLiteDatabase db = getReadableDatabase();
         int cnt = 0;
         int from = (-7 * i) + (weeks * 7);
         int to = (-7 * (i+1)) + (weeks * 7);
 
-        Cursor cursor = db.rawQuery("select count(*) from STRESS_INFO where date <= datetime('now', '" + from + " days', '+9 hours') and date > datetime('now', '" + to + " days', '+9 hours');", null);
+        //dB value (min/max)
+        int dBto = start;
+        int dBfrom = end;
+
+        Cursor cursor = db.rawQuery("select count(*) from STRESS_INFO where date <= datetime('now', '" + from + " days', '+9 hours') and date > datetime('now', '" + to + " days', '+9 hours') and signal between " +
+                dBto + " and " + dBfrom + ";", null);
         while (cursor.moveToNext()) {
             cnt = cursor.getInt(0);
         }

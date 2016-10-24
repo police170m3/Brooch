@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import java.io.IOException;
 
 import kr.mint.testbluetoothspp.BTService;
+import kr.mint.testbluetoothspp.BluetoothSignalReceiver;
 import kr.mint.testbluetoothspp.ConnectionReceiver;
 
 /**
@@ -36,6 +37,7 @@ public class SetCall extends Activity {
         setContentView(R.layout.setting_call);
 
         Button callButton = (Button)findViewById(R.id.setcall_btn_call);
+        BTService.config_check = true;
 
         //BT 연결처리
         _btService = new BTService(getApplicationContext());
@@ -59,6 +61,7 @@ public class SetCall extends Activity {
                     Intent i = new Intent(SetCall.this, MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
+                    BTService.config_check = false;
                 }
             });
         }
@@ -67,22 +70,31 @@ public class SetCall extends Activity {
             @Override
             public void onClick(View view) {
                 //녹음명령
-                try {
+                try {                          //ninny
                     BTService.writesSelect(1);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }                         //ninny
                 //녹음명령
-
 
                 flag = true;
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("content://contacts/people/"));
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
+
+                try {                         //ninny
+                    Thread.sleep(33000);
+                    try {
+                        BTService.writesSelect(2);
+                        Thread.sleep(5000);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }                         //ninny
             }
         });
-
-
     }
 
     @Override

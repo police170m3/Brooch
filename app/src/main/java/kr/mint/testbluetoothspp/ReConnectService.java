@@ -48,12 +48,17 @@ public class ReConnectService {
 
                 Log.i("ReConnectService.java | run", "|==" + "연결 시도 중" + "|");
                 BTService btService = new BTService(_context);
-//                try {
-//                    mmConnectedThread.writesSelect(3);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
                 btService.connect(PreferenceUtil.lastConnectedDeviceAddress());
+
+                try { //ninny
+                    Thread.sleep(2000);
+                    BTService.writesSelect(3);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } //ninny
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         };
         _timer = new Timer();

@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:id="@+id/imageView"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/warninig"
+        android:src="@drawable/danger"
         android:layout_height="300dp"
         android:layout_marginTop="15dp" />
 
@@ -45,7 +45,8 @@
         android:padding="15dp"
         android:singleLine="false"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_marginTop="15dp" />
 
     <!--
     <Button

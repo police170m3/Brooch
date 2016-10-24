@@ -1,6 +1,7 @@
 package com.tathink.brooch.brooch;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -31,20 +32,25 @@ import lecho.lib.hellocharts.view.LineChartView;
  * Created by MSI on 2016-08-17.
  */
 public class StatisticsMonth extends FragmentActivity {
-    private static int SMcount = 0;
+    private static int SMcount = 0, top = 100;
     public static float[] SMdbValue = new float[4];
     public static int weeks = 0;
+    private int min = 0, max = 0, avg = 0, avgSub = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_month);
 
+        getPreferences();
+        avg = (min + max) / 2;
+        avgSub = (min + avg) / 2;     //소리쳤을 때 min, max의 평균
+
         //DBManager 객체 생성
         final DBManager dbManager = new DBManager(getApplicationContext(), "STRESS.db", null, 1);
         //DB 최근 데이터 24시간 횟수 select
         for(int i = 0; i < 4; i++) {
-            SMcount = dbManager.SelectStress1month(i, weeks);
+            SMcount = dbManager.SelectStress1month(i, weeks, min, avgSub-1);
             SMdbValue[3 - i] = (float) SMcount;
         }
 
@@ -198,6 +204,9 @@ public class StatisticsMonth extends FragmentActivity {
         private void generateValues() {
             for(int i = 0; i < 4; i++){
                 randomNumbersTab[0][i] = SMdbValue[i];
+                if (SMdbValue[i] > top) {
+                    top = (int)SMdbValue[i];
+                }
             }
 
         }
@@ -224,7 +233,7 @@ public class StatisticsMonth extends FragmentActivity {
             // Reset viewport height range to (0,100)
             final Viewport v = new Viewport(chart.getMaximumViewport());
             v.bottom = 0;
-            v.top = 100;    //y축 최대 크기
+            v.top = top;    //y축 최대 크기
             v.left = 0;
             v.right = numberOfPoints - 1;
             chart.setMaximumViewport(v);
@@ -361,5 +370,11 @@ public class StatisticsMonth extends FragmentActivity {
             }
 
         }
+    }
+
+    private void getPreferences(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        min = pref.getInt("rvMin", 0);
+        max = pref.getInt("rvMax", 0);
     }
 }

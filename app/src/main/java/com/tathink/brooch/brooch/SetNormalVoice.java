@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
+
+import kr.mint.testbluetoothspp.BTService;
 
 /**
  * Created by MSI on 2016-08-18.
@@ -23,15 +27,25 @@ public class SetNormalVoice extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_normalvoice);
-
+        BTService.config_check = true;
         // Setup the new range seek bar
         final RangeSeekBar rangeSeekBar = new RangeSeekBar(this);
         // Set the range
         getPreferences();   //프리퍼런스 값 읽어오기....
         rangeSeekBar.setTextAboveThumbsColor(R.color.common_signin_btn_dark_text_default);
         rangeSeekBar.setRangeValues(30, 80);
+
+        if(BTService.callrecv_max != null && BTService.callrecv_min != null) {                         //ninny
+            min = Integer.parseInt(BTService.callrecv_min);
+            max = Integer.parseInt(BTService.callrecv_max);
+        }
+        else
+            Toast.makeText(this, "목소리 측정 시간이 짧아서 실패. 다시걸기하세요", Toast.LENGTH_LONG).show();                         //ninny
+
+        Log.i("SetNormalVoice.java" , BTService.callrecv_max + "|" + BTService.callrecv_min);
         rangeSeekBar.setSelectedMinValue(min);   //추후 프리퍼런스의 값 읽어와서 인자전달
         rangeSeekBar.setSelectedMaxValue(max);   //추후 프리퍼런스의 값 읽어와서 인자전달
+
         /*rangeSeekBar.setSelectedMinValue(Integer.parseInt(BTService.callrecv_min));   //추후 프리퍼런스의 값 읽어와서 인자전달
         rangeSeekBar.setSelectedMaxValue(Integer.parseInt(BTService.callrecv_max));   //추후 프리퍼런스의 값 읽어와서 인자전달*/
 
@@ -46,6 +60,7 @@ public class SetNormalVoice extends Activity {
                     Intent i = new Intent(SetNormalVoice.this, MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
+                    BTService.config_check = false;
                 }
             });
         }
@@ -62,7 +77,6 @@ public class SetNormalVoice extends Activity {
                 max = (int) maxValue;
             }
         });
-
 
         ((Button)findViewById(R.id.setnormalvoice_btn_set)).setOnClickListener(new View.OnClickListener() {
             @Override

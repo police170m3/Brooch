@@ -1,6 +1,7 @@
 package com.tathink.brooch.brooch;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -32,14 +33,19 @@ import lecho.lib.hellocharts.view.LineChartView;
  */
 public class RageStatisticsDay extends FragmentActivity {
 
-    private static int SDcount = 0;
+    private static int SDcount = 0, top = 50;
     public static float[] RDdbValue = new float[24];
     public static  int hours = 0;
+    private int min = 0, max = 0, avg = 0, avgSub = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.statistics_day);
+
+        getPreferences();
+        avg = (min + max) / 2;
+        avgSub = (min + avg) / 2;     //소리쳤을 때 min, max의 평균
 
         //Toast.makeText(RageStatisticsDay.this, "현재 hours는 "+hours+" "+((hours)/24)+"일 전입니다.", Toast.LENGTH_LONG).show();
 
@@ -47,7 +53,7 @@ public class RageStatisticsDay extends FragmentActivity {
         final DBManager dbManager = new DBManager(getApplicationContext(), "STRESS.db", null, 1);
         //DB 최근 데이터 24시간 횟수 select
         for(int i = 0; i < 24; i++) {
-            SDcount = dbManager.SelectStress24h(i, hours);
+            SDcount = dbManager.SelectStress24h(i, hours, avgSub, max);
             RDdbValue[23 - i] = (float) SDcount;
         }
 
@@ -206,6 +212,9 @@ public class RageStatisticsDay extends FragmentActivity {
         private void generateValues() {
             for(int i = 0; i < 24; i++){
                 randomNumbersTab[0][i] = RDdbValue[i];
+                if (RDdbValue[i] > top) {
+                    top = (int)RDdbValue[i];
+                }
             }
         }
 
@@ -231,7 +240,7 @@ public class RageStatisticsDay extends FragmentActivity {
             // Reset viewport height range to (0,100)
             final Viewport v = new Viewport(chart.getMaximumViewport());
             v.bottom = 0;
-            v.top = 50;    //y축 최대 크기
+            v.top = top;    //y축 최대 크기
             v.left = 0;
             v.right = numberOfPoints - 1;
             chart.setMaximumViewport(v);
@@ -362,5 +371,11 @@ public class RageStatisticsDay extends FragmentActivity {
             }
 
         }
+    }
+
+    private void getPreferences(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        min = pref.getInt("rvMin", 0);
+        max = pref.getInt("rvMax", 0);
     }
 }

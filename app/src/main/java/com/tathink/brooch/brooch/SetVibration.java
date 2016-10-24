@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import kr.mint.testbluetoothspp.BTService;
+
 /**
  * Created by MSI on 2016-08-23.
  */
@@ -19,7 +21,7 @@ public class SetVibration extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_vibration);
-
+        BTService.config_check = true;
         RadioButton opt1 = (RadioButton)findViewById(R.id.radioButton1);
         RadioButton opt2 = (RadioButton)findViewById(R.id.radioButton2);
         RadioButton opt3 = (RadioButton)findViewById(R.id.radioButton3);
@@ -54,6 +56,7 @@ public class SetVibration extends Activity {
                 //프리퍼런스 값 저장
                 savePreferences();
                 //다음 액티비티로 이동
+                BTService.configure3[8] = 5;  //ninny
                 Intent i = new Intent(SetVibration.this, SetBell.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
@@ -66,6 +69,7 @@ public class SetVibration extends Activity {
                 //프리퍼런스 값 저장
                 savePreferences();
                 //다음 액티비티로 이동
+                BTService.configure3[8] = 7;  //ninny
                 Intent i = new Intent(SetVibration.this, SetBell.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
@@ -77,6 +81,7 @@ public class SetVibration extends Activity {
                 bvTime = 10;
                 //프리퍼런스 값 저장
                 savePreferences();
+                BTService.configure3[8] = 10;  //ninny
                 //다음 액티비티로 이동
                 Intent i = new Intent(SetVibration.this, SetBell.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -89,6 +94,7 @@ public class SetVibration extends Activity {
                 bvTime = 15;
                 //프리퍼런스 값 저장
                 savePreferences();
+                BTService.configure3[8] = 15;  //ninny
                 //다음 액티비티로 이동
                 Intent i = new Intent(SetVibration.this, SetBell.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -139,6 +145,7 @@ public class SetVibration extends Activity {
                     Intent i = new Intent(SetVibration.this, MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
+                    BTService.config_check = false;
                 }
             });
         }

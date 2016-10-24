@@ -12,6 +12,7 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
+
+import kr.mint.testbluetoothspp.BTService;
 
 /**
  * Created by MSI on 2016-08-24.
@@ -35,7 +40,7 @@ public class SetBell extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_bell);
-
+        BTService.config_check = true;
         //프리퍼런스 값 읽어서 선택처리
         getPreferences();
         switch (pbTime) {
@@ -93,6 +98,7 @@ public class SetBell extends Activity {
                     Intent i = new Intent(SetBell.this, MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
+                    BTService.config_check = false;
                 }
             });
         }
@@ -165,6 +171,13 @@ public class SetBell extends Activity {
                         //프리퍼런스 저장
                         saveBellPreferences();
 
+                        try {                          //ninny
+                            BTService.writesSelect(3);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                                                        //ninny
+                        Log.i("SetBell.java | 설정값 확인", "|===========" + BTService.configure3[5] + "|" + BTService.configure3[8]);
                         //통계화면으로 이동 처리
                         Intent i = new Intent(SetBell.this, MainActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

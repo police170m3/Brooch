@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.IOException;
+
+import kr.mint.testbluetoothspp.BTService;
+
 /**
  * Created by MSI on 2016-08-19.
  */
@@ -18,7 +22,7 @@ public class SetRage extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_rage);
-
+        BTService.config_check = true;
         Button callButton = (Button)findViewById(R.id.setrage_btn_set);
 
         //home 버튼 처리
@@ -33,6 +37,7 @@ public class SetRage extends Activity{
                     Intent i = new Intent(SetRage.this, MainActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
+                    BTService.config_check = false;
                 }
             });
         }
@@ -40,6 +45,13 @@ public class SetRage extends Activity{
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                try {                         //ninny
+                    BTService.writesSelect(9);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }                         //ninny
+
                 Intent i = new Intent(SetRage.this, SetRageMeasure.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);

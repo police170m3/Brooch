@@ -1,8 +1,12 @@
 package com.tathink.brooch.brooch;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
@@ -11,12 +15,15 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -26,16 +33,20 @@ import java.io.IOException;
 
 public class EventActivityWarning2 extends Activity {
     public int pbTime, pbKind;
-    public String pic1, pic2, pic3, pic4, pic5, eventText, picURI;
+    public String pic1, pic2, pic3, pic4, pic5, eventText, sms1, sms2, sms3, picURI;
     private MediaPlayer mMediaPlayer;
     int volume, temp, degree;
     private AudioManager audioManager;
     Bitmap resizeBitmap;
+    private boolean smsTime = true;
+    String msgTxt = "통화가 될 때까지 전화를 계속 걸어 주시겠어요?";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventactivity_warning2);
+
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);       //SMS 보내기 퍼미션 설정되어야함
 
         //사진 프리퍼런스 읽어오기
         getPreferences();
@@ -132,7 +143,33 @@ public class EventActivityWarning2 extends Activity {
 
             @Override
             public void onFinish() {
+                //벨소리 정지
                 stopMusic();
+
+                //문자 전송
+                if (smsTime == true) {
+                    if (sms1 != "") {
+                        try {
+                            sendSmsMessage(sms1, msgTxt);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (sms2 != "") {
+                        try {
+                            sendSmsMessage(sms2, msgTxt);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (sms3 != "") {
+                        try {
+                            sendSmsMessage(sms3, msgTxt);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
         };cntr_aCounter.start();
         ///////////////////
@@ -151,6 +188,7 @@ public class EventActivityWarning2 extends Activity {
         findViewById(R.id.stop_btn).setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
+                smsTime = false;
                 stopMusic();
                 finish();
             }
@@ -190,6 +228,62 @@ public class EventActivityWarning2 extends Activity {
         }
     }
 
+    protected void sendSmsMessage(String address, String message) throws Exception{
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(address, null, message, null, null);
+    }
+
+    private void sendSMS(String phoneNumber, String message){
+        String SENT = "SMS_SENT";
+        String DELIVERED = "SMS_DELIVERED";
+
+        PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent(SENT), 0);
+        PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0, new Intent(DELIVERED), 0);
+
+        //when the sms has been sent
+        registerReceiver(new BroadcastReceiver() {
+            public void onReceive(Context arg0, Intent arg1) {
+                switch (getResultCode()) {
+                    case Activity.RESULT_OK:
+                        Toast.makeText(getBaseContext(), "SMS sent", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        Toast.makeText(getBaseContext(), "Generic failure", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NO_SERVICE:
+                        Toast.makeText(getBaseContext(), "No service", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        Toast.makeText(getBaseContext(), "Null PDU", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        Toast.makeText(getBaseContext(), "Radio off", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        }, new IntentFilter(SENT));
+
+        //when the SMS has been delivered
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent arg1) {
+                switch (getResultCode()){
+                    case Activity.RESULT_OK:
+                        Toast.makeText(getBaseContext(), "SMS delivered",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        Toast.makeText(getBaseContext(), "SMS not delivered",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        }, new IntentFilter(DELIVERED));
+
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
+    }
+
     private void getPreferences(){
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         pic1 = pref.getString("pic1", "");
@@ -201,6 +295,10 @@ public class EventActivityWarning2 extends Activity {
 
         pbTime = pref.getInt("pbTime", 5);
         pbKind = pref.getInt("pbKind", 0);
+
+        sms1 = pref.getString("sms1", "");
+        sms2 = pref.getString("sms2", "");
+        sms3 = pref.getString("sms3", "");
 
         temp = 0;
         if(pic1 != ""){ temp += 1;  }

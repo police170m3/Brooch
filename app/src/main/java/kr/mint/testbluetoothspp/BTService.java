@@ -23,12 +23,15 @@ public class BTService extends Service {
     public static String callrecv_min = null;
     public static String callrecv_avg = null;
     public static String callrecv_max = null;
-    public static String brooch_DB = null;
-    public static String brooch_safe = null;
+    public static byte[] configure3 =      {-1, 85, 8, 0, 3, 60, 3, 3, 3, 10};
 
-    private static BluetoothSocket mmSocket;
-    private static InputStream mmInStream;
-    private static OutputStream mmOutStream;
+    public static String brooch_DB = null;
+    public static boolean brooch_safe = false;
+    public static boolean config_check = false;//ninny
+
+    public static BluetoothSocket mmSocket;
+    public static InputStream mmInStream;
+    public static OutputStream mmOutStream;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -139,7 +142,7 @@ public class BTService extends Service {
         public void run() {
             //byte[] buffer = new byte[1024]; // buffer store for the stream
             //int bytes; // bytes returned from read()
-            byte[] readBuffer = new byte[10];
+            byte[] readBuffer = new byte[1024];
             int readBufferPosition = 0;
             final byte delimiter = 10;
 
@@ -167,12 +170,16 @@ public class BTService extends Service {
                                             brooch_DB = String.valueOf((int) readBuffer[5]);
                                             Intent intent = new Intent("kr.mint.bluetooth.receive");
                                             intent.putExtra("signal", bytes2String(readBuffer[5]));
+                                            brooch_safe = false;
+//                                            BluetoothSignalReceiver.signal =  Integer.parseInt(bytes2String(readBuffer[5]));
                                             _context.sendBroadcast(intent);
                                             readBufferPosition = 0;
                                         } else if (readBuffer[4] == 7) {
-                                            brooch_safe = String.valueOf((int) readBuffer[5]);
+                                            brooch_safe = true;
                                             Intent intent = new Intent("kr.mint.bluetooth.receive");
-                                            intent.putExtra("signal", bytes2String(readBuffer[5]));
+                                            intent.putExtra("signal_safe", bytes2String(readBuffer[5]));
+                                            Log.d("00000000000000000000000000000000000000-----", bytes2String(readBuffer[5]));
+//                                            BluetoothSignalReceiver.signal_safe = Integer.parseInt(bytes2String(readBuffer[5]));
                                             _context.sendBroadcast(intent);
                                             readBufferPosition = 0;
                                             // safe 모드 (safe 모듈 실행)
@@ -181,9 +188,9 @@ public class BTService extends Service {
                                             callrecv_min = String.valueOf((int) readBuffer[5]);
                                             callrecv_avg = String.valueOf((int) readBuffer[6]);
                                             callrecv_max = String.valueOf((int) readBuffer[7]);
-                                            Intent intent = new Intent("kr.mint.bluetooth.receive");
-                                            intent.putExtra("signal", "min, avg, max save");
-                                            _context.sendBroadcast(intent);
+//                                            Intent intent = new Intent("kr.mint.bluetooth.receive"); //ninny
+//                                            intent.putExtra("signal", "min, avg, max save");
+//                                            _context.sendBroadcast(intent);   //ninny
                                             readBufferPosition = 0;
                                         }
                                     }
@@ -205,12 +212,14 @@ public class BTService extends Service {
     }
 
     private String bytes2String(byte b) {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<StringBuffer> result = new ArrayList<>();
+//        ArrayList<String> result = new ArrayList<String>();
         //for (int i = 0; i < count; i++) {
 
-        String myInt = String.valueOf((int) b);
+ //       String myInt = String.valueOf((int) b);
+        StringBuffer myInt = new StringBuffer(String.valueOf((int) b));   //stringbuffer로 변경 ninny 10월21일 5시46분
 //                String myInt =  Integer.toHexString((int) (b[i] & 0xFF));
-        result.add(myInt + " dB");
+        result.add(myInt);
 
         // }
         return TextUtils.join("-", result);
@@ -219,12 +228,14 @@ public class BTService extends Service {
     /* Call this from the main Activity to send data to the remote device */
     public static void writesSelect(int num) throws IOException {
 
-        byte[] call1 = {-1, 85, 8, 0, 1, 0, 0, 0, 0, 10};
-        byte[] callrecv2 = {-1, 85, 8, 0, 2, 0, 0, 0, 0, 10};
-        byte[] configure3 = {-1, 85, 8, 0, 2, 60, 3, 3, 3, 10};
-        byte[] cation4 = {-1, 85, 8, 0, 4, 0, 0, 0, 0, 10};
-        byte[] serious5 = {-1, 85, 8, 0, 5, 0, 0, 0, 0, 10};
-        byte[] warning6 = {-1, 85, 8, 0, 6, 0, 0, 0, 0, 10};
+        byte[] call1 =           {-1, 85, 8, 0, 1,  0, 0, 0, 0, 10};
+        byte[] callrecv2 =       {-1, 85, 8, 0, 2,  0, 0, 0, 0, 10};
+   //     byte[] configure3 =      {-1, 85, 8, 0, 3, 60, 3, 3, 3, 10};
+        byte[] cation4 =         {-1, 85, 8, 0, 4,  0, 0, 0, 0, 10};
+        byte[] serious5 =        {-1, 85, 8, 0, 5,  0, 0, 0, 0, 10};
+        byte[] warning6 =        {-1, 85, 8, 0, 6,  0, 0, 0, 0, 10};
+        byte[] callangry7 =      {-1, 85, 8, 0, 9,  0, 0, 0, 0, 10};                         //ninny
+        byte[] broothstates8 =      {-1, 85, 8, 0, 7,  0, 0, 0, 0, 10};                         //ninny
 
         switch (num) {
             case 1:
@@ -263,6 +274,18 @@ public class BTService extends Service {
                     Log.d("hello~~~~~~~~~~~", "mmOutStream.write(warning6[i]);");
                 }
                 break;
+            case 9:                         //ninny
+                for (int i = 0; i <= 9; i++) {
+                    mmOutStream.write(callangry7[i]);
+                    Log.d("hello~~~~~~~~~~~", "mmOutStream.write(callangry7[i]);");
+                }
+                break;
+            case 10:
+                for (int i = 0; i <= 9; i++) {
+                    mmOutStream.write(broothstates8[i]);
+                    Log.d("hello~~~~~~~~~~~", "mmOutStream.write(broothstates8[i]);");
+                }
+                break;                         //ninny
         }
     }
 

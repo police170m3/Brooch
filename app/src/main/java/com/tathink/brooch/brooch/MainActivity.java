@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.IOException;
+
 import kr.mint.testbluetoothspp.BTService;
 import kr.mint.testbluetoothspp.ConnectionReceiver;
 import kr.mint.testbluetoothspp.Send;
@@ -28,26 +30,48 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BTService.config_check = false;
 
         ImageView gear = (ImageView) findViewById(R.id.set);
+        ImageView bt = (ImageView) findViewById(R.id.bt);
 
         //BT 연결처리
         _btService = new BTService(getApplicationContext());
         mBTAdapter = BluetoothAdapter.getDefaultAdapter();
+        /*
+        //BT연결 처리는 블루투스 아이콘 눌러서 처리
         if(!ConnectionReceiver.btCheck){
             ConnectionReceiver.btCheck = true;
             Intent serverIntent = new Intent(this, DeviceListActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
+        }*/
+
+        //현상태점검
+        if(ConnectionReceiver.btCheck) {
+            try {                          //ninny
+                BTService.writesSelect(10);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }                         //ninny
         }
-        //BT 연결처리
+        //현상태점검
 
         gear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //ImageView 클릭시 이벤트 처리........
                 Intent i = new Intent(MainActivity.this, SetCall.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(i);
+            }
+        });
+
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ImageView 클릭시 이벤트 처리........
+                Intent i = new Intent(MainActivity.this, DeviceListActivity.class);
+                startActivityForResult(i, REQUEST_CONNECT_DEVICE_INSECURE);
             }
         });
 
@@ -140,6 +164,20 @@ public class MainActivity extends Activity {
         //테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BTService.config_check = false;
+        //현상태점검
+        if(ConnectionReceiver.btCheck) {    //ninny
+            try {
+                BTService.writesSelect(10);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }                         //ninny
+        }               //ninny
+        //현상태점검
+    }
 //    @Override
 //    protected void onDestroy(){
 //        super.onDestroy();
@@ -166,6 +204,13 @@ public class MainActivity extends Activity {
 
             BluetoothDevice device = mBTAdapter.getRemoteDevice(address);
             _btService.connect(device);
+            //현상태점검
+/*            try {                          //ninny
+                BTService.writesSelect(10);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }    */                     //ninny
+            //현상태점검
         }
     }
 

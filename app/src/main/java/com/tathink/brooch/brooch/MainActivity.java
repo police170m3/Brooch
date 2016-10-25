@@ -13,10 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import java.io.IOException;
-
 import kr.mint.testbluetoothspp.BTService;
-import kr.mint.testbluetoothspp.ConnectionReceiver;
 import kr.mint.testbluetoothspp.Send;
 
 public class MainActivity extends Activity {
@@ -46,7 +43,7 @@ public class MainActivity extends Activity {
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
         }*/
 
-        //현상태점검
+/*        //현상태점검
         if(ConnectionReceiver.btCheck) {
             try {                          //ninny
                 BTService.writesSelect(10);
@@ -54,7 +51,7 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
             }                         //ninny
         }
-        //현상태점검
+        //현상태점검*/
 
         gear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,7 +165,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         BTService.config_check = false;
-        //현상태점검
+/*        //현상태점검
         if(ConnectionReceiver.btCheck) {    //ninny
             try {
                 BTService.writesSelect(10);
@@ -176,7 +173,7 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
             }                         //ninny
         }               //ninny
-        //현상태점검
+        //현상태점검*/
     }
 //    @Override
 //    protected void onDestroy(){

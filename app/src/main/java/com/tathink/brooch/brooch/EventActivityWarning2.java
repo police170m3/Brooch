@@ -39,7 +39,7 @@ public class EventActivityWarning2 extends Activity {
     private AudioManager audioManager;
     Bitmap resizeBitmap;
     private boolean smsTime = true;
-    String msgTxt = "통화가 될 때까지 전화를 계속 걸어 주시겠어요?";
+    String msgTxt = "\"저의 양육 스트레스를 덜어줄 따뜻한 위로가 필요합니다.\n지금 전화를 걸어 힘이 되어주세요.\"";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,7 +190,7 @@ public class EventActivityWarning2 extends Activity {
             public void onClick(View view) {
                 smsTime = false;
                 stopMusic();
-                finish();
+                //finish();      //sejin 2016.10.25
             }
         });
     }

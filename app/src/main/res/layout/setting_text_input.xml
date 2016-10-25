@@ -14,7 +14,7 @@
         android:ems="10"
         android:background="@drawable/round"
         android:textAlignment="center"
-        android:text="화내시는 모습을 보면 무섭고 슬퍼요." />
+        android:text='"죄송해요. 하지만, 소리를 지르시면 저는 무서워요."' />
 
     <Button
         android:layout_width="wrap_content"

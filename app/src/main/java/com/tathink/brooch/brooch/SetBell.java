@@ -30,7 +30,7 @@ import kr.mint.testbluetoothspp.BTService;
  */
 public class SetBell extends Activity {
     public boolean prefSave = false;
-    public int pbTime = 5, pbKind = 1;
+    public int pbTime = 5, pbKind = 0;
     RadioButton radioBtn_on;
     TextView textView1, textView2;
     int temp;       //임시 변수
@@ -140,6 +140,7 @@ public class SetBell extends Activity {
     @Override
     @Deprecated
     protected Dialog onCreateDialog(int id) {
+        temp = pbKind;      //sejin 2016.10.25
         switch (id) {
             case 1:
                 final AlertDialog.Builder builder = new AlertDialog.Builder(SetBell.this);

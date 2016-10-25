@@ -59,6 +59,9 @@ public class ReConnectService {
                 catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
+                BTService.config_check = false;     //ninny 2016.10.25
+                BTService.brooch_safe = false;      //ninny 2016.10.25
             }
         };
         _timer = new Timer();

@@ -170,6 +170,7 @@ public class BTService extends Service {
                                             brooch_DB = String.valueOf((int) readBuffer[5]);
                                             Intent intent = new Intent("kr.mint.bluetooth.receive");
                                             intent.putExtra("signal", bytes2String(readBuffer[5]));
+                                            Log.d("00000000000000000000000000000000000000-----", bytes2String(readBuffer[5]));
                                             brooch_safe = false;
 //                                            BluetoothSignalReceiver.signal =  Integer.parseInt(bytes2String(readBuffer[5]));
                                             _context.sendBroadcast(intent);

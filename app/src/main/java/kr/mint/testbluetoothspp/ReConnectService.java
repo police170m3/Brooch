@@ -1,14 +1,19 @@
 package kr.mint.testbluetoothspp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
+import com.tathink.brooch.brooch.MainActivity;
+
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.Context;
-import android.util.Log;
+import static android.R.attr.delay;
 
 public class ReConnectService {
     private static ReConnectService _instance;
@@ -53,6 +58,7 @@ public class ReConnectService {
                 try { //ninny
                     Thread.sleep(2000);
                     BTService.writesSelect(3);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 } //ninny

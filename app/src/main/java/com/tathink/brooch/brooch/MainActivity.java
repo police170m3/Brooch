@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import kr.mint.testbluetoothspp.BTService;
-import kr.mint.testbluetoothspp.Send;
 
 public class MainActivity extends Activity {
     private static final int REQUEST_ENABLE_BT = 100;
@@ -83,7 +82,7 @@ public class MainActivity extends Activity {
         });
 
 
-        //테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////
+        /*//테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////
         ((Button)findViewById(R.id.safe_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,7 +157,7 @@ public class MainActivity extends Activity {
                 startActivity(i);
             }
         });
-        //테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////
+        //테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////*/
     }
 
     @Override

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#74c9be"
     tools:context="com.tathink.brooch.brooch.MainActivity"
     android:orientation="vertical">
 
@@ -33,10 +33,10 @@
     </FrameLayout>
 
     <ImageView
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="370dp"
         android:id="@+id/imageView"
-        android:src="@drawable/main"
+        android:src="@drawable/intro"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal" />
@@ -48,66 +48,7 @@
         android:id="@+id/btnStatistics"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="안전"
-            android:id="@+id/safe_btn" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="주의"
-            android:id="@+id/caution_btn" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="심각"
-            android:id="@+id/serious_btn" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="경고"
-            android:id="@+id/warning_btn" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BT TEST"
-            android:id="@+id/bt_btn" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DB TEST"
-            android:id="@+id/dbtest_btn" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="경고2"
-            android:id="@+id/warning2_btn" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SEND"
-            android:id="@+id/send_btn" />
-    </LinearLayout>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp" />
 
 </LinearLayout>

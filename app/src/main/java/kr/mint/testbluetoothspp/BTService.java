@@ -25,12 +25,12 @@ public class BTService extends Service {
     public static String callrecv_max = null;
     public static byte[] configure3 =      {-1, 85, 8, 0, 3, 60, 3, 3, 3, 10};
 
-    public static String brooch_DB = null;
+    //  public static String brooch_DB = null;
     public static boolean brooch_safe = false;
     public static boolean config_check = false;//ninny
 
     public static BluetoothSocket mmSocket;
-    public static InputStream mmInStream;
+    //    public static InputStream mmInStream;
     public static OutputStream mmOutStream;
 
     @Override
@@ -65,6 +65,17 @@ public class BTService extends Service {
         mAdapter.cancelDiscovery();
         ConnectedThread thread = new ConnectedThread($socket);
         thread.start();
+        try { //ninny
+            Thread.sleep(2000);
+            BTService.writesSelect(3);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } //ninny
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        BTService.config_check = false;
+        BTService.brooch_safe = false;
     }
 
     private class ConnectThread extends Thread {
@@ -123,6 +134,8 @@ public class BTService extends Service {
 
     public class ConnectedThread extends Thread {
 
+        private final InputStream mmInStream;
+
         public ConnectedThread(BluetoothSocket socket) {
             mmSocket = socket;
             InputStream tmpIn = null;
@@ -142,7 +155,10 @@ public class BTService extends Service {
         public void run() {
             //byte[] buffer = new byte[1024]; // buffer store for the stream
             //int bytes; // bytes returned from read()
-            byte[] readBuffer = new byte[1024];
+            byte[] readBuffer = new byte[10];
+            for (int i = 0; i < 10; i++) {
+                readBuffer[i] = 0;
+            }
             int readBufferPosition = 0;
             final byte delimiter = 10;
 
@@ -153,13 +169,14 @@ public class BTService extends Service {
                     // Send the obtained bytes to the UI Activity
 //               mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
                     //Log.i("BTService.java | run", "|==" + bytes2String(buffer, bytes) + "|");
+                    Thread.sleep(100);//ninny
 
                     int bytesAvailable = mmInStream.available();
-
+                    Log.d("----------BTService 값-169-------", "readBuffer[4]:" + bytes2String(readBuffer[4]) + "   readBuffer[5]:" + bytes2String(readBuffer[5]));
                     if (bytesAvailable > 0) {
                         final byte[] packetBytes = new byte[bytesAvailable];
                         mmInStream.read(packetBytes);
-
+                        Log.d("----------BTService 값-169-------", "readBuffer[4]:" + bytes2String(readBuffer[4]) + "   readBuffer[5]:" + bytes2String(readBuffer[5]));
                         for (int i = 0; i < bytesAvailable; i++) {
                             byte b = packetBytes[i];
 
@@ -167,10 +184,9 @@ public class BTService extends Service {
                                 if (readBuffer[0] == -1) {
                                     if (readBuffer[1] == 85) {
                                         if (readBuffer[4] == 8) {
-                                            brooch_DB = String.valueOf((int) readBuffer[5]);
+                                            //   brooch_DB = String.valueOf((int) readBuffer[5]);
                                             Intent intent = new Intent("kr.mint.bluetooth.receive");
                                             intent.putExtra("signal", bytes2String(readBuffer[5]));
-                                            Log.d("00000000000000000000000000000000000000-----", bytes2String(readBuffer[5]));
                                             brooch_safe = false;
 //                                            BluetoothSignalReceiver.signal =  Integer.parseInt(bytes2String(readBuffer[5]));
                                             _context.sendBroadcast(intent);
@@ -196,7 +212,6 @@ public class BTService extends Service {
                                         }
                                     }
                                 }
-
                             } else {
                                 readBuffer[readBufferPosition++] = b;
                             }
@@ -213,17 +228,18 @@ public class BTService extends Service {
     }
 
     private String bytes2String(byte b) {
-        ArrayList<StringBuffer> result = new ArrayList<>();
-//        ArrayList<String> result = new ArrayList<String>();
+//        ArrayList<StringBuffer> result = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<String>();
         //for (int i = 0; i < count; i++) {
 
- //       String myInt = String.valueOf((int) b);
-        StringBuffer myInt = new StringBuffer(String.valueOf((int) b));   //stringbuffer로 변경 ninny 10월21일 5시46분
+        String myInt = String.valueOf((int) b);
+        //       StringBuffer myInt = new StringBuffer(String.valueOf((int) b));   //stringbuffer로 변경 ninny 10월21일 5시46분
 //                String myInt =  Integer.toHexString((int) (b[i] & 0xFF));
         result.add(myInt);
 
         // }
         return TextUtils.join("-", result);
+
     }
 
     /* Call this from the main Activity to send data to the remote device */
@@ -231,12 +247,12 @@ public class BTService extends Service {
 
         byte[] call1 =           {-1, 85, 8, 0, 1,  0, 0, 0, 0, 10};
         byte[] callrecv2 =       {-1, 85, 8, 0, 2,  0, 0, 0, 0, 10};
-   //     byte[] configure3 =      {-1, 85, 8, 0, 3, 60, 3, 3, 3, 10};
+        //     byte[] configure3 =     {-1, 85, 8, 0, 3, 60, 3, 3, 3, 10};
         byte[] cation4 =         {-1, 85, 8, 0, 4,  0, 0, 0, 0, 10};
         byte[] serious5 =        {-1, 85, 8, 0, 5,  0, 0, 0, 0, 10};
         byte[] warning6 =        {-1, 85, 8, 0, 6,  0, 0, 0, 0, 10};
         byte[] callangry7 =      {-1, 85, 8, 0, 9,  0, 0, 0, 0, 10};                         //ninny
-        byte[] broothstates8 =      {-1, 85, 8, 0, 7,  0, 0, 0, 0, 10};                         //ninny
+        byte[] broothstates8 =   {-1, 85, 8, 0, 7,  0, 0, 0, 0, 10};                         //ninny
 
         switch (num) {
             case 1:
@@ -353,10 +369,10 @@ public class BTService extends Service {
 
     */
 /**
-     * 주소로 연결하기
-     *
-     * @param $address mac address
-     *//*
+ * 주소로 연결하기
+ *
+ * @param $address mac address
+ *//*
 
     public void connect(String $address) {
         BluetoothDevice device = mAdapter.getRemoteDevice($address);
@@ -421,8 +437,8 @@ public class BTService extends Service {
 
         */
 /**
-         * Will cancel an in-progress connection, and close the socket
-         *//*
+ * Will cancel an in-progress connection, and close the socket
+ *//*
 
         public void cancel() {
             try {

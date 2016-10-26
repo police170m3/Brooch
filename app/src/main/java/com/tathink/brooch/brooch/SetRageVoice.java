@@ -99,7 +99,7 @@ public class SetRageVoice   extends Activity {
             @Override
             public void onClick(View view) {
                 //다시 측정하기 - 화났을때 목소리
-                Intent i = new Intent(SetRageVoice.this, SetRageMeasure.class);
+                Intent i = new Intent(SetRageVoice.this, SetRage.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
@@ -121,6 +121,7 @@ public class SetRageVoice   extends Activity {
     @Override
     protected  void onDestroy(){
         super.onDestroy();
+
     }
 
     private void savePreferences(int min, int max){

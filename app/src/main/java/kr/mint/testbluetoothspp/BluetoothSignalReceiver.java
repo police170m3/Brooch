@@ -44,7 +44,7 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
         }*/
 
         if (prefSave != false) {
-
+            Log.d("-----------------------------------------------------", "-----------------------------------------------------");
             if (BTService.brooch_safe == false) {
                 signal = Integer.parseInt($intent.getStringExtra("signal"));
             } else {

@@ -55,7 +55,7 @@ public class ReConnectService {
                 BTService btService = new BTService(_context);
                 btService.connect(PreferenceUtil.lastConnectedDeviceAddress());
 
-                try { //ninny
+/*                try { //ninny
                     Thread.sleep(2000);
                     BTService.writesSelect(3);
 
@@ -67,7 +67,7 @@ public class ReConnectService {
                 }
 
                 BTService.config_check = false;     //ninny 2016.10.25
-                BTService.brooch_safe = false;      //ninny 2016.10.25
+                BTService.brooch_safe = false;      //ninny 2016.10.25*/
             }
         };
         _timer = new Timer();

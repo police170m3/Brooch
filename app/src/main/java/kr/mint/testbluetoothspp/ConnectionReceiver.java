@@ -11,7 +11,7 @@ import android.widget.Toast;
 public class ConnectionReceiver extends BroadcastReceiver {
     public static boolean btCheck = false;
     @Override
-    public void onReceive(Context $context, Intent $intent) {
+    public void onReceive(final Context $context, Intent $intent) {
         ContextUtil.CONTEXT = $context;
 
         Log.i("ConnectionReceiver.java | onReceive", "|===========" + $intent.getAction() + "|");
@@ -44,8 +44,14 @@ public class ConnectionReceiver extends BroadcastReceiver {
             if (address.equals(lastRequestAddress)) {
                 PreferenceUtil.putLastConnectedDeviceAddress(lastRequestAddress);
                 Log.i("ConnectionReceiver.java | onReceive", "|==" + "연결 완료" + "|" + lastRequestAddress);
-                Toast.makeText($context, "연결되었습니다.", Toast.LENGTH_LONG).show();
                 ReConnectService.instance($context).stopReconnect();
+
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText($context, "블루투스가 연결되었습니다.", Toast.LENGTH_LONG).show();
 
 /*            Intent intent = new Intent($context, MainActivity.class);
             intent.setAction("kr.mint.bluetooth.receive");

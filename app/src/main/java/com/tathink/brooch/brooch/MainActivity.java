@@ -4,7 +4,6 @@ package com.tathink.brooch.brooch;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,19 +13,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import kr.mint.testbluetoothspp.BTService;
+import kr.mint.testbluetoothspp.BluetoothSignalReceiver;
 
 public class MainActivity extends Activity {
     private static final int REQUEST_ENABLE_BT = 100;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 200;
     private BluetoothAdapter mBTAdapter;
     private BTService _btService;
-    BroadcastReceiver myReceiver;
+
+//    BroadcastReceiver myReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BTService.config_check = false;
+        BluetoothSignalReceiver.activity_close = true;
 
         ImageView gear = (ImageView) findViewById(R.id.set);
         ImageView bt = (ImageView) findViewById(R.id.bt);
@@ -42,15 +44,15 @@ public class MainActivity extends Activity {
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
         }*/
 
-/*        //현상태점검
-        if(ConnectionReceiver.btCheck) {
+        //현상태점검
+/*        if(ConnectionReceiver.btCheck) {
             try {                          //ninny
                 BTService.writesSelect(10);
             } catch (IOException e) {
                 e.printStackTrace();
             }                         //ninny
-        }
-        //현상태점검*/
+        }*/
+        //현상태점검
 
         gear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +84,7 @@ public class MainActivity extends Activity {
         });
 
 
-        /*//테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////
+      /*  //테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////
         ((Button)findViewById(R.id.safe_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,27 +166,29 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         BTService.config_check = false;
-/*        //현상태점검
-        if(ConnectionReceiver.btCheck) {    //ninny
+        BluetoothSignalReceiver.activity_close = true;
+        //현상태점검
+/*        if(ConnectionReceiver.btCheck) {    //ninny
             try {
                 BTService.writesSelect(10);
             } catch (IOException e) {
                 e.printStackTrace();
             }                         //ninny
-        }               //ninny
-        //현상태점검*/
+        }    */           //ninny
+        //현상태점검
     }
-//    @Override
-//    protected void onDestroy(){
-//        super.onDestroy();
-//        unregisterReceiver(myReceiver);
-//    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+        BluetoothSignalReceiver.activity_close = false;
+        Log.d("onPause99999999999999999999999999999999999999999999", " : " + BluetoothSignalReceiver.activity_close);
+        //unregisterReceiver(myReceiver);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
 
         Log.i("MainActivity.java | onActivityResult", "|==" + requestCode + "|" + resultCode + "(ok = " + RESULT_OK + ")|" + data);
         if (resultCode != RESULT_OK) {

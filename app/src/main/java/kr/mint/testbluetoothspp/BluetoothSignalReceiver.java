@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.os.PowerManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.tathink.brooch.brooch.EventActivityCaution;
 import com.tathink.brooch.brooch.EventActivitySafe;
@@ -28,6 +27,7 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
     private int signal_safe_DB = 0;   //ninny
     private  Context context;
     private static int danger_count=0;
+    public static boolean activity_close = true;
 
 
     @Override
@@ -44,11 +44,11 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
         }*/
 
         if (prefSave != false) {
-            Log.d("-----------------------------------------------------", "-----------------------------------------------------");
+
             if (BTService.brooch_safe == false) {
                 signal = Integer.parseInt($intent.getStringExtra("signal"));
             } else {
-               // signal_safe = true;
+                // signal_safe = true;
                 signal_safe_DB = Integer.parseInt($intent.getStringExtra("signal_safe"));
             }
             avg = (min + max) / 2;
@@ -59,10 +59,10 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
             final DBManager dbManager = new DBManager(ContextUtil.CONTEXT.getApplicationContext(), "STRESS.db", null, 1);
 
             Log.i("BluetoothSignalReceiver.java | onReceive", "|action : " + $intent.getAction() + "| signal : " + $intent.getStringExtra("signal") + " dB|");
-            Toast.makeText($context, $intent.getStringExtra("signal"), Toast.LENGTH_SHORT).show();
+            //    Toast.makeText($context, $intent.getStringExtra("signal"), Toast.LENGTH_SHORT).show();
 
             Log.i("BluetoothSignalReceiver.java | onReceive", "|action : " + $intent.getAction() + "| signal_safe : " + $intent.getStringExtra("signal_safe") + " dB|");
-            Toast.makeText($context, $intent.getStringExtra("signal_safe"), Toast.LENGTH_SHORT).show();
+            //  Toast.makeText($context, $intent.getStringExtra("signal_safe"), Toast.LENGTH_SHORT).show();
 
 
 
@@ -75,13 +75,15 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
                 signal_safe_DB = 0;
                 danger_count=0;
                 Log.d("----------------------------------안 전 구 간----------------------------------", "EventActivitySafe");
-                Intent i = new Intent($context, EventActivitySafe.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                PendingIntent pi = PendingIntent.getActivity($context, 0, i, PendingIntent.FLAG_ONE_SHOT);
-                try {
-                    pi.send();
-                } catch (PendingIntent.CanceledException e) {
-                    e.printStackTrace();
+                if(activity_close == true) {
+                    Intent i = new Intent($context, EventActivitySafe.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    PendingIntent pi = PendingIntent.getActivity($context, 0, i, PendingIntent.FLAG_ONE_SHOT);
+                    try {
+                        pi.send();
+                    } catch (PendingIntent.CanceledException e) {
+                        e.printStackTrace();
+                    }
                 }
 
 /*                final CountDownTimer countDownTimer = new CountDownTimer(500, 1000) {
@@ -98,7 +100,7 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
 
             }
 
-           // Log.i("BluetoothSignalReceiver.java |", "danger_count|==" + danger_count + "|");
+            // Log.i("BluetoothSignalReceiver.java |", "danger_count|==" + danger_count + "|");
             else if(signal >= min && BTService.brooch_safe == false && BTService.config_check ==false) {
                 //dB값 위험 구간중 최소값 이상일 때 SQLite에 저장
                 //android.text.format.DateFormat df = new android.text.format.DateFormat();
@@ -151,30 +153,34 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
 
                         //주의구간 Activity Event
                         Log.d("----------------------------------주 의 구 간----------------------------------", "EventActivityCaution");
-                        Intent i = new Intent($context, EventActivityCaution.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        PendingIntent pi = PendingIntent.getActivity($context, 0, i, PendingIntent.FLAG_ONE_SHOT);
-                        try {
-                            pi.send();
-                        } catch (PendingIntent.CanceledException e) {
-                            e.printStackTrace();
-                        }
-
-                        final CountDownTimer countDownTimer = new CountDownTimer(2000, 1000) {
-                            @Override
-                            public void onTick(long millisUntilFinished) {
-//                                Log.d("-------BluetoothSignalReceiver   217   ");
+                        Log.d("999999999999999999999999999999999999999999999999", " : " + activity_close);
+                        if(activity_close == true) {
+                            Intent i = new Intent($context, EventActivityCaution.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            PendingIntent pi = PendingIntent.getActivity($context, 0, i, PendingIntent.FLAG_ONE_SHOT);
+                            try {
+                                pi.send();
+                            } catch (PendingIntent.CanceledException e) {
+                                e.printStackTrace();
                             }
 
-                            @Override
-                            public void onFinish() {
+                            final CountDownTimer countDownTimer = new CountDownTimer(2000, 1000) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+//                                Log.d("-------BluetoothSignalReceiver   217   ");
+                                }
+
+                                @Override
+                                public void onFinish() {
 //                                try {
 //                                    Thread.sleep(3000);
 //                                } catch (InterruptedException e) {
 //                                    e.printStackTrace();
 //                                }
-                            }
-                        };countDownTimer.start();
+                                }
+                            };countDownTimer.start();
+
+                        } //activity_close == true
 
                     } else if (signal >= avgSub && signal < avg) {
                         signal = 0;
@@ -188,31 +194,34 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
 
                         //심각구간 Activity Event
                         Log.d("----------------------------------심 각 구 간----------------------------------", "EventActivitySerious");
-                        Intent i = new Intent($context, EventActivitySerious.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        PendingIntent pi = PendingIntent.getActivity($context, 0, i, PendingIntent.FLAG_ONE_SHOT);
-                        try {
-                            pi.send();
-                        } catch (PendingIntent.CanceledException e) {
-                            e.printStackTrace();
-                        }
-
-                        final CountDownTimer countDownTimer = new CountDownTimer(2000, 1000) {
-                            @Override
-                            public void onTick(long millisUntilFinished) {
-//                                Log.d("-------BluetoothSignalReceiver   217   ");
+                        Log.d("999999999999999999999999999999999999999999999999", " : " + activity_close);
+                        if(activity_close == true) {
+                            Intent i = new Intent($context, EventActivitySerious.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            PendingIntent pi = PendingIntent.getActivity($context, 0, i, PendingIntent.FLAG_ONE_SHOT);
+                            try {
+                                pi.send();
+                            } catch (PendingIntent.CanceledException e) {
+                                e.printStackTrace();
                             }
 
-                            @Override
-                            public void onFinish() {
+                            final CountDownTimer countDownTimer = new CountDownTimer(2000, 1000) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+//                                Log.d("-------BluetoothSignalReceiver   217   ");
+                                }
+
+                                @Override
+                                public void onFinish() {
 //                                try {
 //                                    Thread.sleep(3000);
 //                                } catch (InterruptedException e) {
 //                                    e.printStackTrace();
 //                                }
-                            }
-                        };countDownTimer.start();
-
+                                }
+                            };
+                            countDownTimer.start();
+                        } //activity_close == true
                     }
                     else if(signal >= avg && danger_count >= 1) {
                         signal = 0;
@@ -224,38 +233,42 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
                             e.printStackTrace();
                         }
                         Log.d("----------------------------------경 고 구 간2----------------------------------", "EventActivityWarning");
-                        Intent i = new Intent(context, EventActivityWarning2.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_ONE_SHOT);
-                        try {
-                            pi.send();
-                        } catch (PendingIntent.CanceledException e) {
-                            e.printStackTrace();
-                        }
+                        Log.d("999999999999999999999999999999999999999999999999", " : " + activity_close);
+                        if(activity_close == true) {
+                            Intent i = new Intent(context, EventActivityWarning2.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_ONE_SHOT);
+                            try {
+                                pi.send();
+                            } catch (PendingIntent.CanceledException e) {
+                                e.printStackTrace();
+                            }
 
 
 //                        final CountDownTimer countDownTimer = new CountDownTimer(bvTime*1000, 1000) {
-                        final CountDownTimer countDownTimer = new CountDownTimer(2000, 1000) {
-                            @Override
-                            public void onTick(long millisUntilFinished) {
+                            final CountDownTimer countDownTimer = new CountDownTimer(2000, 1000) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
 //                                Log.d("-------BluetoothSignalReceiver   217   ");
-                            }
+                                }
 
-                            @Override
-                            public void onFinish() {
+                                @Override
+                                public void onFinish() {
 //                                try {
 //                                    Thread.sleep(bvTime*1000);
 //                                } catch (InterruptedException e) {
 //                                    e.printStackTrace();
 //                                }
-                            }
-                        };countDownTimer.start();
+                                }
+                            };countDownTimer.start();
+
+                        } //activity_close == true
                     }
                     else if (signal >= avg ) {
                         signal = 0;
                         danger_count++;
                         Log.i("BluetoothSignalReceiver.java |", "danger_count  187|==" + danger_count + "|");
-                  //경고 Brooch Event
+                        //경고 Brooch Event
                         try {
                             BTService.writesSelect(6);
                         } catch (IOException e) {
@@ -264,31 +277,35 @@ public class BluetoothSignalReceiver extends BroadcastReceiver {
 
                         //경고구간 Activity Event
                         Log.d("----------------------------------경 고 구 간----------------------------------", "EventActivityWarning");
-                        Intent i = new Intent($context, EventActivityWarning.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        PendingIntent pi = PendingIntent.getActivity($context, 0, i, PendingIntent.FLAG_ONE_SHOT);
-                        try {
-                            pi.send();
-                        } catch (PendingIntent.CanceledException e) {
-                            e.printStackTrace();
-                        }
-
-//                        final CountDownTimer countDownTimer = new CountDownTimer(bvTime*1000, 1000) {
-                        final CountDownTimer countDownTimer = new CountDownTimer(2000, 1000) {
-                            @Override
-                            public void onTick(long millisUntilFinished) {
-//                                Log.d("-------BluetoothSignalReceiver   217   ");
+                        Log.d("999999999999999999999999999999999999999999999999", " : " + activity_close);
+                        if(activity_close == true) {
+                            Intent i = new Intent($context, EventActivityWarning.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            PendingIntent pi = PendingIntent.getActivity($context, 0, i, PendingIntent.FLAG_ONE_SHOT);
+                            try {
+                                pi.send();
+                            } catch (PendingIntent.CanceledException e) {
+                                e.printStackTrace();
                             }
 
-                            @Override
-                            public void onFinish() {
+//                        final CountDownTimer countDownTimer = new CountDownTimer(bvTime*1000, 1000) {
+                            final CountDownTimer countDownTimer = new CountDownTimer(2000, 1000) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+//                                Log.d("-------BluetoothSignalReceiver   217   ");
+                                }
+
+                                @Override
+                                public void onFinish() {
 //                                try {
 //                                    Thread.sleep(bvTime*1000);
 //                                } catch (InterruptedException e) {
 //                                    e.printStackTrace();
 //                                }
-                            }
-                        };countDownTimer.start();
+                                }
+                            };
+                            countDownTimer.start();
+                        }        //activity_close == true
 
                     }
                 }

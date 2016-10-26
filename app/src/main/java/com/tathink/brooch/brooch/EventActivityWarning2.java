@@ -27,6 +27,8 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import kr.mint.testbluetoothspp.BluetoothSignalReceiver;
+
 /**
  * Created by MSI on 2016-09-22.
  */
@@ -45,6 +47,7 @@ public class EventActivityWarning2 extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventactivity_warning2);
+        BluetoothSignalReceiver.activity_close = true;
 
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);       //SMS 보내기 퍼미션 설정되어야함
 
@@ -306,5 +309,17 @@ public class EventActivityWarning2 extends Activity {
         if(pic3 != ""){ temp += 1;  }
         if(pic4 != ""){ temp += 1;  }
         if(pic5 != ""){ temp += 1;  }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BluetoothSignalReceiver.activity_close = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BluetoothSignalReceiver.activity_close = true;
     }
 }

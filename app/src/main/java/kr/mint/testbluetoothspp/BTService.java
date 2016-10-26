@@ -172,11 +172,11 @@ public class BTService extends Service {
                     Thread.sleep(100);//ninny
 
                     int bytesAvailable = mmInStream.available();
-                    Log.d("----------BTService 값-169-------", "readBuffer[4]:" + bytes2String(readBuffer[4]) + "   readBuffer[5]:" + bytes2String(readBuffer[5]));
+                    //Log.d("----------BTService 값-169-------", "readBuffer[4]:" + bytes2String(readBuffer[4]) + "   readBuffer[5]:" + bytes2String(readBuffer[5]));
                     if (bytesAvailable > 0) {
                         final byte[] packetBytes = new byte[bytesAvailable];
                         mmInStream.read(packetBytes);
-                        Log.d("----------BTService 값-169-------", "readBuffer[4]:" + bytes2String(readBuffer[4]) + "   readBuffer[5]:" + bytes2String(readBuffer[5]));
+                        //Log.d("----------BTService 값-169-------", "readBuffer[4]:" + bytes2String(readBuffer[4]) + "   readBuffer[5]:" + bytes2String(readBuffer[5]));
                         for (int i = 0; i < bytesAvailable; i++) {
                             byte b = packetBytes[i];
 

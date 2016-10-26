@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import kr.mint.testbluetoothspp.BluetoothSignalReceiver;
+
 /**
  * Created by MSI on 2016-08-25.
  */
@@ -20,6 +22,7 @@ public class EventActivityWarning extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eventactivity_warning);
+        BluetoothSignalReceiver.activity_close = true;
 
         //getPreferences();
 
@@ -124,4 +127,16 @@ public class EventActivityWarning extends Activity{
         pbTime = pref.getInt("pbTime", 5);
         pbKind = pref.getInt("pbKind", 0);
     }*/
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BluetoothSignalReceiver.activity_close = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BluetoothSignalReceiver.activity_close = true;
+    }
 }

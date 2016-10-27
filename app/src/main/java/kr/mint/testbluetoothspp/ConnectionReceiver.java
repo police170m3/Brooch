@@ -35,6 +35,7 @@ public class ConnectionReceiver extends BroadcastReceiver {
         if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
             reconnect($context, address);
             btCheck = false;
+            ReConnectService.ReConnectServiceStop = false; //ninny 10월 26일 6시35분
         } else if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
             btCheck = true;
             String lastRequestAddress = PreferenceUtil.lastRequestDeviceAddress();
@@ -52,7 +53,6 @@ public class ConnectionReceiver extends BroadcastReceiver {
                     e.printStackTrace();
                 }
                 Toast.makeText($context, "블루투스가 연결되었습니다.", Toast.LENGTH_LONG).show();
-
 /*            Intent intent = new Intent($context, MainActivity.class);
             intent.setAction("kr.mint.bluetooth.receive");
             intent.putExtra("msg", "연결 완료");
@@ -61,7 +61,6 @@ public class ConnectionReceiver extends BroadcastReceiver {
             }
         }
     }
-
 
     private void reconnect(Context $context, String $address) {
         String lastConnectAddress = PreferenceUtil.lastConnectedDeviceAddress();

@@ -22,6 +22,7 @@ public class ReConnectService {
     private ScheduledExecutorService _scheduledExecutorService;
     protected BTService.ConnectedThread mmConnectedThread;
 
+
     public static boolean ReConnectServiceStop = false;
 
     public static synchronized ReConnectService instance(Context $context) {

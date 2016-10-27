@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.os.PowerManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.tathink.brooch.brooch.EventActivityCaution;
 import com.tathink.brooch.brooch.EventActivitySafe;

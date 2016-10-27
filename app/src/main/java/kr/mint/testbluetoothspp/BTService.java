@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -105,7 +106,6 @@ public class BTService extends Service {
                 mmSocket.connect();
             } catch (Exception e1) {
                 Log.e("BTService.java | run", "|==" + "connect fail" + "|");
-
                 e1.printStackTrace();
                 // Unable to connect; close the socket and get out
                 try {

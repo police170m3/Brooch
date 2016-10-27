@@ -312,9 +312,9 @@ public class EventActivityWarning2 extends Activity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onBackPressed() {
         BluetoothSignalReceiver.activity_close = false;
+        finish();
     }
 
     @Override

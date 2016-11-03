@@ -56,6 +56,7 @@ public class SetRage extends Activity{
             previousButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
+                    BTService.FREE_PASS = true;
                     Intent i = new Intent(SetRage.this, SetNormalVoice.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(i);

@@ -44,7 +44,7 @@ public class SetRageVoice   extends Activity {
         if(BTService.callrecv_max != null && BTService.callrecv_min != null) {                         //ninny
 //            min = Integer.parseInt(BTService.callrecv_min);
             max = Integer.parseInt(BTService.callrecv_max);
-        } else if (BTService.FREE_PASS = true) {
+        } else if (BTService.FREE_PASS == true) {
             BTService.FREE_PASS = false;
             Log.d("SetRageVoice","----------FREE PASS----------"+BTService.FREE_PASS);
         } else {      //sejin 2016.11.02

@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import kr.mint.testbluetoothspp.BTService;
+
 /**
  * Created by MSI on 2016-08-19.
  */
@@ -83,10 +85,10 @@ public class SetPic extends Activity {
             previousButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
+                    BTService.FREE_PASS = true;
                     Intent i = new Intent(SetPic.this, SetRageVoice.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    i.putExtra("FREE_PASS", true);
-                    startActivityForResult(i, 0);
+                    startActivity(i);
                 }
             });
             //다음 이벤트 처리

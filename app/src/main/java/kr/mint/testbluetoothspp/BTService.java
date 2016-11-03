@@ -34,6 +34,8 @@ public class BTService extends Service {
     //    public static InputStream mmInStream;
     public static OutputStream mmOutStream;
 
+    public static boolean FREE_PASS = false;
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;

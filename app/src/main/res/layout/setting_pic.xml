@@ -127,6 +127,13 @@
             android:layout_gravity="center_horizontal">
 
             <Button
+                android:text="&lt;"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/previous_btn"
+                android:layout_weight="1" />
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/registration"
@@ -141,6 +148,13 @@
                 android:id="@+id/setpic_btn_nexttime"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp" />
+
+            <Button
+                android:text=">"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/next_btn"
+                android:layout_weight="1" />
         </LinearLayout>
 
     </LinearLayout>

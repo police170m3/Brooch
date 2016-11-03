@@ -47,6 +47,13 @@
         android:layout_gravity="center_horizontal">
 
         <Button
+            android:text="&lt;"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/previous_btn"
+            android:layout_weight="1" />
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/registration"
@@ -57,6 +64,13 @@
             android:layout_height="wrap_content"
             android:text="@string/tryagain"
             android:id="@+id/setragevoice_btn_remeasure" />
+
+        <Button
+            android:text=">"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/next_btn"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TextView

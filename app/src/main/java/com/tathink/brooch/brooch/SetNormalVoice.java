@@ -35,12 +35,22 @@ public class SetNormalVoice extends Activity {
         rangeSeekBar.setTextAboveThumbsColor(R.color.common_signin_btn_dark_text_default);
         rangeSeekBar.setRangeValues(30, 80);
 
+        //이전, 다음 버튼 처리////////////////////////////////////////////////////////////////////// sejin 2016.11.02
+        Button previousButton = (Button) findViewById(R.id.previous_btn);
+        Button nextButton = (Button) findViewById(R.id.next_btn);
+        previousButton.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.INVISIBLE);
+        //이전, 다음 버튼 처리//////////////////////////////////////////////////////////////////////
+
         if(BTService.callrecv_max != null && BTService.callrecv_min != null) {                         //ninny
             min = Integer.parseInt(BTService.callrecv_min);
             max = Integer.parseInt(BTService.callrecv_max);
-        }
-        else
+        } else if (BTService.FREE_PASS == true) {
+            BTService.FREE_PASS = false;
+            Log.d("SetNormalVoice","----------FREE PASS----------"+BTService.FREE_PASS);
+        } else {      //sejin 2016.11.01
             Toast.makeText(this, "목소리 측정 시간이 짧아서 실패. 다시걸기하세요", Toast.LENGTH_LONG).show();                         //ninny
+        }
 
         Log.i("SetNormalVoice.java" , BTService.callrecv_max + "|" + BTService.callrecv_min);
         rangeSeekBar.setSelectedMinValue(min);   //추후 프리퍼런스의 값 읽어와서 인자전달
@@ -63,6 +73,30 @@ public class SetNormalVoice extends Activity {
                     BTService.config_check = false;
                 }
             });
+
+            //이전, 다음 버튼 활성화 및 이벤트 처리///////////////////////// sejin 2016.11.02
+            previousButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
+
+            //이전 이벤트 처리
+            previousButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent(SetNormalVoice.this, SetCall.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(i);
+                }
+            });
+            //다음 이벤트 처리
+            nextButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent(SetNormalVoice.this, SetRage.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(i);
+                }
+            });
+            //이전, 다음 버튼 활성화 및 이벤트 처리/////////////////////////
         }
 
         // Add to layout

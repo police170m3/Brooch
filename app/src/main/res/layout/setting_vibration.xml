@@ -77,6 +77,28 @@ android:layout_height="match_parent">
             android:layout_marginBottom="10dp" />
     </RadioGroup>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:text="&lt;"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/previous_btn"
+            android:layout_weight="1" />
+
+        <Button
+            android:text=">"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/next_btn"
+            android:layout_weight="1" />
+    </LinearLayout>
+
     <!--
     <Button
         android:layout_width="wrap_content"

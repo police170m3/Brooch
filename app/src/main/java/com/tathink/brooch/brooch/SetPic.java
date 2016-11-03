@@ -54,6 +54,13 @@ public class SetPic extends Activity {
         checkPermission();
         //mashowmallow permission////////////////////////////////////////////////////////////////////
 
+        //이전, 다음 버튼 처리////////////////////////////////////////////////////////////////////// sejin 2016.11.02
+        Button previousButton = (Button) findViewById(R.id.previous_btn);
+        Button nextButton = (Button) findViewById(R.id.next_btn);
+        previousButton.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.INVISIBLE);
+        //이전, 다음 버튼 처리//////////////////////////////////////////////////////////////////////
+
         //home 버튼 처리
         if (prefSave) {
             ImageView home = (ImageView) findViewById(R.id.home);
@@ -67,6 +74,31 @@ public class SetPic extends Activity {
                     startActivity(i);
                 }
             });
+
+            //이전, 다음 버튼 활성화 및 이벤트 처리///////////////////////// sejin 2016.11.02
+            previousButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
+
+            //이전 이벤트 처리
+            previousButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent(SetPic.this, SetRageVoice.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.putExtra("FREE_PASS", true);
+                    startActivityForResult(i, 0);
+                }
+            });
+            //다음 이벤트 처리
+            nextButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent(SetPic.this, SetText.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(i);
+                }
+            });
+            //이전, 다음 버튼 활성화 및 이벤트 처리/////////////////////////
         }
 
         //ImageView 버튼 처리

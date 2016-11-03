@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
@@ -26,6 +27,13 @@ public class SetVibration extends Activity {
         RadioButton opt2 = (RadioButton)findViewById(R.id.radioButton2);
         RadioButton opt3 = (RadioButton)findViewById(R.id.radioButton3);
         RadioButton opt4 = (RadioButton)findViewById(R.id.radioButton4);
+
+        //이전, 다음 버튼 처리////////////////////////////////////////////////////////////////////// sejin 2016.11.02
+        Button previousButton = (Button) findViewById(R.id.previous_btn);
+        Button nextButton = (Button) findViewById(R.id.next_btn);
+        previousButton.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.INVISIBLE);
+        //이전, 다음 버튼 처리//////////////////////////////////////////////////////////////////////
 
 
         //프리퍼런스 값 읽어서 선택처리
@@ -148,6 +156,30 @@ public class SetVibration extends Activity {
                     BTService.config_check = false;
                 }
             });
+
+            //이전, 다음 버튼 활성화 및 이벤트 처리///////////////////////// sejin 2016.11.02
+            previousButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
+
+            //이전 이벤트 처리
+            previousButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent(SetVibration.this, SetSMS.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(i);
+                }
+            });
+            //다음 이벤트 처리
+            nextButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent(SetVibration.this, SetBell.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(i);
+                }
+            });
+            //이전, 다음 버튼 활성화 및 이벤트 처리/////////////////////////
         }
 
 //        ((Button)findViewById(R.id.setvibration_btn_set)).setOnClickListener(new View.OnClickListener() {

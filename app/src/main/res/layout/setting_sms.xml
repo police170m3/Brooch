@@ -97,6 +97,13 @@
         android:layout_gravity="center_horizontal">
 
         <Button
+            android:text="&lt;"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/previous_btn"
+            android:layout_weight="1" />
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/setting"
@@ -107,6 +114,13 @@
             android:layout_height="wrap_content"
             android:text="@string/nexttime"
             android:id="@+id/setsms_btn_nexttime" />
+
+        <Button
+            android:text=">"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/next_btn"
+            android:layout_weight="1" />
     </LinearLayout>
 
 </LinearLayout>

@@ -44,7 +44,7 @@
             android:id="@+id/radioButton1"
             android:layout_below="@+id/textView"
             android:layout_centerHorizontal="true"
-            android:checked="true"
+            android:checked="false"
             android:layout_gravity="left"
             android:layout_marginBottom="10dp" />
 
@@ -63,7 +63,7 @@
             android:text="20초"
             android:id="@+id/radioButton3"
             android:layout_gravity="left"
-            android:checked="false"
+            android:checked="true"
             android:layout_marginBottom="10dp" />
 
         <RadioButton
@@ -102,6 +102,28 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:textAlignment="center" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:text="&lt;"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/previous_btn"
+            android:layout_weight="1" />
+
+        <Button
+            android:text=">"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/next_btn"
+            android:layout_weight="1" />
+    </LinearLayout>
 
     <!--
     <Button

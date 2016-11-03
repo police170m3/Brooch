@@ -34,13 +34,22 @@ public class SetRageVoice   extends Activity {
         rangeSeekBar.setTextAboveThumbsColor(R.color.common_signin_btn_dark_text_default);
         rangeSeekBar.setRangeValues(30, 80);
 
+        //이전, 다음 버튼 처리////////////////////////////////////////////////////////////////////// sejin 2016.11.02
+        Button previousButton = (Button) findViewById(R.id.previous_btn);
+        Button nextButton = (Button) findViewById(R.id.next_btn);
+        previousButton.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.INVISIBLE);
+        //이전, 다음 버튼 처리//////////////////////////////////////////////////////////////////////
 
         if(BTService.callrecv_max != null && BTService.callrecv_min != null) {                         //ninny
-            min = Integer.parseInt(BTService.callrecv_min);
+//            min = Integer.parseInt(BTService.callrecv_min);
             max = Integer.parseInt(BTService.callrecv_max);
-        }
-        else
+        } else if (BTService.FREE_PASS = true) {
+            BTService.FREE_PASS = false;
+            Log.d("SetRageVoice","----------FREE PASS----------"+BTService.FREE_PASS);
+        } else {      //sejin 2016.11.02
             Toast.makeText(this, "목소리 측정 시간이 짧아서 실패. 다시걸기하세요", Toast.LENGTH_LONG).show();                         //ninny
+        }
 
         Log.i("SetNormalVoice.java" , BTService.callrecv_max + "|" + BTService.callrecv_min);
 
@@ -61,6 +70,30 @@ public class SetRageVoice   extends Activity {
                     startActivity(i);
                 }
             });
+
+            //이전, 다음 버튼 활성화 및 이벤트 처리///////////////////////// sejin 2016.11.02
+            previousButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
+
+            //이전 이벤트 처리
+            previousButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent(SetRageVoice.this, SetRage.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(i);
+                }
+            });
+            //다음 이벤트 처리
+            nextButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent(SetRageVoice.this, SetPic.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(i);
+                }
+            });
+            //이전, 다음 버튼 활성화 및 이벤트 처리/////////////////////////
         }
         // Add to layout
         LinearLayout layout = (LinearLayout) findViewById(R.id.seekbar_placeholder);
@@ -137,7 +170,7 @@ public class SetRageVoice   extends Activity {
     private void getPreferences(){
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         //min = pref.getInt("rvMin", 0);
-        min = pref.getInt("rvMin", 0);
+        min = pref.getInt("nvMax", 0);
         max = pref.getInt("rvMax", 0);
         prefSave = pref.getBoolean("prefSave", false);
         /*Log.d("5555555555555555", ""+ pref.getInt("nvMin", 0));

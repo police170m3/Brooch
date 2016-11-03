@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import java.io.IOException;
 
 import kr.mint.testbluetoothspp.BTService;
-import kr.mint.testbluetoothspp.BluetoothSignalReceiver;
 import kr.mint.testbluetoothspp.ConnectionReceiver;
 
 /**
@@ -38,6 +37,13 @@ public class SetCall extends Activity {
 
         Button callButton = (Button)findViewById(R.id.setcall_btn_call);
         BTService.config_check = true;
+
+        //이전, 다음 버튼 처리////////////////////////////////////////////////////////////////////// sejin 2016.11.01
+        Button previousButton = (Button) findViewById(R.id.previous_btn);
+        Button nextButton = (Button) findViewById(R.id.next_btn);
+        previousButton.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.INVISIBLE);
+        //이전, 다음 버튼 처리//////////////////////////////////////////////////////////////////////
 
         //BT 연결처리
         _btService = new BTService(getApplicationContext());
@@ -64,6 +70,31 @@ public class SetCall extends Activity {
                     BTService.config_check = false;
                 }
             });
+
+            //이전, 다음 버튼 활성화 및 이벤트 처리///////////////////////// sejin 2016.11.01
+            previousButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
+
+            //이전 이벤트 처리
+            previousButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent(SetCall.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            });
+            //다음 이벤트 처리
+            nextButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    BTService.FREE_PASS = true;
+                    Intent i = new Intent(SetCall.this, SetNormalVoice.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(i);
+                }
+            });
+            //이전, 다음 버튼 활성화 및 이벤트 처리/////////////////////////
         }
 
         callButton.setOnClickListener(new View.OnClickListener() {

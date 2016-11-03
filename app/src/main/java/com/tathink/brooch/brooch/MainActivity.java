@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 //ImageView 클릭시 이벤트 처리........
                 Intent i = new Intent(MainActivity.this, SetCall.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
         });
@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
             }
         });
 
-      /*  //테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////
+      /*//테스트용 버튼 이벤트//////////////////////////////////////////////////////////////////////
         ((Button)findViewById(R.id.safe_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

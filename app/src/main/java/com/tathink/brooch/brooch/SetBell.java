@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -30,7 +31,7 @@ import kr.mint.testbluetoothspp.BTService;
  */
 public class SetBell extends Activity {
     public boolean prefSave = false;
-    public int pbTime = 5, pbKind = 0;
+    public int pbTime = 20, pbKind = 0;
     RadioButton radioBtn_on;
     TextView textView1, textView2;
     int temp;       //임시 변수
@@ -41,6 +42,15 @@ public class SetBell extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_bell);
         BTService.config_check = true;
+
+        //이전, 다음 버튼 처리////////////////////////////////////////////////////////////////////// sejin 2016.11.02
+        Button previousButton = (Button) findViewById(R.id.previous_btn);
+        Button nextButton = (Button) findViewById(R.id.next_btn);
+        previousButton.setVisibility(View.INVISIBLE);
+        nextButton.setVisibility(View.INVISIBLE);
+        //이전, 다음 버튼 처리//////////////////////////////////////////////////////////////////////
+
+
         //프리퍼런스 값 읽어서 선택처리
         getPreferences();
         switch (pbTime) {
@@ -101,6 +111,30 @@ public class SetBell extends Activity {
                     BTService.config_check = false;
                 }
             });
+
+            //이전, 다음 버튼 활성화 및 이벤트 처리///////////////////////// sejin 2016.11.02
+            previousButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
+
+            //이전 이벤트 처리
+            previousButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent(SetBell.this, SetVibration.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(i);
+                }
+            });
+            //다음 이벤트 처리
+            nextButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Intent i = new Intent(SetBell.this, MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            });
+            //이전, 다음 버튼 활성화 및 이벤트 처리/////////////////////////
         }
 
         textView1 = (TextView) findViewById(R.id.setbell_textview_select);       //전화벨 종류 선택
@@ -287,7 +321,7 @@ public class SetBell extends Activity {
 
     private void getPreferences(){
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        pbTime = pref.getInt("pbTime", 5);
+        pbTime = pref.getInt("pbTime", 20);
         pbKind = pref.getInt("pbKind", 0);
         prefSave = pref.getBoolean("prefSave", false);
     }

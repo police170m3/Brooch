@@ -90,7 +90,7 @@ public class SetCall extends Activity {
                 public void onClick(View view){
                     BTService.FREE_PASS = true;
                     Intent i = new Intent(SetCall.this, SetNormalVoice.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }
             });

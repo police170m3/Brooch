@@ -87,7 +87,7 @@ public class SetPic extends Activity {
                 public void onClick(View view){
                     BTService.FREE_PASS = true;
                     Intent i = new Intent(SetPic.this, SetRageVoice.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }
             });
@@ -96,7 +96,7 @@ public class SetPic extends Activity {
                 @Override
                 public void onClick(View view){
                     Intent i = new Intent(SetPic.this, SetText.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }
             });

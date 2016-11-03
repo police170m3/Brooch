@@ -58,7 +58,7 @@ public class SetRage extends Activity{
                 public void onClick(View view){
                     BTService.FREE_PASS = true;
                     Intent i = new Intent(SetRage.this, SetNormalVoice.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }
             });
@@ -68,7 +68,7 @@ public class SetRage extends Activity{
                 public void onClick(View view){
                     BTService.FREE_PASS = true;
                     Intent i = new Intent(SetRage.this, SetRageVoice.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }
             });

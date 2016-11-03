@@ -166,7 +166,7 @@ public class SetVibration extends Activity {
                 @Override
                 public void onClick(View view){
                     Intent i = new Intent(SetVibration.this, SetSMS.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }
             });
@@ -175,7 +175,7 @@ public class SetVibration extends Activity {
                 @Override
                 public void onClick(View view){
                     Intent i = new Intent(SetVibration.this, SetBell.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }
             });

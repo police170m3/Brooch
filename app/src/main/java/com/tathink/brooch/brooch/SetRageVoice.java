@@ -44,11 +44,14 @@ public class SetRageVoice   extends Activity {
         if(BTService.callrecv_max != null && BTService.callrecv_min != null) {                         //ninny
 //            min = Integer.parseInt(BTService.callrecv_min);
             max = Integer.parseInt(BTService.callrecv_max);
-        } else if (BTService.FREE_PASS == true) {
-            BTService.FREE_PASS = false;
-            Log.d("SetRageVoice","----------FREE PASS----------"+BTService.FREE_PASS);
         } else {      //sejin 2016.11.02
-            Toast.makeText(this, "목소리 측정 시간이 짧아서 실패. 다시걸기하세요", Toast.LENGTH_LONG).show();                         //ninny
+            if (BTService.FREE_PASS == true) {
+                getPreferences();
+                BTService.FREE_PASS = false;
+                Log.d("SetRageVoice","----------FREE PASS----------"+BTService.FREE_PASS);
+            } else {
+                Toast.makeText(this, "목소리 측정 시간이 짧아서 실패. 다시걸기하세요", Toast.LENGTH_LONG).show();                         //ninny
+            }
         }
 
         Log.i("SetNormalVoice.java" , BTService.callrecv_max + "|" + BTService.callrecv_min);
@@ -80,7 +83,7 @@ public class SetRageVoice   extends Activity {
                 @Override
                 public void onClick(View view){
                     Intent i = new Intent(SetRageVoice.this, SetRage.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }
             });
@@ -89,7 +92,7 @@ public class SetRageVoice   extends Activity {
                 @Override
                 public void onClick(View view){
                     Intent i = new Intent(SetRageVoice.this, SetPic.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }
             });

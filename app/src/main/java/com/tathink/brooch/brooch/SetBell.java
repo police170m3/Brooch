@@ -121,7 +121,7 @@ public class SetBell extends Activity {
                 @Override
                 public void onClick(View view){
                     Intent i = new Intent(SetBell.this, SetVibration.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                 }
             });
